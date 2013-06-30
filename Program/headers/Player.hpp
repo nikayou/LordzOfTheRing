@@ -15,7 +15,7 @@ private:
 
 public:
   //constructors
-  Player();
+  Player(const std::string&, const unsigned short&, const unsigned short&, Character *);
   ~Player();
   //getters
   std::string getName() const{
@@ -25,7 +25,7 @@ public:
     return m_victories; 
   };
   unsigned short getPoints() const {
-    return m_poins; 
+    return m_points; 
   };
   Character * getCharacter() const{
     return m_character; 
@@ -44,7 +44,7 @@ public:
     m_character = value;
   };
   //others
-  bool resetPoints(){
+  void resetPoints(){
     m_points = 0;
   };
   void addPoints(const unsigned short& value){
