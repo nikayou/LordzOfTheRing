@@ -13,7 +13,8 @@ CDEFGH = 000000-111111 for action term (up to 64 actions)
 
 namespace NAction{
   typedef enum{
-    ATTACK_LEFT = 0,
+    UNKNOWN = 0,
+    ATTACK_LEFT = 1,
     ATTACK_MIDDLE,
     ATTACK_RIGHT,
     DODGE_LEFT,
@@ -25,8 +26,8 @@ namespace NAction{
   } Action;
   
   typedef enum{
-    SELF = 0,
-    OPPONENT
+    PLAYER1 = 0,
+    PLAYER2
   } Subject;
 
 }
