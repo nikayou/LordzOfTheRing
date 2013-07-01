@@ -53,6 +53,7 @@ public:
   void addVictory(){
     m_victories = (m_victories == -1) ? -1 : m_victories+1;
   }
+  std::string toString();
 };
 
 
