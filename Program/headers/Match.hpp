@@ -3,6 +3,9 @@
 
 #include "../headers/Player.hpp"
 
+#include <string>
+
+
 namespace MatchOptions{
   typedef enum{ 
     KO, //only KOs count in victory
@@ -14,16 +17,16 @@ namespace MatchOptions{
 class Match{
 
 private:
+  Player * m_player1;
+  Player * m_player2;
   unsigned short m_timePerRound; //time (in seconds). 0 = infinity
   unsigned short m_roundsNumber; //number of rounds to play
   unsigned short m_currentRound; 
   MatchOptions::scoreType m_type; 
-  Player * m_player1;
-  Player * m_player2;
 
 public:
   //constructors
-  Match();
+  Match(Player * p1, Player * p2, const unsigned short&, const unsigned short&, const MatchOptions::scoreType&);
   ~Match();
   //getters
   unsigned short getTimePerRound() const{
@@ -67,6 +70,7 @@ public:
   bool isFinished(){
     return m_currentRound >= m_roundsNumber;
   };
+  std::string toString();
 };
 
 #endif
