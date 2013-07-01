@@ -15,7 +15,7 @@ private:
 
 public:
   //constructors
-  Player(const std::string&, const unsigned short&, const unsigned short&, Character *);
+  Player(const std::string&, Character *);
   ~Player();
   //getters
   std::string getName() const{
