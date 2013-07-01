@@ -1,5 +1,6 @@
 #include "../headers/Game.hpp"
 #include "../headers/Character.hpp"
+#include "../headers/Config.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/Match.hpp"
 
@@ -24,7 +25,7 @@
 -begins the loop
  **/
 void Game::start(){
-  sf::RenderWindow rw(sf::VideoMode(800, 600), "Heil");
+  sf::RenderWindow rw(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Heil");
   m_window = &rw;
   loop();
 }

@@ -8,6 +8,9 @@
 #include <SFML/Window/Event.hpp>
 
 #include <map>
+#include <string>
+
+#define CONFIG_FILE "../../Resources/config.txt"
 
 typedef sf::Keyboard::Key Key;
 
@@ -18,10 +21,9 @@ class Config : public Singleton<Config>{
   friend class Singleton<Config>;
 
 private:
-  Config(){ };
+  Config(){ loadFromFile(CONFIG_FILE); };
   ~Config(){ };
-
-protected:
+  bool loadFromFile(const std::string&);
   std::map< Key, action > m_mapping; // no double in both sides 
   Key m_pause;
   byte m_musicVolume;
@@ -33,6 +35,18 @@ public:
   //getters
   action getAction(const Key& k);
   Key getKey(const action&) const;
+  byte getMusicVolume() const{
+    return m_musicVolume;
+  };
+  byte getSoundVolume() const{
+    return m_soundVolume;
+  };
+  unsigned int getWindowWidth() const{
+    return m_windowWidth;
+  };
+  unsigned int getWindowHeight() const{
+    return m_windowHeight;
+  };
   //setters
   void setAction(const Key&, const action&);
   void setMusicVolume(const byte& v){
@@ -48,6 +62,7 @@ public:
     m_windowHeight = h;
   };
   //others
+  void init();
 };
 
 #endif
