@@ -55,7 +55,7 @@ public:
     m_roundsNumber = value;
   };
   void setCurrentRound(const unsigned short& value){
-    m_currentRound = value;
+    m_currentRound = if(value >= m_roundsNumber)?m_roundsNumber:value;
   };
   void setType(const MatchOptions::scoreType& value){
     m_timePerRound = value;
@@ -70,6 +70,9 @@ public:
   bool isFinished(){
     return m_currentRound >= m_roundsNumber;
   };
+  void newRound(){
+    setCurrentRound( m_currentRound +1 );
+  }
   std::string toString();
 };
 
