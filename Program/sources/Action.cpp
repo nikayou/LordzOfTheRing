@@ -2,6 +2,9 @@
 
 #include "../headers/Action.hpp"
 
+#include <sstream>
+#include <string>
+
 NAction::Subject NAction::getDoer(const action& a){
   int f = (1<<7);
   return (NAction::Subject) (a&f);
@@ -27,4 +30,24 @@ byte NAction::targetToByte(const NAction::Subject& t){
 
 byte NAction::doerToByte(const NAction::Subject& d){
   return d<<7;
+}
+
+std::string NAction::actionToString(const action& a){
+  std::ostringstream oss;
+  if(NAction::getDoer(a) == NAction::PLAYER1){
+    oss << "Player1 - ";
+  }else{
+    oss << "Player2 - ";
+  }
+  switch( NAction::getAction(a) ){
+  case NAction::ATTACK_LEFT: oss << "Attack Left"; break;
+  case NAction::ATTACK_MIDDLE: oss << "Uppercut"; break;
+  case NAction::ATTACK_RIGHT: oss << "Attack Right"; break;
+  case NAction::DODGE_LEFT: oss << "Dodge Left"; break;
+  case NAction::DODGE_MIDDLE: oss << "Dodge Middle"; break;
+  case NAction::DODGE_RIGHT: oss << "Dodge Right"; break;
+  case NAction::PAUSE: oss << "Pause"; break;
+  default: oss << "Unknown"; break;
+  }
+  return oss.str();
 }

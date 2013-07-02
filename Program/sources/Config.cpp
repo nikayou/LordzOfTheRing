@@ -165,22 +165,9 @@ std::string Config::toString(){
   std::map<Key,action>::iterator it;
   for (it = m_mapping.begin(); it != m_mapping.end(); ++it) {
     oss << (int)it->first << " : ";
-    if(NAction::getDoer(it->second) == NAction::PLAYER1){
-      oss << "Player1 - ";
-    }else{
-      oss << "Player2 - ";
-    }
-    switch( NAction::getAction(it->second) ){
-    case NAction::ATTACK_LEFT: oss << "Attack Left"; break;
-    case NAction::ATTACK_MIDDLE: oss << "Uppercut"; break;
-    case NAction::ATTACK_RIGHT: oss << "Attack Right"; break;
-    case NAction::DODGE_LEFT: oss << "Dodge Left"; break;
-    case NAction::DODGE_MIDDLE: oss << "Dodge Middle"; break;
-    case NAction::DODGE_RIGHT: oss << "Dodge Right"; break;
-    case NAction::PAUSE: oss << "Pause"; break;
-    default: oss << "Unknown"; break;
-    }
-    oss << " ("<< (unsigned int)NAction::getAction(it->second) <<")"<<std::endl;
+    oss << NAction::actionToString(it->second);
+    //oss << " ("<< (unsigned int)NAction::getAction(it->second) <<")";
+    oss << std::endl;
     
   }
   return oss.str();

@@ -3,6 +3,8 @@
 
 #include "../headers/Misc.hpp"
 
+#include <string>
+
 typedef byte action;
 /** An action can be described in one byte:
  ABCDEFGH with
@@ -42,6 +44,8 @@ namespace NAction{
   byte targetToByte(const NAction::Subject&);
 
   byte doerToByte(const NAction::Subject&);
+
+  std::string actionToString(const action&);
 }
 
 

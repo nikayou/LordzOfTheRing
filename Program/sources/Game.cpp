@@ -50,7 +50,9 @@ void Game::loop(){
 	}else if(event.type ==sf::Event::KeyPressed ){
 	  std::ostringstream oss;
 	  oss << event.key.code;
-	  std::cout<<"Pressed "<< oss.str() <<std::endl;
+	  action a = Config::getInstance()->getAction( (Key)event.key.code);
+       
+	  std::cout<<"Pressed "<< oss.str() <<" : "<< NAction::actionToString(a) <<std::endl;
 	  //readInput( event.key );
 	}
 	  
