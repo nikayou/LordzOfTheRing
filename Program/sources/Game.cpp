@@ -38,7 +38,7 @@ void Game::start(){
 **/
 void Game::loop(){
   sf::Clock loopTimer;
-  while(true){
+  while(m_window->isOpen() ){
     if(loopTimer.getElapsedTime().asMilliseconds() > FREQUENCE*1000){
       //we refresh at every time = frequency
       //read inputs

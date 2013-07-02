@@ -22,6 +22,7 @@ namespace NAction{
     DODGE_RIGHT,
     KO,
     SUPER_STRIKE,
+    PAUSE,
     ACTIONS_COUNT
   } Action;
   
@@ -30,12 +31,19 @@ namespace NAction{
     PLAYER2
   } Subject;
 
+  Action getAction(const action&);
+
+  Subject getTarget(const action&);
+
+  Subject getDoer(const action&);
+
+  byte actionToByte(const NAction::Action&, const NAction::Subject& doer = NAction::PLAYER1, const NAction::Subject& target = NAction::PLAYER1);
+
+  byte targetToByte(const NAction::Subject&);
+
+  byte doerToByte(const NAction::Subject&);
 }
 
-NAction::Action getAction(const action&);
 
-NAction::Subject getTarget(const action&);
-
-NAction::Subject getDoer(const action&);
 
 #endif

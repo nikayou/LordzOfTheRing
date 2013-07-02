@@ -25,7 +25,6 @@ private:
   ~Config(){ };
   bool loadFromFile(const std::string&);
   std::map< Key, action > m_mapping; // no double in both sides 
-  Key m_pause;
   byte m_musicVolume;
   byte m_soundVolume;
   unsigned int m_windowWidth;
@@ -63,6 +62,7 @@ public:
   };
   //others
   void init();
+  std::string toString();
 };
 
 #endif
