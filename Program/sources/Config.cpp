@@ -17,19 +17,19 @@ void Config::init(){
   m_soundVolume = 100;
   m_windowWidth = 300;
   m_windowHeight = 100;
-  m_mapping[sf::Keyboard::Escape] = actionToByte(NAction::PAUSE);
-  m_mapping[sf::Keyboard::A] = actionToByte(NAction::ATTACK_LEFT, NAction::PLAYER1, NAction::PLAYER2);
-  m_mapping[sf::Keyboard::Z] = actionToByte(NAction::ATTACK_MIDDLE, NAction::PLAYER1, NAction::PLAYER2);
-  m_mapping[sf::Keyboard::E] = actionToByte(NAction::ATTACK_RIGHT, NAction::PLAYER1, NAction::PLAYER2);
-  m_mapping[sf::Keyboard::Q] = actionToByte(NAction::DODGE_LEFT, NAction::PLAYER1, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::S] = actionToByte(NAction::DODGE_MIDDLE, NAction::PLAYER1, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::D] = actionToByte(NAction::DODGE_RIGHT, NAction::PLAYER1, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::I] = actionToByte(NAction::ATTACK_LEFT, NAction::PLAYER2, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::O] = actionToByte(NAction::ATTACK_MIDDLE, NAction::PLAYER2, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::P] = actionToByte(NAction::ATTACK_RIGHT, NAction::PLAYER2, NAction::PLAYER1);
-  m_mapping[sf::Keyboard::K] = actionToByte(NAction::DODGE_LEFT, NAction::PLAYER2, NAction::PLAYER2);
-  m_mapping[sf::Keyboard::L] = actionToByte(NAction::DODGE_MIDDLE, NAction::PLAYER2, NAction::PLAYER2);
-  m_mapping[sf::Keyboard::M] = actionToByte(NAction::DODGE_RIGHT, NAction::PLAYER2, NAction::PLAYER2);
+  m_mapping[sf::Keyboard::Escape] = actionToByte(Action::PAUSE);
+  m_mapping[sf::Keyboard::A] = actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2);
+  m_mapping[sf::Keyboard::Z] = actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2);
+  m_mapping[sf::Keyboard::E] = actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2);
+  m_mapping[sf::Keyboard::Q] = actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1);
+  m_mapping[sf::Keyboard::S] = actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1);
+  m_mapping[sf::Keyboard::D] = actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1);
+  m_mapping[sf::Keyboard::I] = actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1);
+  m_mapping[sf::Keyboard::O] = actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1);
+  m_mapping[sf::Keyboard::P] = actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1);
+  m_mapping[sf::Keyboard::K] = actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2);
+  m_mapping[sf::Keyboard::L] = actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2);
+  m_mapping[sf::Keyboard::M] = actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2);
 }
 
 
@@ -68,69 +68,69 @@ bool Config::loadFromFile(const std::string& path){
     }
     if(contains(line, "pause=") ){
       setAction( (Key) extractInt(line), 
-		 NAction::actionToByte(NAction::PAUSE) );
+		 Action::actionToByte(Action::PAUSE) );
       continue;
     }
     //Player 1 controller
     if(contains(line, "1-attackL=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::ATTACK_LEFT, NAction::PLAYER1, NAction::PLAYER2) );
+Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-attackM=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::ATTACK_MIDDLE, NAction::PLAYER1, NAction::PLAYER2) );
+Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-attackR=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::ATTACK_RIGHT, NAction::PLAYER1, NAction::PLAYER2) );
+ Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-dodgeL=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::DODGE_LEFT, NAction::PLAYER1, NAction::PLAYER1) );
+Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "1-dodgeM=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::DODGE_MIDDLE, NAction::PLAYER1, NAction::PLAYER1) );
+ Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "1-dodgeR=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::DODGE_RIGHT, NAction::PLAYER1, NAction::PLAYER1) );
+ Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     //player2 controller
         if(contains(line, "2-attackL=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::ATTACK_LEFT, NAction::PLAYER2, NAction::PLAYER1) );
+Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-attackM=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::ATTACK_MIDDLE, NAction::PLAYER2, NAction::PLAYER1) );
+Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-attackR=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::ATTACK_RIGHT, NAction::PLAYER2, NAction::PLAYER1) );
+ Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-dodgeL=") ){
       setAction( (Key) extractInt(line), 
-NAction::actionToByte(NAction::DODGE_LEFT, NAction::PLAYER2, NAction::PLAYER2) );
+Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "2-dodgeM=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::DODGE_MIDDLE, NAction::PLAYER2, NAction::PLAYER2) );
+ Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "2-dodgeR=") ){
       setAction( (Key) extractInt(line), 
- NAction::actionToByte(NAction::DODGE_RIGHT, NAction::PLAYER2, NAction::PLAYER2) );
+ Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
   }
@@ -165,8 +165,8 @@ std::string Config::toString(){
   std::map<Key,action>::iterator it;
   for (it = m_mapping.begin(); it != m_mapping.end(); ++it) {
     oss << (int)it->first << " : ";
-    oss << NAction::actionToString(it->second);
-    //oss << " ("<< (unsigned int)NAction::getAction(it->second) <<")";
+    oss << Action::actionToString(it->second);
+    //oss << " ("<< (unsigned int)Action::getAction(it->second) <<")";
     oss << std::endl;
     
   }

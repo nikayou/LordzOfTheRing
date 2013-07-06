@@ -52,7 +52,9 @@ void Game::loop(){
 	  oss << event.key.code;
 	  action a = Config::getInstance()->getAction( (Key)event.key.code);
        
-	  std::cout<<"Pressed "<< oss.str() <<" : "<< NAction::actionToString(a) <<std::endl;
+	  std::cout<<"Pressed "<< oss.str() <<" : "<< Action::actionToString(a) <<std::endl;
+	  //if(event.key.code == sf::Keyboard::C)
+	  //  std::cout<<Config::getInstance()->toString()<<std::endl;
 	  //readInput( event.key );
 	}
 	  
