@@ -13,6 +13,8 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 
+
+#include <cstdio> //DELETE
 #include <iostream>
 #include <sstream>
 
@@ -27,6 +29,12 @@
 void Game::start(){
   sf::RenderWindow rw(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Heil");
   m_window = &rw;
+  // DELETE
+  printf("Initialized Attack_Left Framing : %d\n", Action::Framing_AttackL.size() );
+  for(unsigned int i = 0; i < 4; i++)
+    printf("%d - ", Action::Framing_AttackL[i].nb_frames );
+  printf("\n");
+  //END DELETE
   loop();
 }
 
