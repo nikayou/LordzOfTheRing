@@ -34,6 +34,7 @@ public:
   //getters
   action getAction(const Key& k);
   Key getKey(const action&) const;
+  Key getKey(const Action::Type&) const;
   byte getMusicVolume() const{
     return m_musicVolume;
   };

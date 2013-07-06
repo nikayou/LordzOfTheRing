@@ -65,7 +65,7 @@ public:
   };
   void setPlayer2(Player * value){
     m_player2 = value;
-  };
+};
   //others
   bool isFinished(){
     return m_currentRound >= m_roundsNumber;

@@ -149,6 +149,11 @@ Key Config::getKey(const action& a) const{
   return (Key)-1;
 }
 
+//TODO
+Key Config::getKey(const Action::Type& a) const{
+  return (Key)-1;
+}
+
 void Config::setAction(const Key& k, const action& a){
   std::map<Key,action>::iterator it = m_mapping.find(k);
   if( it != m_mapping.end() )

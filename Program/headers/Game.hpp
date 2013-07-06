@@ -1,6 +1,8 @@
 #include "../headers/Singleton.hpp"
+#include "../headers/Match.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
 
 namespace GameState{
@@ -23,11 +25,14 @@ private:
   ~Game(){ }
   sf::RenderWindow * m_window;
   GameState::state m_state;
+  Match * m_match;
+  sf::Clock m_clock;
 
 public:
   void start();
+  void init();
   void loop();
-  void loopSplash();
+  void splash();
   void loopMainMenu();
   void loopOptionsMenu();
   void loopProfileMenu();
@@ -35,8 +40,25 @@ public:
   void loopMatch();
   void pause();
   void close();
+  //getters
+  Match * getMatch() const{
+    return m_match;
+  };
   GameState::state getState() const{
     return m_state;
+  };
+  sf::Clock getClock() const{
+    return m_clock;
+  };
+  sf::Int32 getMsTime() const{
+    return m_clock.getElapsedTime().asMilliseconds();
+  };
+  float getTime() const{
+    return m_clock.getElapsedTime().asSeconds();
+  };
+  //setters
+  void setMatch(Match * m){
+    m_match = m;
   };
   void setState(const GameState::state& s){
     m_state = s;
