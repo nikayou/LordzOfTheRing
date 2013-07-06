@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "../headers/Character.hpp"
+#include "../headers/CharacterPlayed.hpp"
 
 #include <string>
 
@@ -11,11 +11,11 @@ private:
   std::string m_name; //name of the player, displayed during the match
   unsigned short m_victories; //number of victories (for global score)
   unsigned short m_points; //number of points in the current match
-  Character * m_character; //character chosen by the player
+  CharacterPlayed * m_character; //character chosen by the player
 
 public:
   //constructors
-  Player(const std::string&, Character *);
+  Player(const std::string&, CharacterPlayed *);
   ~Player();
   //getters
   std::string getName() const{
@@ -27,7 +27,7 @@ public:
   unsigned short getPoints() const {
     return m_points; 
   };
-  Character * getCharacter() const{
+  CharacterPlayed * getCharacter() const{
     return m_character; 
   };
   //setters
@@ -40,7 +40,7 @@ public:
   void setPoints(const unsigned short& value){
     m_points = value;
   };
-  void setCharacter(Character * value){
+  void setCharacter(CharacterPlayed * value){
     m_character = value;
   };
   //others
@@ -53,6 +53,7 @@ public:
   void addVictory(){
     m_victories = (m_victories == -1) ? -1 : m_victories+1;
   }
+  void manage();
   std::string toString();
 };
 

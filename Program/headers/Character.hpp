@@ -16,7 +16,7 @@ namespace Stats{
 
 class Character{
 
-private:
+protected:
   unsigned short m_health;
   Stats::stats m_LResistance; //resistance to light punches
   Stats::stats m_HResistance; //resistance to hard punches
@@ -28,6 +28,7 @@ private:
 
 public:
   //constructors
+  Character();
   Character(const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
   ~Character();
   //getters

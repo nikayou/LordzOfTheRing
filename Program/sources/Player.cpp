@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-Player::Player(const std::string& name = "Player", Character * chara = NULL){
+Player::Player(const std::string& name = "Player", CharacterPlayed * chara = NULL){
   m_name = name;
   m_character = chara;
   m_victories = 0;
@@ -11,6 +11,10 @@ Player::Player(const std::string& name = "Player", Character * chara = NULL){
 }
 
 Player::~Player(){
+}
+
+void Player::manage(){
+
 }
 
 std::string Player::toString(){

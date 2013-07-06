@@ -1,5 +1,7 @@
 #include "../headers/Game.hpp"
+#include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
+#include "../headers/CharacterPlayed.hpp"
 #include "../headers/Config.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/Match.hpp"
@@ -15,19 +17,22 @@
 
 
 #include <cstdio> //DELETE
+#include <cstdlib>
 #include <iostream>
 #include <sstream>
 
 #define FREQUENCE 1/30
+#define FRAMERATE 1
 
 /** Starts the game : 
--loads configuration
--creates the window
--loads files
--begins the loop
- **/
+    -loads configuration
+    -creates the window
+    -loads files
+    -begins the loop
+**/
 void Game::start(){
   sf::RenderWindow rw(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Heil");
+  rw.setFramerateLimit(FRAMERATE);
   m_window = &rw;
   // DELETE
   printf("Initialized Attack_Left Framing : %d\n", Action::Framing_AttackL.size() );
@@ -35,6 +40,7 @@ void Game::start(){
     printf("%d - ", Action::Framing_AttackL[i].nb_frames );
   printf("\n");
   //END DELETE
+  setState(GameState::MATCH);
   loop();
 }
 
@@ -46,48 +52,112 @@ void Game::start(){
 **/
 void Game::loop(){
   sf::Clock loopTimer;
+  Character defaut(100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
+  CharacterPlayed defautp;
+  defautp.fromCharacter(defaut);
+  Player p1("player1", &defautp);
+  Player p2("player2", &defautp);
+  Match match(&p1, &p2, 60, 3, MatchOptions::POINTS);
   while(m_window->isOpen() ){
-    if(loopTimer.getElapsedTime().asMilliseconds() > FREQUENCE*1000){
-      //we refresh at every time = frequency
-      //read inputs
-      m_window->clear();
-      sf::Event event;
-      while( m_window->pollEvent(event) ){
-	if(event.type == sf::Event::Closed){
-	  close();
-	}else if(event.type ==sf::Event::KeyPressed ){
-	  std::ostringstream oss;
-	  oss << event.key.code;
-	  action a = Config::getInstance()->getAction( (Key)event.key.code);
-       
-	  std::cout<<"Pressed "<< oss.str() <<" : "<< Action::actionToString(a) <<std::endl;
-	  //if(event.key.code == sf::Keyboard::C)
-	  //  std::cout<<Config::getInstance()->toString()<<std::endl;
-	  //readInput( event.key );
-	}
-	  
-      
-      }
-      //
-      m_window->display();
+    //we refresh at every time = frequency
+    //read inputs
+    printf("Time : %d\n", loopTimer.getElapsedTime().asMilliseconds() );
+    m_window->clear();
+    //switching looping with game state
+    switch(m_state){
+    case GameState::MATCH :
+      loopMatch();
+      break;
+
+    case GameState::PAUSE :
+      pause();
+      break;
+
+    default:
+      break;
     }
+      
+  m_window->display();
   }
+  //
+    
 }
 
 
-/** Closes the game
- **/
-void Game::close(){
-  m_window->close();
+void Game::loopSplash(){
+
 }
 
+void Game::loopMainMenu(){
 
-
-int main(){
-  Character c(110, Stats::WEAK, Stats::WEAKEST, Stats::STRONG, Stats::STRONGEST, Stats::MEDIUM, Stats::MEDIUM);
-  Player p("Moi", &c);
-  std::cout<< p.toString();
-  Game::getInstance()->start();
-  return 0;
 }
+
+void Game::loopOptionsMenu(){
+
+}
+
+void Game::loopProfileMenu(){
+
+}
+
+void Game::loopCharacterSelect(){
+
+}
+
+void Game::loopMatch(){
+  printf("this is a match\n");
+  sf::Event event;
+  while( m_window->pollEvent(event) ){
+    if(event.type == sf::Event::Closed){
+      close();
+    }else if(event.type ==sf::Event::KeyPressed ){
+      action a = Config::getInstance()->getAction( (Key)event.key.code);
+      if(Action::getType(a) == Action::PAUSE ){
+	setState(GameState::PAUSE);
+	break;
+      }
+      
+
+    }
+
+  }
+
+
+}
+
+void Game::pause(){
+  printf("pause\n");
+  sf::Event event;
+  while( m_window->pollEvent(event) ){
+    if(event.type == sf::Event::Closed){
+      close();
+    }else if(event.type ==sf::Event::KeyPressed ){
+      action a = Config::getInstance()->getAction( (Key)event.key.code);
+      if(Action::getType(a) == Action::PAUSE ){
+	setState(GameState::MATCH);
+        break;
+      }
+    }
+
+  }
+
+}
+
+    /** Closes the game
+     **/
+    void Game::close(){
+      m_window->close();
+    }
+
+
+
+    int main(){
+      Character c(110, Stats::WEAK, Stats::WEAKEST, Stats::STRONG, Stats::STRONGEST, Stats::MEDIUM, Stats::MEDIUM);
+      CharacterPlayed d;
+      d.fromCharacter(c);
+      Player p("Moi", &d);
+      std::cout<< p.toString();
+      Game::getInstance()->start();
+      return 0;
+    }
 

@@ -73,6 +73,7 @@ public:
   void newRound(){
     setCurrentRound( m_currentRound +1 );
   }
+  void manage();
   std::string toString();
 };
 

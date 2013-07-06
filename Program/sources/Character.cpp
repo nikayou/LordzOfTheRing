@@ -1,8 +1,11 @@
 #include "../headers/Character.hpp"
+#include "../headers/CharacterPlayed.hpp"
 
 #include <sstream>
 #include <string>
 
+Character::Character(){
+}
 
 Character::Character(
 		     const unsigned short& h = 100, 
@@ -22,6 +25,7 @@ Character::Character(
 }
 
 Character::~Character(){}
+
 
 std::string Character::toString(){
   std::ostringstream oss;

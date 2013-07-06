@@ -17,12 +17,14 @@ CDEFGH = 000000-111111 for action term (up to 64 actions), see enum Type.
 namespace Action{
   typedef enum{
     UNKNOWN = 0,
-    ATTACK_LEFT = 1,
+    NORMAL = 1,
+    ATTACK_LEFT,
     ATTACK_MIDDLE,
     ATTACK_RIGHT,
     DODGE_LEFT,
     DODGE_MIDDLE,
     DODGE_RIGHT,
+    STROKE,
     KO,
     SUPER_STRIKE,
     PAUSE,

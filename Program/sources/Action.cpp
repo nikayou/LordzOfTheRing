@@ -68,6 +68,7 @@ namespace Action{
   std::vector< Framing_t > Framing_DodgeL = initFramingDL();
   std::vector< Framing_t > Framing_DodgeM = initFramingDM();
   std::vector< Framing_t > Framing_DodgeR = initFramingDR();
+  std::vector< Framing_t > Framing_Stroke = initFramingStroke();
 
   std::vector<Framing_t> initFramingAL(){
     Framing_t _0; 

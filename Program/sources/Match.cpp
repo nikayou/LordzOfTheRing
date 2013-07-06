@@ -18,6 +18,12 @@ Match::Match(Player * p1, Player * p2,
 Match::~Match(){
 }
 
+void Match::manage(){
+  m_player1->manage();
+  m_player2->manage();
+  //check if match is ended
+}
+
 std::string Match::toString(){
   std::ostringstream oss;
   oss<<"Match "<<m_player1->getName()<<" vs "<<m_player2->getName()<<std::endl;
