@@ -14,6 +14,8 @@ namespace Stats{
     STRONGER,
     STRONGEST
   } stats;
+
+  stats fromString(const std::string&);
 }
 
 class Character{

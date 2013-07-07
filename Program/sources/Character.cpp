@@ -4,6 +4,37 @@
 #include <sstream>
 #include <string>
 
+
+namespace Stats{
+
+  Stats::stats fromString(const std::string& s){
+    if(s.compare("medium") != 0 ){
+      return Stats::MEDIUM;
+    }
+    if(s.compare("strong") != 0 ){
+      return Stats::STRONG;
+    }
+    if(s.compare("weak") != 0 ){
+      return Stats::WEAK;
+    }
+    if(s.compare("stronger") != 0 ){
+      return Stats::STRONGER;
+    }
+    if(s.compare("weaker") != 0 ){
+      return Stats::WEAKER;
+    }
+    if(s.compare("strongest") != 0 ){
+      return Stats::STRONGEST;
+    }
+    if(s.compare("weakest") != 0 ){
+      return Stats::WEAKEST;
+    }
+    return Stats::MEDIUM;
+
+  }
+}
+
+
 Character::Character(){
   m_name = "Unknown";
   m_health = 100;
@@ -37,3 +68,4 @@ std::string Character::toString(){
   oss<<"Stamina = "<< m_stamina << std::endl;
   return oss.str();
 }
+

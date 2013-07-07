@@ -1,5 +1,6 @@
 #include "../headers/Misc.hpp"
 
+#include <cstdlib>
 #include <string>
 
 /**
@@ -12,4 +13,9 @@ std::string cutFrom(const std::string& s, char c){
 /** Does the first string contain the second string ? */
 bool contains(const std::string& s, const std::string& sub){
   return ( s.find(sub) != std::string::npos);
+}
+
+/** Retrieves first int after the first '=' */
+unsigned int extractInt(const std::string& s){
+  return atoi( cutFrom(s, '=').c_str() );
 }

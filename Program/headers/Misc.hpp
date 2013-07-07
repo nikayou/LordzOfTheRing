@@ -15,5 +15,7 @@ std::string cutFrom(const std::string&, char);
 /** Does the first string contain the second string ? */
 bool contains(const std::string&, const std::string&);
 
+/** Retrieves first int after the first '=' */
+unsigned int extractInt(const std::string&);
 
 #endif

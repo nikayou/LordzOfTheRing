@@ -4,7 +4,6 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -32,11 +31,6 @@ void Config::init(){
   m_mapping[sf::Keyboard::M] = actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2);
 }
 
-
-/** Retrieves first int after the first '=' */
-unsigned int extractInt(const std::string& s){
-  return atoi( cutFrom(s, '=').c_str() );
-}
 
 bool Config::loadFromFile(const std::string& path){
   init();
