@@ -42,7 +42,7 @@ void Game::init(){
   rw.setPosition(sf::Vector2i(0, 0) ); //adjust
   m_window = &rw;
   //setting match settings
-  Character defC(100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
+  Character defC(100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
   CharacterPlayed defCP;
   defCP.fromCharacter(defC);
   Player p1("Aaron", &defCP);
@@ -113,7 +113,6 @@ void Game::loop(){
 
 
 void Game::splash(){
-  printf("splash screen\n");
   sf::RenderWindow rw(sf::VideoMode(600, 400), "splashscreen", sf::Style::None );
   rw.setPosition(sf::Vector2i(0,0) ); //adjust
   sf::Texture t;
@@ -126,7 +125,7 @@ void Game::splash(){
   rw.draw(s);
   rw.display();
   while(getTime() < 2.);
-  t.loadFromFile("../../Resources/Images/splash_authors.png");
+  t.loadFromFile("../../Resources/Images/splash_author.png");
   s.setTexture(t);
   s.setOrigin(t.getSize().x/2, t.getSize().y/2);
   s.setPosition(sf::Vector2f(300, 200) );
@@ -170,6 +169,7 @@ void Game::loopMainMenu(){
     loopMainMenu();
     break;
   }
+
 }
 
 void Game::loopOptionsMenu(){  
@@ -181,7 +181,6 @@ void Game::loopOptionsMenu(){
     printf("Resolution : %d x %d\n", Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
     printf("Volume : music = %d - sound = %d\n", Config::getInstance()->getMusicVolume(), Config::getInstance()->getSoundVolume() );
     printf("Inputs : \n");
-    
     printf("Volume : music = %d - sound = %d\n", Config::getInstance()->getMusicVolume(), Config::getInstance()->getSoundVolume() );
     printf("---------------\n");
     printf("1-Change resolution\n");
@@ -374,11 +373,6 @@ void Game::close(){
 
 
 int main(){
-  Character c(110, Stats::WEAK, Stats::WEAKEST, Stats::STRONG, Stats::STRONGEST, Stats::MEDIUM, Stats::MEDIUM);
-  CharacterPlayed d;
-  d.fromCharacter(c);
-  Player p("Moi", &d);
-  std::cout<< p.toString();
   Game::getInstance()->start();
   return 0;
 }

@@ -9,34 +9,26 @@ CharacterPlayed::CharacterPlayed(){
 }
 
 CharacterPlayed::CharacterPlayed(
-				   const unsigned short& h = 100, 
-				   const Stats::stats& lpr = Stats::MEDIUM, 
-				   const Stats::stats& hpr = Stats::MEDIUM, 
-				   const Stats::stats& lps = Stats::MEDIUM, 
-				   const Stats::stats& hps = Stats::MEDIUM, 
-				   const Stats::stats& sta = Stats::MEDIUM, 
-				   const Stats::stats& dod = Stats::MEDIUM): Character(h, lpr, hpr, lps, hps, sta, dod){
-    m_health = h;
-    m_LResistance = lpr;
-    m_HResistance = hpr;
-    m_LAttack = lps;
-    m_HAttack = hps;
-    m_stamina = sta;
-    m_dodging = dod;
-    m_currentHealth = h;
-    m_action = Action::NORMAL;
-    m_frame = 0;
-    m_phase = 0;
-  }
+				 const unsigned short& h = 100, 
+				 const Stats::stats& r = Stats::MEDIUM, 
+				 const Stats::stats& a = Stats::MEDIUM, 
+				 const Stats::stats& sta = Stats::MEDIUM): Character(h, r, a, sta){
+  m_health = h;
+  m_resistance = r;
+  m_attack = a;
+  m_stamina = sta;
+
+  m_currentHealth = h;
+  m_action = Action::NORMAL;
+  m_frame = 0;
+  m_phase = 0;
+}
 
 void CharacterPlayed::fromCharacter(const Character& c){
   m_health = c.getHealth();
-  m_LResistance = c.getLResistance();
-  m_HResistance = c.getHResistance();
-  m_LAttack = c.getLAttack();
-  m_HAttack = c.getHAttack();
+  m_resistance = c.getResistance();
+  m_attack = c.getAttack();
   m_stamina = c.getStamina();
-  m_dodging = c.getDodging();
   m_currentHealth = m_health;
   m_action = Action::NORMAL;
   m_phase = 0;

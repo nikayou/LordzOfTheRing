@@ -17,7 +17,7 @@ protected:
 public:
   //constructors
   CharacterPlayed();
-  CharacterPlayed(const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
+  CharacterPlayed(const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
   //getters
   unsigned short getCurrentHealth() const{
     return m_currentHealth;
