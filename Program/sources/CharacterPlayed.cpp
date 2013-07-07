@@ -5,14 +5,25 @@
 #include <vector>
 
 CharacterPlayed::CharacterPlayed(){
+  m_name = "Unknown";
+  m_health = 100;
+  m_resistance = Stats::MEDIUM;
+  m_attack = Stats::MEDIUM;
+  m_stamina = Stats::MEDIUM;
 
+  m_currentHealth = 100;
+  m_action = Action::NORMAL;
+  m_frame = 0;
+  m_phase = 0;
 }
 
 CharacterPlayed::CharacterPlayed(
+				 const std::string& n = "Unknown",
 				 const unsigned short& h = 100, 
 				 const Stats::stats& r = Stats::MEDIUM, 
 				 const Stats::stats& a = Stats::MEDIUM, 
-				 const Stats::stats& sta = Stats::MEDIUM): Character(h, r, a, sta){
+				 const Stats::stats& sta = Stats::MEDIUM): Character(n, h, r, a, sta){
+  m_name = n;
   m_health = h;
   m_resistance = r;
   m_attack = a;
@@ -25,6 +36,7 @@ CharacterPlayed::CharacterPlayed(
 }
 
 void CharacterPlayed::fromCharacter(const Character& c){
+  m_name = c.getName();
   m_health = c.getHealth();
   m_resistance = c.getResistance();
   m_attack = c.getAttack();

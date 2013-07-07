@@ -19,6 +19,7 @@ namespace Stats{
 class Character{
 
 protected:
+  std::string m_name;
   unsigned short m_health;
   Stats::stats m_resistance; //amount of hits he can get before stunning
   Stats::stats m_attack; //Light punches strenght
@@ -28,9 +29,12 @@ protected:
 public:
   //constructors
   Character();
-  Character(const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
+  Character(const std::string&, const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
   ~Character();
   //getters
+  std::string getName() const{ 
+    return m_name; 
+  };
   unsigned short getHealth() const{ 
     return m_health; 
   };
@@ -43,7 +47,10 @@ public:
   Stats::stats getStamina() const{ 
     return m_stamina; 
   };
-  //setters  
+  //setters
+  void setName(const std::string& value){  
+    m_name = value; 
+  };
   void setHealth(const unsigned short& value){  
     m_health = value; 
   };

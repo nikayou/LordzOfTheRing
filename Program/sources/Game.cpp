@@ -42,7 +42,7 @@ void Game::init(){
   rw.setPosition(sf::Vector2i(0, 0) ); //adjust
   m_window = &rw;
   //setting match settings
-  Character defC(100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
+  Character defC("CharA", 100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
   CharacterPlayed defCP;
   defCP.fromCharacter(defC);
   Player p1("Aaron", &defCP);

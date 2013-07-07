@@ -4,7 +4,6 @@
 #include <string>
 
 Player::Player(const std::string& name = "Player", CharacterPlayed * chara = NULL){
-  m_name = name;
   m_character = chara;
   m_victories = 0;
   m_points = 0;
