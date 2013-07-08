@@ -1,10 +1,12 @@
 #ifndef MATCH_HPP
 #define MATCH_HPP
 
+#include "../headers/CharacterPlayed.hpp"
 #include "../headers/Player.hpp"
 
 #include <string>
 
+//typedef Player * [2] Players;
 
 namespace MatchOptions{
   typedef enum{ 
@@ -17,8 +19,7 @@ namespace MatchOptions{
 class Match{
 
 private:
-  Player * m_player1;
-  Player * m_player2;
+  Player * m_players[2];
   unsigned short m_timePerRound; //time (in seconds). 0 = infinity
   unsigned short m_roundsNumber; //number of rounds to play
   unsigned short m_currentRound; 
@@ -45,11 +46,23 @@ const MatchOptions::scoreType& = MatchOptions::KO
   MatchOptions::scoreType getType() const{
     return m_type;
   };
+  Player * getPlayer(const unsigned short& n) const{
+    return m_players[n];
+  };
   Player * getPlayer1() const{
-    return m_player1;
+    return m_players[0];
   };
   Player * getPlayer2() const{
-    return m_player2;
+    return m_players[1];
+  };
+  CharacterPlayed * getCharacter1() const{
+    return m_players[0]->getCharacter();
+  };
+  CharacterPlayed * getCharacter2() const{
+    return m_players[1]->getCharacter();
+  };
+  CharacterPlayed * getCharacter(const unsigned short& v) const{
+    return m_players[v]->getCharacter();
   };
   //setters
   void setTimePerRound(const unsigned short& value){
@@ -65,10 +78,10 @@ const MatchOptions::scoreType& = MatchOptions::KO
     m_timePerRound = value;
   };
   void setPlayer1(Player * value){
-    m_player1 = value;
+    m_players[0] = value;
   };
   void setPlayer2(Player * value){
-    m_player2 = value;
+    m_players[1] = value;
 };
   //others
   bool isFinished(){

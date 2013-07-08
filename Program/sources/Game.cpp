@@ -44,15 +44,17 @@ void Game::init(){
   rw.setPosition(sf::Vector2i(0, 0) ); //adjust
   m_window = &rw;
   //setting match settings
-  Character defC("CharA", 100, Stats::MEDIUM, Stats::MEDIUM, Stats::MEDIUM);
-  CharacterPlayed defCP;
-  defCP.fromCharacter(defC);
-  Player p1("Aaron", &defCP);
-  Player p2("Barney", &defCP);
-  Match match(&p1, &p2, 60, 3, MatchOptions::POINTS);
+  Player p1("Aaron");
+  Player p2("Barney");
+  Match match(&p1, &p2, 60, 3, MatchOptions::KO);
   setMatch(&match);
+  printf("p1 : %p, c1 : %p\np2 : %p, c2 : %p\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
+  printf("Match : %p\nP1 : %p, c1 : %p\nP2 : %p, c2 : %p\n",
+	 getMatch(), getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(),
+	 getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
   //starting loop
-  setState(GameState::MAIN_MENU);
+  setState(GameState::CHARACTER_SELECT);
+  //setState(GameState::MAIN_MENU);
   loop();
 }
 
@@ -108,7 +110,7 @@ void Game::loop(){
     }
       
     m_window->display();
-
+    printf("Loop done\n");
   }
     
 }
@@ -240,7 +242,7 @@ void Game::loopProfileMenu(){
   case '2':
     printf("New name : ");
     std::cin>>s;
-    getMatch()->getPlayer1()->setName(s);
+    getMatch()->getPlayer2()->setName(s);
     loopProfileMenu();
     break;
 
@@ -262,72 +264,22 @@ void Game::loopProfileMenu(){
 
 void Game::loopCharacterSelect(){
   char entry = '_';  
-  do{
-    printf("\033c");
-    printf("Character selection\n");
-    printf("---------------\n");
-    printf("Player 1 (%s)\n", getMatch()->getPlayer1()->getName().c_str() );
-    printf("---------------\n");
-    printf("1- Charasian\n");
-    printf("2- Charab\n" );
-    printf("0-Quit\n");
-    printf("---------------\n");
-    printf(">");
-    std::cin>>entry;
-  }while(entry != '1' && entry != '2' && entry != '0');
-  
-  switch(entry){
-  case '1':
-    break;
-
-  case '2':
-    break;
-
-  case '0':
-    close();
-    break;
-
-  default:
-    break;
-  }
-
-  do{
-    printf("\033c");
-    printf("Character selection\n");
-    printf("---------------\n");
-    printf("Player 2 (%s)\n", getMatch()->getPlayer2()->getName().c_str() );
-    printf("---------------\n");
-    printf("1- Charasian\n");
-    printf("2- Charab\n" );
-    printf("0-Quit\n");
-    printf("---------------\n");
-    printf(">");
-    std::cin>>entry;
-  }while(entry != '1' && entry != '2' && entry != '0');
-  
-  switch(entry){
-  case '1':
-    break;
-
-  case '2':
-    break;
-
-  case '0':
-    close();
-    break;
-
-  default:
-    break;
-  }
+  std::cout<<"Character selection"<<std::endl;
+  printf("Loading characters for %p (%p) and %p (%p)\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
+  CharacterPlayed c1(* (CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara") )  );
+  CharacterPlayed c2(* (CharacterManager::getInstance()->get("../../Resources/Characters/vziggo.chara") )  );
+  printf("Character loaded %p & %p\n", &c1, &c2);
+  getMatch()->getPlayer2()->setCharacter(c2);
+  getMatch()->getPlayer1()->setCharacter(c1);
+  printf("Characters defined\n");
   setState(GameState::MATCH);
   loopMatch();
 
 }
 
 void Game::loopMatch(){
-  printf("this is a match\n");
-  printf("player1 : %s\n", getMatch()->getPlayer1()->getName().c_str() );
-  printf("player2 : %s\n", getMatch()->getPlayer2()->getName().c_str() );
+  printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
+  printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
   sf::Event event;
   while( m_window->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
@@ -339,10 +291,16 @@ void Game::loopMatch(){
 	break;
       }
       
-
+      if(getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NORMAL ){
+	getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
+      }else{
+	//player is already performing an action
+	printf("Cannot do an action until the curent is done\n");
+      }
     }
 
   }
+  getMatch()->manage();
 
 
 }
@@ -375,7 +333,8 @@ void Game::close(){
 
 
 int main(){
-  Game::getInstance()->start();
+  CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara") ;
+  Game::getInstance()->init();
   return 0;
 }
 

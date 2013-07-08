@@ -11,17 +11,17 @@ namespace Action{
 
   Subject getDoer(const action& a){
     int f = (1<<7);
-    return (Subject) (a&f);
+    return (Subject)( (a&f) == 0?0:1 );
   }
 
   Subject getTarget(const action& a){
     int f= 1<<6;
-    return (Subject) ( a&f);
+    return (Subject)( (a&f) == 0?0:1 );
   }
 
   Type getType(const action& a){
     int f = 1 + (1<<1) + (1<<2) + (1<<3) + (1<<4) + (1<<5);
-    return (Type) ( a&f);
+    return (Type) (a&f);
   }
 
 
@@ -45,23 +45,30 @@ namespace Action{
     }else{
       oss << "Player2 - ";
     }
-    switch( getType(a) ){
-    case ATTACK_LEFT: oss << "Attack Left"; break;
-    case ATTACK_MIDDLE: oss << "Uppercut"; break;
-    case ATTACK_RIGHT: oss << "Attack Right"; break;
-    case DODGE_LEFT: oss << "Dodge Left"; break;
-    case DODGE_MIDDLE: oss << "Dodge Middle"; break;
-    case DODGE_RIGHT: oss << "Dodge Right"; break;
-    case PAUSE: oss << "Pause"; break;
-    default: oss << "Unknown"; break;
-    }
+    oss << typeToString(getType(a) );
     return oss.str();
+  }
+
+  std::string typeToString(const Type& t){
+    switch( t ){
+    case NORMAL: return "Normal"; break;
+    case ATTACK_LEFT: return "Attack Left"; break;
+    case ATTACK_MIDDLE: return "Uppercut"; break;
+    case ATTACK_RIGHT: return "Attack Right"; break;
+    case DODGE_LEFT: return "Dodge Left"; break;
+    case DODGE_MIDDLE: return "Dodge Middle"; break;
+    case DODGE_RIGHT: return "Dodge Right"; break;
+    case PAUSE: return "Pause"; break;
+    default: return "Unknown"; break;
+    }
+    return "Unknown";
   }
 
 
 
   // Here begin all the framing stuff, for synchro of actions (and animations)
 
+  std::vector< Framing_t > Framing_Normal = initFramingN();
   std::vector< Framing_t > Framing_AttackL = initFramingAL();
   std::vector< Framing_t > Framing_AttackM = initFramingAM();
   std::vector< Framing_t > Framing_AttackR = initFramingAR();
@@ -69,6 +76,23 @@ namespace Action{
   std::vector< Framing_t > Framing_DodgeM = initFramingDM();
   std::vector< Framing_t > Framing_DodgeR = initFramingDR();
   std::vector< Framing_t > Framing_Stroke = initFramingStroke();
+
+  std::vector<Framing_t> initFramingN(){ 
+    Framing_t _0;
+    Framing_t _1;
+    Framing_t _2;
+    Framing_t _3;
+    _0.nb_frames = 1; //middle
+    _1.nb_frames = 1; //left
+    _2.nb_frames = 1; //middle
+    _3.nb_frames = 1; //right
+    std::vector<Framing_t> t;
+    t.push_back(_0);
+    t.push_back(_1);
+    t.push_back(_2);
+    t.push_back(_3);
+    return t;
+  }
 
   std::vector<Framing_t> initFramingAL(){
     Framing_t _0; 

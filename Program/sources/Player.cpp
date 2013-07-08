@@ -1,19 +1,31 @@
 #include "../headers/Player.hpp"
 
+#include <cstdio> //delete
 #include <sstream>
 #include <string>
 
-Player::Player(const std::string& name, CharacterPlayed * chara){
-  m_character = chara;
+Player::Player(const std::string& name, CharacterPlayed * c){
+  m_name = name;
+  printf("player : character = (before) %p\n", m_character);
+  m_character = c;
+  printf("player : character = (mid) %p (parameter is %p)\n", m_character, c);
+  if(c == NULL){
+    Character d;
+    m_character = new CharacterPlayed(d);
+    //e.fromCharacter(d);
+    //m_character = &e;
+  printf("player : character = (after) %p\n", m_character);
+  }
   m_victories = 0;
   m_points = 0;
 }
 
 Player::~Player(){
+  delete m_character;
 }
 
 void Player::manage(){
-
+  m_character->manage();
 }
 
 std::string Player::toString(){

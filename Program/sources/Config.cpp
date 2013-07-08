@@ -128,7 +128,6 @@ Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
   }
-  std::cout<< toString() <<std::endl;
   return true;
 }
 

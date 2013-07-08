@@ -15,7 +15,7 @@ private:
 
 public:
   //constructors
-  Player(const std::string&  = "Player", CharacterPlayed * = NULL);
+  Player(const std::string& = "Player", CharacterPlayed * = NULL);
   ~Player();
   //getters
   std::string getName() const{
@@ -40,8 +40,16 @@ public:
   void setPoints(const unsigned short& value){
     m_points = value;
   };
-  void setCharacter(CharacterPlayed * value){
-    m_character = value;
+  void setCharacter(const CharacterPlayed& c){
+    m_character->setName( c.getName() );
+    m_character->setHealth( c.getHealth() );
+    m_character->setCurrentHealth( c.getCurrentHealth() );
+    m_character->setAction( c.getAction() );
+    m_character->setFrame( c.getFrame() );
+    m_character->setPhase( c.getPhase() );
+    m_character->setResistance( c.getResistance() );
+    m_character->setAttack( c.getAttack() );
+    m_character->setStamina( c.getStamina() );
   };
   //others
   void resetPoints(){

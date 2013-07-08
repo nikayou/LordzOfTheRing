@@ -33,7 +33,7 @@ namespace Action{
   
   typedef enum{
     PLAYER1 = 0,
-    PLAYER2
+    PLAYER2 = 1
   } Subject;
 
  
@@ -58,6 +58,8 @@ namespace Action{
   //returns a string in format DOER-TARGET-ACTION
   std::string actionToString(const action&);
 
+  //returns a string in format ACTION
+  std::string typeToString(const Action::Type&);
 
   // Here begin all the framing stuff, for synchro of actions (and animations)
   
@@ -66,6 +68,7 @@ namespace Action{
     //animation
   } Framing_t;
 
+  extern std::vector< Framing_t > Framing_Normal;
   extern std::vector< Framing_t > Framing_AttackL;
   extern std::vector< Framing_t > Framing_AttackM;
   extern std::vector< Framing_t > Framing_AttackR;
@@ -73,6 +76,7 @@ namespace Action{
   extern std::vector< Framing_t > Framing_DodgeM;
   extern std::vector< Framing_t > Framing_DodgeR;
   extern std::vector< Framing_t > Framing_Stroke;
+  std::vector< Framing_t > initFramingN();
   std::vector< Framing_t > initFramingAL();
   std::vector< Framing_t > initFramingAM();
   std::vector< Framing_t > initFramingAR();
