@@ -1,18 +1,23 @@
+#ifndef RESOURCEMANAGER_HPP
+#define RESOURCEMANAGER_HPP
+
+#include <iostream> //delete
 #include <map>
 #include <string>
 
-template <typename T>
+template <class T>
 class ResourceManager
 {
 protected:
-  ResourceManager () { }
+  std::map<std::string, T > mData;
+  ResourceManager () { std::cout<<"ResourceManager created "<<std::endl; }
   ~ResourceManager () { }
- std::map<std::string, T > mData;
   /**
      Add an element to data
    */
   virtual void add(const std::string& s, const T& t){
     std::string n = s;
+    std::cout<< "adding resource "<<s<<std::endl;
     mData.insert( std::pair<std::string, T>(n, t) );
   }
   /**
@@ -21,58 +26,30 @@ protected:
   virtual void remove(const std::string& n){
     mData.erase(n);
   }
-  /**
-     load a data from a file and adds it to data
-   */
-  virtual bool loadFromFile(const std::string& path){
-    T t;
-    if(!t.loadFromFile(path) ){
-      return false;
-    }
-    add(path, t);
-    return true;
-  }
 
-public:
+
+public:  
   /**
      Tries to return the value matching the key.
      If not here, tries to load it from the file.
      If failure, return NULL, otherwise returns pointer to the value.
    */
-  T * get(const std::string& n){
+  virtual T * get(const std::string& n){
+    T t;
+    std::cout<< "trying to get resource "<<n<<"("<<t.getClass()<<")"<<std::endl;
     if(mData.find(n) == mData.end() ){
-      if(loadFromFile(n) )
+      std::cout<< "not present"<<std::endl;
+      if( t.loadFromFile(n) ){
+	add(n, t);
 	return &mData[n];
-      else
+      }else
 	return NULL;
     }
     return &mData[n];
   }
-  // Interface publique
-  static ResourceManager *getInstance ()
-  {
-    if (NULL == _resourceManager)
-      {
-	//creation singleton
-        _resourceManager = new ResourceManager;
-      }
 
-    return _resourceManager;
-  }
+   virtual std::string getClass(){ return "ResourceManager"; };
 
-  static void kill ()
-  {
-    if (NULL != _resourceManager)
-      {
-        delete _resourceManager;
-        _resourceManager = NULL;
-      }
-  }
-
-private:
-  // Unique instance
-  static ResourceManager *_resourceManager;
 };
 
-template <typename T>
-ResourceManager<T> *ResourceManager<T>::_resourceManager = NULL;
+#endif

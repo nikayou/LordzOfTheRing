@@ -30,8 +30,11 @@ protected:
 
 public:
   //constructors
-  Character();
-  Character(const std::string&, const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
+  Character(const std::string& n = "Unknown",
+		     const unsigned short& h = 100, 
+		     const Stats::stats& r = Stats::MEDIUM, 
+		     const Stats::stats& a = Stats::MEDIUM, 
+		     const Stats::stats& sta = Stats::MEDIUM);
   ~Character();
   //getters
   std::string getName() const{ 
@@ -66,7 +69,11 @@ public:
     m_stamina = value; 
   };
   //others
+  static std::string getClass(){
+    return "Character";
+  };
   std::string toString();
+  bool loadFromFile(const std::string&);
 
 };
 

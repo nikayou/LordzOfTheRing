@@ -1,11 +1,13 @@
 #include "../headers/Game.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
+#include "../headers/CharacterManager.hpp"
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Config.hpp"
 #include "../headers/Match.hpp"
 #include "../headers/Misc.hpp"
 #include "../headers/Player.hpp"
+#include "../headers/ResourceManager.hpp"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -373,7 +375,10 @@ void Game::close(){
 
 
 int main(){
-  Game::getInstance()->start();
+  std::cout<< CharacterManager::getInstance()->getClass() <<std::endl;
+  std::cout<< CharacterManager::getInstance()->get("../../Resources/Characters/vziggo.chara")->toString() << std::endl;
+  std::cout<< CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara")->toString() << std::endl;
+  //Game::getInstance()->start();
   return 0;
 }
 
