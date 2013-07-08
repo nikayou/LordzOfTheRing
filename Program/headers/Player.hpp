@@ -15,7 +15,7 @@ private:
 
 public:
   //constructors
-  Player(const std::string&, CharacterPlayed *);
+  Player(const std::string&  = "Player", CharacterPlayed * = NULL);
   ~Player();
   //getters
   std::string getName() const{

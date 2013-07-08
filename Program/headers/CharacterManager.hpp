@@ -22,11 +22,15 @@ class CharacterManager: public ResourceManager<Character>, public Singleton<Char
   //friend class ResourceManager<Character>;
 
 public:
-  CharacterManager(){ std::cout<<"Character manager" <<std::endl; };
+  CharacterManager(){ //std::cout<<"Character manager created" <<std::endl; 
+  };
   
 
 public:
-  std::string getClass(){ return "CharacterManager"; };
+  std::string getClass(){ 
+    return "CharacterManager"; 
+  };
+
 };
 
 

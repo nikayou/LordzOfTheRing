@@ -10,14 +10,15 @@ class ResourceManager
 {
 protected:
   std::map<std::string, T > mData;
-  ResourceManager () { std::cout<<"ResourceManager created "<<std::endl; }
+  ResourceManager () { //std::cout<<"ResourceManager created "<<std::endl; 
+}
   ~ResourceManager () { }
   /**
      Add an element to data
    */
   virtual void add(const std::string& s, const T& t){
     std::string n = s;
-    std::cout<< "adding resource "<<s<<std::endl;
+    //std::cout<< "adding resource "<<s<<std::endl;
     mData.insert( std::pair<std::string, T>(n, t) );
   }
   /**
@@ -36,9 +37,9 @@ public:
    */
   virtual T * get(const std::string& n){
     T t;
-    std::cout<< "trying to get resource "<<n<<"("<<t.getClass()<<")"<<std::endl;
+    //std::cout<< "trying to get resource "<<n<<"("<<t.getClass()<<")"<<std::endl;
     if(mData.find(n) == mData.end() ){
-      std::cout<< "not present"<<std::endl;
+      //std::cout<< "not present"<<std::endl;
       if( t.loadFromFile(n) ){
 	add(n, t);
 	return &mData[n];
@@ -48,7 +49,20 @@ public:
     return &mData[n];
   }
 
-   virtual std::string getClass(){ return "ResourceManager"; };
+  virtual std::string toString(){
+    typename std::map<std::string, T>::iterator it;
+    std::string res = "";
+    for(it = mData.begin(); it != mData.end(); ++it){
+      res += it->first;
+      res += " = \n";
+      res += it->second.toString();
+      res += "\n";
+    }
+    return res;
+  };
+  virtual std::string getClass(){ 
+    return "ResourceManager"; 
+  };
 
 };
 

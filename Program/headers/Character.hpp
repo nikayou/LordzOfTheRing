@@ -30,11 +30,11 @@ protected:
 
 public:
   //constructors
-  Character(const std::string& n = "Unknown",
-		     const unsigned short& h = 100, 
-		     const Stats::stats& r = Stats::MEDIUM, 
-		     const Stats::stats& a = Stats::MEDIUM, 
-		     const Stats::stats& sta = Stats::MEDIUM);
+  Character(const std::string& = "Unknown",
+		     const unsigned short& = 100, 
+		     const Stats::stats& = Stats::MEDIUM, 
+		     const Stats::stats& = Stats::MEDIUM, 
+		     const Stats::stats& = Stats::MEDIUM);
   ~Character();
   //getters
   std::string getName() const{ 

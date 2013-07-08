@@ -118,7 +118,7 @@ void Game::splash(){
   sf::RenderWindow rw(sf::VideoMode(600, 400), "splashscreen", sf::Style::None );
   rw.setPosition(sf::Vector2i(0,0) ); //adjust
   sf::Texture t;
-  t.loadFromFile("../../Resources/Images/splash_sfml.png");
+  t.loadFromFile("../../Resources/Images/sfml.splash");
   sf::Sprite s;
   s.setTexture(t);
   s.setOrigin(t.getSize().x/2, t.getSize().y/2);
@@ -127,7 +127,7 @@ void Game::splash(){
   rw.draw(s);
   rw.display();
   while(getTime() < 2.);
-  t.loadFromFile("../../Resources/Images/splash_author.png");
+  t.loadFromFile("../../Resources/Images/auth.splash");
   s.setTexture(t);
   s.setOrigin(t.getSize().x/2, t.getSize().y/2);
   s.setPosition(sf::Vector2f(300, 200) );
@@ -375,10 +375,7 @@ void Game::close(){
 
 
 int main(){
-  std::cout<< CharacterManager::getInstance()->getClass() <<std::endl;
-  std::cout<< CharacterManager::getInstance()->get("../../Resources/Characters/vziggo.chara")->toString() << std::endl;
-  std::cout<< CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara")->toString() << std::endl;
-  //Game::getInstance()->start();
+  Game::getInstance()->start();
   return 0;
 }
 

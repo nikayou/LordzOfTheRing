@@ -16,12 +16,14 @@ typedef sf::Keyboard::Key Key;
 
 /** Configuration class (singleton)
     It defines the input keys, graphic options...
- */
+*/
 class Config : public Singleton<Config>{
   friend class Singleton<Config>;
 
 private:
-  Config(){ loadFromFile(CONFIG_FILE); };
+  Config(){ 
+    loadFromFile(CONFIG_FILE); 
+  };
   ~Config(){ };
   bool loadFromFile(const std::string&);
   std::map< Key, action > m_mapping; // no double in both sides 

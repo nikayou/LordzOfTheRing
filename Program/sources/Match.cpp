@@ -4,9 +4,9 @@
 #include <string>
 
 Match::Match(Player * p1, Player * p2, 
-	     const unsigned short& t = 90,
-	     const unsigned short& r = 3,
-	     const MatchOptions::scoreType& st = MatchOptions::KO){
+	     const unsigned short& t,
+	     const unsigned short& r,
+	     const MatchOptions::scoreType& st){
   m_player1 = p1;
   m_player2 = p2;
   m_timePerRound = t;

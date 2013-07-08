@@ -16,8 +16,11 @@ protected:
 
 public:
   //constructors
-  CharacterPlayed();
-  CharacterPlayed(const std::string&, const unsigned short&, const Stats::stats&, const Stats::stats&, const Stats::stats&);
+  CharacterPlayed(const std::string& = "Unknown",
+		  const unsigned short& = 100, 
+		  const Stats::stats& = Stats::MEDIUM, 
+		  const Stats::stats& = Stats::MEDIUM, 
+		  const Stats::stats& = Stats::MEDIUM);
   //getters
   unsigned short getCurrentHealth() const{
     return m_currentHealth;

@@ -26,7 +26,11 @@ private:
 
 public:
   //constructors
-  Match(Player * p1, Player * p2, const unsigned short&, const unsigned short&, const MatchOptions::scoreType&);
+  Match(Player * p1 = NULL, Player * p2 = NULL, 
+const unsigned short& = 90, 
+const unsigned short& = 3, 
+const MatchOptions::scoreType& = MatchOptions::KO
+);
   ~Match();
   //getters
   unsigned short getTimePerRound() const{

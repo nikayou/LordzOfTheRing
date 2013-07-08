@@ -65,8 +65,8 @@ std::string Character::toString(){
 }
 
 bool Character::loadFromFile(const std::string& path){
-  std::cout<<"load from file (CharacterManager)"<<std::endl;
-  std::cout<< "Loading Character "<<path<<std::endl;
+  //std::cout<<"load from file (CharacterManager)"<<std::endl;
+  //std::cout<< "Loading Character "<<path<<std::endl;
   std::ifstream ifs;
   ifs.open(path.c_str() );
   if( !ifs.good() ){
