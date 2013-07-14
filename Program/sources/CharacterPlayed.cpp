@@ -21,9 +21,9 @@ CharacterPlayed::CharacterPlayed(
   m_stamina = sta;
 
   m_currentHealth = h;
-  m_action = Action::NORMAL;
+  m_action = Action::NONE;
   m_frame = 0;
-  m_phase = 0;
+  m_state = Action::NORMAL;
 }
 
 CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
@@ -35,7 +35,7 @@ CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
   m_currentHealth = c.getCurrentHealth();
   m_action = c.getAction();
   m_frame = c.getFrame();
-  m_phase = c.getPhase();
+  m_state = c.getState();
 }
 
 CharacterPlayed::CharacterPlayed(const Character& c){
@@ -45,29 +45,27 @@ CharacterPlayed::CharacterPlayed(const Character& c){
   m_attack = c.getAttack();
   m_stamina = c.getStamina();
   m_currentHealth = m_health;
-  m_action = Action::NORMAL;
-  m_phase = 0;
+  m_action = Action::NONE;
   m_frame = 0;
+  m_state = Action::NORMAL;
 }
 
-void CharacterPlayed::addFrame(const std::vector< Action::Framing_t >& t){
-  printf("Adding frame - %d:%d (%d)\n", m_phase, m_frame, (m_frame >= t[m_phase].nb_frames) );
+void CharacterPlayed::addFrame(const Action::Framing& f){
   m_frame++;
-  if(m_frame >= t[m_phase].nb_frames){
-    m_phase++;
+  if(m_frame >= f.nb_frames){
     m_frame = 0;
-  }
-}
-
-void CharacterPlayed::checkActionEnd(const std::vector< Action::Framing_t >& t){
-  if(m_phase >= t.size() ){
-    m_phase = 0;
-    m_action = Action::NORMAL;
+    m_action = Action::NONE; //action is over, come back to normal
+    m_state = Action::NORMAL;
+  }else if(m_frame == f.change_state){
+    setState(f.state);
+  }else if(m_frame == f.return_state){
+    setState(Action::NORMAL);
   }
 }
 
 unsigned short CharacterPlayed::loseHealth(const unsigned short& v){
-  return (m_currentHealth = (m_currentHealth>v)?m_currentHealth-v:0 );
+  unsigned short nextHealth = m_currentHealth - v + m_resistance;
+  return (m_currentHealth = nextHealth<m_currentHealth? nextHealth:0 );
 }
 
 unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
@@ -75,50 +73,57 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
 }
 
 void CharacterPlayed::manage(){
-  printf("Managing : action = %s\n", Action::typeToString(m_action).c_str() );
-  std::vector<Action::Framing_t> t;
+  //printf("Managing : action = %s\n", Action::typeToString(m_action).c_str() );
+  Action::Framing f;
   switch(m_action){
   case Action::ATTACK_LEFT :
-    t = Action::Framing_AttackL;
+    f = Action::Framing_AttackL;
     break;
 
   case Action::ATTACK_MIDDLE :
-    t = Action::Framing_AttackM;
+    f = Action::Framing_AttackM;
     break;
 
   case Action::ATTACK_RIGHT :
-    t = Action::Framing_AttackR;
+    f = Action::Framing_AttackR;
     break;
 
   case Action::DODGE_LEFT :
-    t = Action::Framing_DodgeL;
+    f = Action::Framing_DodgeL;
     break;
 
   case Action::DODGE_MIDDLE :
-    t = Action::Framing_DodgeM;
+    f = Action::Framing_DodgeM;
     break;
 
   case Action::DODGE_RIGHT :
-    t = Action::Framing_DodgeR;
+    f = Action::Framing_DodgeR;
     break;
 
   case Action::STROKE :
-    t = Action::Framing_Stroke;
+    f = Action::Framing_Stroke;
     break;
 
   default:
-    t = Action::Framing_Normal;
+    f = Action::Framing_None;
     break;
   }
 
-  addFrame(t);
-  checkActionEnd(t);
+  addFrame(f);
+  checkActionEnd(f);
+}
+
+void CharacterPlayed::checkActionEnd(const Action::Framing& f){
+  if( m_frame >= f.nb_frames){
+    setAction(Action::NONE);
+    m_state = Action::NORMAL;
+  }
 }
 
 std::string CharacterPlayed::toString(){
   std::ostringstream oss;
-  oss << m_name << " :" << m_currentHealth<< "/"<< m_health <<std::endl;
-  oss << "Framing : action = "<< Action::typeToString(m_action) << "-"<< m_phase <<":"<< m_frame <<std::endl;
+  oss << m_name << " : " << m_currentHealth<< "/"<< m_health <<std::endl;
+  oss << "Framing : action = "<< Action::typeToString(m_action) << "-"<< m_frame <<":"<< m_state <<std::endl;
   return oss.str();
 }
 

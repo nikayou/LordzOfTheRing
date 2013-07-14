@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 
-//extern std::vector< Action::Framing_t > Framing_AttackL;
 namespace Action{
 
   Subject getDoer(const action& a){
@@ -51,13 +50,16 @@ namespace Action{
 
   std::string typeToString(const Type& t){
     switch( t ){
-    case NORMAL: return "Normal"; break;
+    case NONE: return "None"; break;
     case ATTACK_LEFT: return "Attack Left"; break;
     case ATTACK_MIDDLE: return "Uppercut"; break;
     case ATTACK_RIGHT: return "Attack Right"; break;
     case DODGE_LEFT: return "Dodge Left"; break;
     case DODGE_MIDDLE: return "Dodge Middle"; break;
     case DODGE_RIGHT: return "Dodge Right"; break;
+    case STROKE: return "Stroke"; break;
+    case KO: return "KO"; break;
+    case HAPPY: return "Happy"; break;
     case PAUSE: return "Pause"; break;
     default: return "Unknown"; break;
     }
@@ -68,134 +70,96 @@ namespace Action{
 
   // Here begin all the framing stuff, for synchro of actions (and animations)
 
-  std::vector< Framing_t > Framing_Normal = initFramingN();
-  std::vector< Framing_t > Framing_AttackL = initFramingAL();
-  std::vector< Framing_t > Framing_AttackM = initFramingAM();
-  std::vector< Framing_t > Framing_AttackR = initFramingAR();
-  std::vector< Framing_t > Framing_DodgeL = initFramingDL();
-  std::vector< Framing_t > Framing_DodgeM = initFramingDM();
-  std::vector< Framing_t > Framing_DodgeR = initFramingDR();
-  std::vector< Framing_t > Framing_Stroke = initFramingStroke();
+  Framing Framing_None = initFramingN();
+  Framing Framing_AttackL = initFramingAL();
+  Framing Framing_AttackM = initFramingAM();
+  Framing Framing_AttackR = initFramingAR();
+  Framing Framing_DodgeL = initFramingDL();
+  Framing Framing_DodgeM = initFramingDM();
+  Framing Framing_DodgeR = initFramingDR();
+  Framing Framing_Stroke = initFramingStroke();
 
-  std::vector<Framing_t> initFramingN(){ 
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    Framing_t _3;
-    _0.nb_frames = 1; //middle
-    _1.nb_frames = 1; //left
-    _2.nb_frames = 1; //middle
-    _3.nb_frames = 1; //right
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    t.push_back(_3);
-    return t;
+  Framing initFramingN(){ 
+    Framing _f;
+    _f.nb_frames = 4;
+    _f.change_state = -1;
+    _f.return_state = -1;
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingAL(){
-    Framing_t _0; 
-    Framing_t _1;
-    Framing_t _2;
-    Framing_t _3;
-    _0.nb_frames = 2; //preparing
-    _1.nb_frames = 4; //striking
-    _2.nb_frames = 2; //pausing
-    _3.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    t.push_back(_3);
-    return t;
+  Framing initFramingAL(){
+    Framing _f;
+    _f.nb_frames = 9;
+    _f.change_state = 5;
+    _f.return_state = 6;
+    _f.state = ATTACKING;
+    //preparing -2
+    //striking -4
+    //pausing -2
+    //recovering -1
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingAM(){
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    Framing_t _3;
-    _0.nb_frames = 3; //preparing
-    _1.nb_frames = 3; //striking
-    _2.nb_frames = 4; //pausing
-    _3.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    t.push_back(_3);
-    return t;
+  Framing initFramingAM(){
+    Framing _f;
+    _f.nb_frames = 11;
+    _f.change_state = 5;
+    _f.return_state = 6;
+    _f.state = ATTACKING;
+    //preparing -3
+    //striking -3
+    //pausing -3
+    //recovering -2
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingAR(){
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    Framing_t _3;
-    _0.nb_frames = 2; //preparing
-    _1.nb_frames = 4; //striking
-    _2.nb_frames = 2; //pausing
-    _3.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    t.push_back(_3);
-    return t;
+  Framing initFramingAR(){
+    Framing _f;
+    _f.nb_frames = 9;
+    _f.change_state = 5;
+    _f.return_state = 6;
+    _f.state = ATTACKING;
+    //preparing -2
+    //striking -4
+    //pausing -2
+    //recovering -1
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingDL(){ 
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    _0.nb_frames = 1; //moving
-    _1.nb_frames = 1; //pausing
-    _2.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    return t;
+  Framing initFramingDL(){ 
+    Framing _f;
+    _f.nb_frames = 3; //moving, pausing, recovering
+    _f.change_state = 0;
+    _f.return_state = 2;
+    _f.state = DODGING;
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingDM(){
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    _0.nb_frames = 1; //moving
-    _1.nb_frames = 1; //pausing
-    _2.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    return t;
+  Framing initFramingDM(){ 
+    Framing _f;
+    _f.nb_frames = 3; //moving, pausing, recovering
+    _f.change_state = 0;
+    _f.return_state = 2;
+    _f.state = DODGING;
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingDR(){
-    Framing_t _0;
-    Framing_t _1;
-    Framing_t _2;
-    _0.nb_frames = 1; //moving
-    _1.nb_frames = 1; //pausing
-    _2.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    t.push_back(_2);
-    return t;
+  Framing initFramingDR(){ 
+    Framing _f;
+    _f.nb_frames = 3; //moving, pausing, recovering
+    _f.change_state = 0;
+    _f.return_state = 2;
+    _f.state = DODGING;
+    return _f;
   }
 
-  std::vector<Framing_t> initFramingStroke(){
-    Framing_t _0;
-    Framing_t _1;
-    _0.nb_frames = 2; //crying
-    _1.nb_frames = 1; //recovering
-    std::vector<Framing_t> t;
-    t.push_back(_0);
-    t.push_back(_1);
-    return t;
+  Framing initFramingStroke(){
+    Framing _f;
+    _f.nb_frames = 3; //crying (2) - recovering (1)
+    _f.change_state = 0;
+    _f.return_state = 2;
+    _f.state = CRYING;
+    return _f;
   }
 
 

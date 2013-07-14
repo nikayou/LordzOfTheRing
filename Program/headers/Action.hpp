@@ -8,16 +8,16 @@
 
 typedef byte action;
 /** An action can be described in one byte:
- ABCDEFGH with
-A = 0-1 for action's maker (see typedef enum subject)
-B= 0-1 for action's target (optionnal, see enum subject)
-CDEFGH = 000000-111111 for action term (up to 64 actions), see enum Type.
+    ABCDEFGH with
+    A = 0-1 for action's maker (see typedef enum subject)
+    B= 0-1 for action's target (optionnal, see enum subject)
+    CDEFGH = 000000-111111 for action term (up to 64 actions), see enum Type.
 */
 
 namespace Action{
   typedef enum{
     UNKNOWN = 0,
-    NORMAL = 1,
+    NONE = 1,
     ATTACK_LEFT,
     ATTACK_MIDDLE,
     ATTACK_RIGHT,
@@ -26,15 +26,16 @@ namespace Action{
     DODGE_RIGHT,
     STROKE,
     KO,
-    SUPER_STRIKE,
+    HAPPY,
     PAUSE,
     ACTIONS_COUNT
-  } Type;
+  } Type; //all kind of actions, from the input to the end
   
+
   typedef enum{
     PLAYER1 = 0,
     PLAYER2 = 1
-  } Subject;
+  } Subject; //who does/receives the action
 
  
   //retrieves in a Subject the first bit of the action
@@ -63,27 +64,37 @@ namespace Action{
 
   // Here begin all the framing stuff, for synchro of actions (and animations)
   
-  typedef struct{
-    unsigned short nb_frames;
-    //animation
-  } Framing_t;
+  typedef enum{
+    NORMAL = 0,
+    ATTACKING,
+    DODGING,
+    CRYING
+  } State; //effective action (ex : the hit is not given when we press the key)
 
-  extern std::vector< Framing_t > Framing_Normal;
-  extern std::vector< Framing_t > Framing_AttackL;
-  extern std::vector< Framing_t > Framing_AttackM;
-  extern std::vector< Framing_t > Framing_AttackR;
-  extern std::vector< Framing_t > Framing_DodgeL;
-  extern std::vector< Framing_t > Framing_DodgeM;
-  extern std::vector< Framing_t > Framing_DodgeR;
-  extern std::vector< Framing_t > Framing_Stroke;
-  std::vector< Framing_t > initFramingN();
-  std::vector< Framing_t > initFramingAL();
-  std::vector< Framing_t > initFramingAM();
-  std::vector< Framing_t > initFramingAR();
-  std::vector< Framing_t > initFramingDL();
-  std::vector< Framing_t > initFramingDM();
-  std::vector< Framing_t > initFramingDR();
-  std::vector< Framing_t > initFramingStroke();
+  typedef struct{
+    unsigned short nb_frames; //number of frames of the action
+    unsigned short change_state; //index of the frame where the state changes (or not if >= nb_frames)
+    unsigned short return_state; //index where the situation gets back to normal
+    State state;
+    //animation
+  } Framing;
+
+  extern Framing Framing_None;
+  extern Framing Framing_AttackL;
+  extern Framing Framing_AttackM;
+  extern Framing Framing_AttackR;
+  extern Framing Framing_DodgeL;
+  extern Framing Framing_DodgeM;
+  extern Framing Framing_DodgeR;
+  extern Framing Framing_Stroke;
+  Framing initFramingN();
+  Framing initFramingAL();
+  Framing initFramingAM();
+  Framing initFramingAR();
+  Framing initFramingDL();
+  Framing initFramingDM();
+  Framing initFramingDR();
+  Framing initFramingStroke();
 }
 
 

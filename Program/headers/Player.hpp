@@ -46,7 +46,6 @@ public:
     m_character->setCurrentHealth( c.getCurrentHealth() );
     m_character->setAction( c.getAction() );
     m_character->setFrame( c.getFrame() );
-    m_character->setPhase( c.getPhase() );
     m_character->setResistance( c.getResistance() );
     m_character->setAttack( c.getAttack() );
     m_character->setStamina( c.getStamina() );

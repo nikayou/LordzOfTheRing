@@ -28,7 +28,7 @@
 #include <sstream>
 
 #define FREQUENCE 1/30
-#define FRAMERATE 1
+#define FRAMERATE 10
 
 /** init all required the game : 
     -loads configuration
@@ -40,7 +40,7 @@
 void Game::init(){
   //setting the window
   sf::RenderWindow rw(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Heil");
-  rw.setFramerateLimit(FRAMERATE);
+  rw.setFramerateLimit( (float) FRAMERATE);
   rw.setPosition(sf::Vector2i(0, 0) ); //adjust
   m_window = &rw;
   //setting match settings
@@ -48,10 +48,8 @@ void Game::init(){
   Player p2("Barney");
   Match match(&p1, &p2, 60, 3, MatchOptions::KO);
   setMatch(&match);
-  printf("p1 : %p, c1 : %p\np2 : %p, c2 : %p\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
-  printf("Match : %p\nP1 : %p, c1 : %p\nP2 : %p, c2 : %p\n",
-	 getMatch(), getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(),
-	 getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
+  //printf("p1 : %p, c1 : %p\np2 : %p, c2 : %p\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
+  //printf("Match : %p\nP1 : %p, c1 : %p\nP2 : %p, c2 : %p\n", getMatch(), getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
   //starting loop
   setState(GameState::CHARACTER_SELECT);
   //setState(GameState::MAIN_MENU);
@@ -110,7 +108,6 @@ void Game::loop(){
     }
       
     m_window->display();
-    printf("Loop done\n");
   }
     
 }
@@ -263,15 +260,14 @@ void Game::loopProfileMenu(){
 }
 
 void Game::loopCharacterSelect(){
-  char entry = '_';  
   std::cout<<"Character selection"<<std::endl;
-  printf("Loading characters for %p (%p) and %p (%p)\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
+  //printf("Loading characters for %p (%p) and %p (%p)\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
   CharacterPlayed c1(* (CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("../../Resources/Characters/vziggo.chara") )  );
-  printf("Character loaded %p & %p\n", &c1, &c2);
+  //printf("Character loaded %p & %p\n", &c1, &c2);
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
-  printf("Characters defined\n");
+  //printf("Characters defined\n");
   setState(GameState::MATCH);
   loopMatch();
 
@@ -291,7 +287,7 @@ void Game::loopMatch(){
 	break;
       }
       
-      if(getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NORMAL ){
+      if(getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NONE ){
 	getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
       }else{
 	//player is already performing an action

@@ -6,6 +6,9 @@
 
 #include <string>
 
+#define BASE_STRIKE 8
+#define NICE_STRIKE 12
+
 //typedef Player * [2] Players;
 
 namespace MatchOptions{
@@ -91,7 +94,12 @@ const MatchOptions::scoreType& = MatchOptions::KO
     setCurrentRound( m_currentRound +1 );
   }
   void manage();
+  void subCheckHits(const unsigned short&, const unsigned short&);
+  void checkHits();
+  void KO(const unsigned short&);
   std::string toString();
+  bool checkHit(const unsigned short&, const unsigned short&);
+  bool checkKO(const unsigned short&);
 };
 
 #endif
