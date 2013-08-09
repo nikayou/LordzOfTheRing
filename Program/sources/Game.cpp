@@ -1,3 +1,6 @@
+/**
+   Here is the game singleton : in which state we are, how many times since launching, the window...
+*/
 #include "../headers/Game.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
@@ -8,6 +11,7 @@
 #include "../headers/Misc.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/ResourceManager.hpp"
+#include "../headers/TextureManager.hpp"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -46,7 +50,7 @@ void Game::init(){
   //setting match settings
   Player p1("Aaron");
   Player p2("Barney");
-  Match match(&p1, &p2, 60, 3, MatchOptions::KO);
+  Match match(&p1, &p2, 210, 3, MatchOptions::KO);
   setMatch(&match);
   //printf("p1 : %p, c1 : %p\np2 : %p, c2 : %p\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
   //printf("Match : %p\nP1 : %p, c1 : %p\nP2 : %p, c2 : %p\n", getMatch(), getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
@@ -97,6 +101,7 @@ void Game::loop(){
 
     case GameState::MATCH :
       loopMatch();
+      displayMatch();
       break;
 
     case GameState::PAUSE :
@@ -299,6 +304,76 @@ void Game::loopMatch(){
   getMatch()->manage();
 
 
+}
+
+void Game::displayMatch(){
+  //drawing order : 
+  //background, opponent, opponent's spec, player's spec, player,
+  // health bars : red, green, border
+  // chrono : back, second 100, second 10, second 1
+  sf::Texture t;
+  sf::Sprite s;
+  float width = Config::getInstance()->getWindowWidth();
+  //t = TextureManager::getInstance()->get("../../Resources/Images/sprite.png");
+  // background
+  
+  // opponent
+  //opponent's spec
+  //player's spec
+  //player
+
+  //red
+  s.setTexture(*TextureManager::getInstance()->get("../../Resources/Images/sprites.png") );
+  s.setTextureRect(sf::IntRect(0, 0, 312, 40) );
+  s.setPosition (sf::Vector2f(0, 26) );
+  m_window->draw(s);
+  s.setPosition (sf::Vector2f(width-312, 26) );
+  m_window->draw(s);
+  //green
+  s.setTextureRect(sf::IntRect(0, 40, 312, 40) );
+  //p1
+  float percent = 0.0+getMatch()->getCharacter1()->getHealth()-getMatch()->getCharacter1()->getCurrentHealth();
+  percent /= getMatch()->getCharacter1()->getHealth();
+  percent *= 300;
+  s.setPosition(sf::Vector2f(-percent, 26) );
+  m_window->draw(s);
+  //p2
+  percent = 0.0+getMatch()->getCharacter2()->getHealth()-getMatch()->getCharacter2()->getCurrentHealth();
+  percent /= getMatch()->getCharacter2()->getHealth();
+  percent *= 300;
+  s.setPosition (sf::Vector2f(width-312+percent, 26) );
+  m_window->draw(s);
+  //borders
+  s.setTextureRect(sf::IntRect(128, 116, 8, 40 ) );
+  s.setPosition(0, 26);
+  m_window->draw(s);
+  s.setTextureRect(sf::IntRect(128+8, 116, 8, 40 ) );
+  s.setPosition(width-8, 26);
+  m_window->draw(s);
+  
+  //clock
+  s.setTextureRect(sf::IntRect(0, 80, 128, 64) );
+  s.setPosition(width/2-64, 10);
+  m_window->draw(s);  
+  unsigned short time;
+  time = getMatch()->getTimePerRound();
+  if(time > 0){ // if time is infinity, we are not displaying time
+    //get time remaining
+    printf("time remining : %d -> %d_%d_%d\n", time, time/100, time%100/10, time %10);   time -= getClock().getElapsedTime().asSeconds();
+    //displaying 100'
+    s.setTextureRect(sf::IntRect(128+(28*(time/100) ), 80, 28, 36) );
+    s.setPosition(width/2-64+16, 10+ 14);
+    m_window->draw(s);
+    //displaying 10'
+    s.setTextureRect(sf::IntRect(128+(28*(time%100/10) ), 80, 28, 36) );
+    s.setPosition(width/2-64+16+34, 10+ 14);
+    m_window->draw(s);
+    //displaying 1'
+    s.setTextureRect(sf::IntRect(128+(28*(time%10) ), 80, 28, 36) );
+    s.setPosition(width/2-64+16+68, 10+ 14);
+    m_window->draw(s);
+  }
+  
 }
 
 void Game::pause(){

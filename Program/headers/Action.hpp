@@ -1,3 +1,14 @@
+/** here we define actions : 
+a doer, an action, and a target.
+An action can be handled in one byte, so we provide functions to
+convert all these elements from/to bytes.
+
+To help with synchronisation, we also provides "states" : they can be
+used to tell, for instance : "the action has began, but not performed yet".
+
+The framing tells how many times does the "phase" of the action lasts
+*/
+
 #ifndef ACTION_HPP
 #define ACTION_HPP
 

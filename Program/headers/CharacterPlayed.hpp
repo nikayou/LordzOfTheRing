@@ -1,3 +1,7 @@
+/**
+Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
+ */
+
 #ifndef CHARACTERPLAYED_HPP
 #define CHARACTERPLAYED_HPP
 

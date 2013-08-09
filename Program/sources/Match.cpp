@@ -3,6 +3,9 @@
 
 #include <cstdio> //delete
 #include <sstream>
+/**
+   Here we define a match : two players and gaming options 
+ */
 #include <string>
 
 Match::Match(Player * p1, Player * p2, 

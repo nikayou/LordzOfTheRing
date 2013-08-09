@@ -1,3 +1,6 @@
+/**
+   Here we define a player, for the current game session : as in many fight games, we keep the number of victories
+ */
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 

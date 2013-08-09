@@ -1,3 +1,6 @@
+/**
+   Here we define a match : two players and gaming options 
+ */
 #ifndef MATCH_HPP
 #define MATCH_HPP
 
@@ -31,7 +34,7 @@ private:
 public:
   //constructors
   Match(Player * p1 = NULL, Player * p2 = NULL, 
-const unsigned short& = 90, 
+const unsigned short& = 150, 
 const unsigned short& = 3, 
 const MatchOptions::scoreType& = MatchOptions::KO
 );

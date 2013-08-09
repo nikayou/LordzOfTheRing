@@ -1,3 +1,7 @@
+/**
+Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
+ */
+
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"

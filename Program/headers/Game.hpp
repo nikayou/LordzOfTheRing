@@ -1,3 +1,6 @@
+/**
+   Here is the game singleton : in which state we are, how many times since launching, the window...
+ */
 #include "../headers/Singleton.hpp"
 #include "../headers/Match.hpp"
 
@@ -38,6 +41,7 @@ public:
   void loopProfileMenu();
   void loopCharacterSelect();
   void loopMatch();
+  void displayMatch();
   void pause();
   void close();
   //getters

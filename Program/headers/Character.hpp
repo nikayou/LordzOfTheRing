@@ -1,3 +1,6 @@
+/** Here we define a character. They are kind of constants, because these are not those who "play", just the general attributes.
+ */
+
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 

@@ -55,7 +55,7 @@ public:
     for(it = mData.begin(); it != mData.end(); ++it){
       res += it->first;
       res += " = \n";
-      res += it->second.toString();
+      //res += it->second.toString();
       res += "\n";
     }
     return res;
