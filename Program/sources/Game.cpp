@@ -311,12 +311,13 @@ void Game::displayMatch(){
   //background, opponent, opponent's spec, player's spec, player,
   // health bars : red, green, border
   // chrono : back, second 100, second 10, second 1
-  sf::Texture t;
   sf::Sprite s;
   float width = Config::getInstance()->getWindowWidth();
   //t = TextureManager::getInstance()->get("../../Resources/Images/sprite.png");
   // background
-  
+  s.setTexture(*TextureManager::getInstance()->get("../../Resources/Images/background") );
+  s.setPosition(sf::Vector2f(0, 0) );
+  m_window->draw(s);
   // opponent
   //opponent's spec
   //player's spec
