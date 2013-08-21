@@ -11,6 +11,8 @@
 #include "../headers/Misc.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/ResourceManager.hpp"
+#include "../headers/SpritesheetManager.hpp"
+#include "../headers/Texture.hpp"
 #include "../headers/TextureManager.hpp"
 
 #include <SFML/Graphics/Color.hpp>
@@ -45,18 +47,17 @@ void Game::init(){
   //setting the window
   sf::RenderWindow rw(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Heil");
   rw.setFramerateLimit( (float) FRAMERATE);
-  rw.setPosition(sf::Vector2i(0, 0) ); //adjust
+  rw.setPosition(sf::Vector2i(10, 10) ); //adjust
   m_window = &rw;
   //setting match settings
   Player p1("Aaron");
   Player p2("Barney");
   Match match(&p1, &p2, 210, 3, MatchOptions::KO);
   setMatch(&match);
-  //printf("p1 : %p, c1 : %p\np2 : %p, c2 : %p\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
-  //printf("Match : %p\nP1 : %p, c1 : %p\nP2 : %p, c2 : %p\n", getMatch(), getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
   //starting loop
   setState(GameState::CHARACTER_SELECT);
   //setState(GameState::MAIN_MENU);
+  std::cout<<"Game initialized"<<std::endl;
   loop();
 }
 
@@ -121,25 +122,28 @@ void Game::loop(){
 void Game::splash(){
   sf::RenderWindow rw(sf::VideoMode(600, 400), "splashscreen", sf::Style::None );
   rw.setPosition(sf::Vector2i(0,0) ); //adjust
-  sf::Texture t;
-  t.loadFromFile("../../Resources/Images/sfml.splash");
+  sf::Texture * t;
+  t = TextureManager::getInstance()->get("splashscreens/sfml.splash")->getTexture();
   sf::Sprite s;
-  s.setTexture(t);
-  s.setOrigin(t.getSize().x/2, t.getSize().y/2);
+  s.setTexture(*t);
+  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
   s.setPosition(sf::Vector2f(300, 200) );
   rw.clear(sf::Color::White);
   rw.draw(s);
   rw.display();
   while(getTime() < 2.);
-  t.loadFromFile("../../Resources/Images/auth.splash");
-  s.setTexture(t);
-  s.setOrigin(t.getSize().x/2, t.getSize().y/2);
+  t = TextureManager::getInstance()->get("splashscreens/auth.splash")->getTexture();
+  s.setTexture(*t );
+  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
   s.setPosition(sf::Vector2f(300, 200) );
   rw.clear(sf::Color::White);
   rw.draw(s);
   rw.display();
   while(getTime() < 4.);
   rw.close();
+  TextureManager::getInstance()->remove("splashscreens/sfml.splash");
+  TextureManager::getInstance()->remove("splashscreens/auth.splash");
+  
   init();
 }
 
@@ -267,8 +271,8 @@ void Game::loopProfileMenu(){
 void Game::loopCharacterSelect(){
   std::cout<<"Character selection"<<std::endl;
   //printf("Loading characters for %p (%p) and %p (%p)\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
-  CharacterPlayed c1(* (CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara") )  );
-  CharacterPlayed c2(* (CharacterManager::getInstance()->get("../../Resources/Characters/vziggo.chara") )  );
+  CharacterPlayed c1(* (CharacterManager::getInstance()->get("A. V. Rage.chara") )  );
+  CharacterPlayed c2(* (CharacterManager::getInstance()->get("V. Ziggo.chara") )  );
   //printf("Character loaded %p & %p\n", &c1, &c2);
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
@@ -306,16 +310,15 @@ void Game::loopMatch(){
 
 }
 
-void Game::displayMatch(){
-  //drawing order : 
-  //background, opponent, opponent's spec, player's spec, player,
+void Game::displayGauges(){
+  
   // health bars : red, green, border
-  // chrono : back, second 100, second 10, second 1
   sf::Sprite s;
+  sf::Texture * t;
   float width = Config::getInstance()->getWindowWidth();
-  //t = TextureManager::getInstance()->get("../../Resources/Images/sprite.png");
   // background
-  s.setTexture(*TextureManager::getInstance()->get("../../Resources/Images/background") );
+  t = TextureManager::getInstance()->get("background")->getTexture();
+  s.setTexture(*t);
   s.setPosition(sf::Vector2f(0, 0) );
   m_window->draw(s);
   // opponent
@@ -324,7 +327,8 @@ void Game::displayMatch(){
   //player
 
   //red
-  s.setTexture(*TextureManager::getInstance()->get("../../Resources/Images/sprites.png") );
+  t = TextureManager::getInstance()->get("sprites.png")->getTexture();
+  s.setTexture(*t);
   s.setTextureRect(sf::IntRect(0, 0, 312, 40) );
   s.setPosition (sf::Vector2f(0, 26) );
   m_window->draw(s);
@@ -352,15 +356,24 @@ void Game::displayMatch(){
   s.setPosition(width-8, 26);
   m_window->draw(s);
   
-  //clock
+  
+}
+
+void Game::displayClock(){
+  
+  // chrono : back, second 100, second 10, second 1
+  sf::Sprite s;
+  sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
+  float width = Config::getInstance()->getWindowWidth();
   s.setTextureRect(sf::IntRect(0, 80, 128, 64) );
   s.setPosition(width/2-64, 10);
+  s.setTexture(*t);
   m_window->draw(s);  
   unsigned short time;
   time = getMatch()->getTimePerRound();
   if(time > 0){ // if time is infinity, we are not displaying time
     //get time remaining
-    printf("time remining : %d -> %d_%d_%d\n", time, time/100, time%100/10, time %10);   time -= getClock().getElapsedTime().asSeconds();
+    printf("time remaining : %d -> %d_%d_%d\n", time, time/100, time%100/10, time %10);   time -= getClock().getElapsedTime().asSeconds();
     //displaying 100'
     s.setTextureRect(sf::IntRect(128+(28*(time/100) ), 80, 28, 36) );
     s.setPosition(width/2-64+16, 10+ 14);
@@ -376,6 +389,26 @@ void Game::displayMatch(){
   }
   
 }
+
+void Game::displayCharacters(){
+  float width = Config::getInstance()->getWindowWidth();
+  sf::Sprite s;
+  //displaying players' sprites
+  std::string p = "characters/";
+  p += getMatch()->getCharacter1()->getName() + "_front.png";
+  s.setTextureRect(sf::IntRect(0,0, 150, 380) );
+  //s.setTexture(TextureManager::getInstance()->get(p)->getTexture() );
+}
+
+void Game::displayMatch(){
+  //drawing order : 
+  //background, opponent, opponent's spec, player's spec, player,
+  displayGauges();
+  displayClock();
+  displayCharacters();
+}
+  
+
 
 void Game::pause(){
   printf("pause\n");
@@ -399,14 +432,17 @@ void Game::pause(){
  **/
 void Game::close(){
   std::cout<<"closing"<<std::endl;
+  TextureManager::getInstance()->remove("background.png");
+  TextureManager::getInstance()->remove("sprites.png");
   m_window->close();
 }
 
 
 
 int main(){
-  CharacterManager::getInstance()->get("../../Resources/Characters/avrage.chara") ;
   Game::getInstance()->init();
+  //sf::Vector2u v =  SpritesheetManager::getInstance()->get("A_back.sprt")->getSprite(57)->getHotpoint();
+  //std::cout<<"vérif : 3 = "<<v.x<<","<<v.y<<std::endl;
   return 0;
 }
 

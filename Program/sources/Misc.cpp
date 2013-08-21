@@ -19,3 +19,9 @@ bool contains(const std::string& s, const std::string& sub){
 unsigned int extractInt(const std::string& s){
   return atoi( cutFrom(s, '=').c_str() );
 }
+
+
+/** Retrieves first int after the first c */
+unsigned int extractInt(const std::string& s, const char& c){
+  return atoi( cutFrom(s, c).c_str() );
+}

@@ -1,6 +1,7 @@
 #ifndef CHARACTERMANAGER_HPP
 #define CHARACTERMANAGER_HPP
 
+
 #include <iostream> //delete
 #include <string>
 #include "../headers/CharacterManager.hpp"

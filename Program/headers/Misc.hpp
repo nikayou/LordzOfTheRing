@@ -18,4 +18,7 @@ bool contains(const std::string&, const std::string&);
 /** Retrieves first int after the first '=' */
 unsigned int extractInt(const std::string&);
 
+/** Retrieves first int after the first c */
+unsigned int extractInt(const std::string& s, const char& c);
+
 #endif

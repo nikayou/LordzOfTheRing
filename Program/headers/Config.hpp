@@ -10,7 +10,7 @@
 #include <map>
 #include <string>
 
-#define CONFIG_FILE "../../Resources/config.txt"
+#define CONFIG_FILE "../../resources/config.txt"
 
 typedef sf::Keyboard::Key Key;
 

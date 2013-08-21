@@ -12,7 +12,9 @@ protected:
   std::map<std::string, T > mData;
   ResourceManager () { //std::cout<<"ResourceManager created "<<std::endl; 
 }
-  ~ResourceManager () { }
+  ~ResourceManager () { 
+    mData.clear();
+  }
   /**
      Add an element to data
    */
@@ -21,12 +23,7 @@ protected:
     //std::cout<< "adding resource "<<s<<std::endl;
     mData.insert( std::pair<std::string, T>(n, t) );
   }
-  /**
-     Remove an element from data, given its name (key)
-   */
-  virtual void remove(const std::string& n){
-    mData.erase(n);
-  }
+
 
 
 public:  
@@ -41,10 +38,13 @@ public:
     if(mData.find(n) == mData.end() ){
       //std::cout<< "not present"<<std::endl;
       if( t.loadFromFile(n) ){
+	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
 	add(n, t);
 	return &mData[n];
-      }else
+      }else{
+	std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
 	return NULL;
+      }
     }
     return &mData[n];
   }
@@ -64,6 +64,13 @@ public:
     return "ResourceManager"; 
   };
 
+  /**
+     Remove an element from data, given its name (key)
+   */
+  virtual void remove(const std::string& n){
+    std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
+    mData.erase(n);
+  }
 };
 
 #endif

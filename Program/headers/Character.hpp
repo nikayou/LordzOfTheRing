@@ -4,6 +4,9 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
+
+#define CHAR_DIR "../../resources/characters/"
+
 #include <string>
 
 /** Defines all kinds of resistances/strengths that a character can deploy. **/

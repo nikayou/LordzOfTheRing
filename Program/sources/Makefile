@@ -3,9 +3,9 @@ PROGRAM=MyBadPunchOut
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
 LIBREP=$(HOME)/.SFML2
-CC=g++
+CC=g++ -std=c++0x
 CPPFLAGS=
-CFLAGS=-Wall
+CFLAGS=-Wall -g
 IFLAGS= -I$(LIBREP)/include
 LDFLAGS=-L$(LIBREP)/lib -lsfml-graphics -lsfml-window -lsfml-system
 

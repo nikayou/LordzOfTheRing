@@ -5,6 +5,7 @@
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Game.hpp"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -67,11 +68,12 @@ std::string Character::toString(){
   return oss.str();
 }
 
-bool Character::loadFromFile(const std::string& path){
+bool Character::loadFromFile(const std::string& f){
   //std::cout<<"load from file (CharacterManager)"<<std::endl;
   //std::cout<< "Loading Character "<<path<<std::endl;
   std::ifstream ifs;
-  ifs.open(path.c_str() );
+  std::string file = CHAR_DIR + f;
+  ifs.open(file.c_str() );
   if( !ifs.good() ){
     return false;
   }
@@ -117,7 +119,7 @@ bool Character::loadFromFile(const std::string& path){
     m_stamina = c.getStamina();
     return true;
   }
-  std::cout <<"Error : incomplete character file \""<< path<<"\""<< std::endl;
+  std::cout <<"Error : incomplete character file \""<< file<<"\""<< std::endl;
   return false;
 }
 

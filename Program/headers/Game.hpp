@@ -24,8 +24,8 @@ class Game : public Singleton<Game>{
   friend class Singleton<Game>;
 
 private:
-  Game() { }
-  ~Game(){ }
+  Game() { sf::RenderWindow r; m_window = &r; };
+  ~Game(){ };
   sf::RenderWindow * m_window;
   GameState::state m_state;
   Match * m_match;
@@ -41,6 +41,9 @@ public:
   void loopProfileMenu();
   void loopCharacterSelect();
   void loopMatch();
+  void displayGauges();
+  void displayClock();
+  void displayCharacters();
   void displayMatch();
   void pause();
   void close();

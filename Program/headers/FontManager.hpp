@@ -7,6 +7,7 @@
 
 #include "ResourceManager.hpp"
 
+#define FONT_DIR "../../resources/"
 #define DEFAULT_FONT "ArialPixel.TTF"
 
 

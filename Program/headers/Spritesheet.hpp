@@ -5,6 +5,16 @@
    -list of animations (indexes refering to sprites)
  */
 
+#ifndef SPRITESHEET_HPP
+#define SPRITESHEET_HPP
+
+
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include <string>
+#include <vector>
+
 class Sprite{
 private:
   sf::Vector2u m_position;
@@ -12,7 +22,10 @@ private:
   sf::Vector2u m_hotpoint;
 
 public:
-  Sprite(const unsigned short&, const unsigned short&, const unsigned short&, const unsigned short&, const unsigned short& = 0, const unsigned & = 0);
+  Sprite(){ };
+  Sprite(const unsigned short&, const unsigned short&, 
+	 const unsigned short&, const unsigned short&, 
+	 const unsigned short& = 0, const unsigned short& = 0);
   sf::Vector2u getPosition(){
     return m_position;
   };
@@ -47,12 +60,17 @@ private:
   std::vector<unsigned short> m_indexes;
 
 public:
-  Animation();
+  Animation(){};
   unsigned short get(const unsigned int& i){
     return m_indexes[i];
   };
+  void add(const unsigned short& v){
+    m_indexes.push_back(v);
+  };
 
 };
+
+#define SPRITESHEET_DIR "../../resources/spritesheets/"
 
 class Spritesheet{
 private:
@@ -61,15 +79,19 @@ private:
   sf::Texture * m_texture;
 
 public:
+  Spritesheet(){ };
   Spritesheet(const std::string& n){
     loadFromFile(n);
   };
-  void loadFromFile(const std::string& n);
+  bool loadFromFile(const std::string& n);
   std::vector<Sprite> getSprites(){
     return m_sprites;
   };
-  Sprite getSprite(const unsigned int& i){
-    return m_sprites[i];
+  Sprite * getSprite(const unsigned int& i){
+    if(i >= m_sprites.size() )
+      return &m_sprites[i];
+    else
+      return NULL;
   };
   std::vector<Animation> getAnimations(){
     return m_animations;
@@ -82,3 +104,5 @@ public:
   };
 
 };
+
+#endif
