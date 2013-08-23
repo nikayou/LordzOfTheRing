@@ -1,7 +1,6 @@
 #ifndef RESOURCEMANAGER_HPP
 #define RESOURCEMANAGER_HPP
 
-#include <iostream> //delete
 #include <map>
 #include <string>
 
@@ -10,7 +9,7 @@ class ResourceManager
 {
 protected:
   std::map<std::string, T > mData;
-  ResourceManager () { //std::cout<<"ResourceManager created "<<std::endl; 
+  ResourceManager () { 
 }
   ~ResourceManager () { 
     mData.clear();
@@ -20,7 +19,6 @@ protected:
    */
   virtual void add(const std::string& s, const T& t){
     std::string n = s;
-    //std::cout<< "adding resource "<<s<<std::endl;
     mData.insert( std::pair<std::string, T>(n, t) );
   }
 
@@ -38,11 +36,11 @@ public:
     if(mData.find(n) == mData.end() ){
       //std::cout<< "not present"<<std::endl;
       if( t.loadFromFile(n) ){
-	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
+	//	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
 	add(n, t);
 	return &mData[n];
       }else{
-	std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
+	// std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
 	return NULL;
       }
     }
@@ -68,7 +66,7 @@ public:
      Remove an element from data, given its name (key)
    */
   virtual void remove(const std::string& n){
-    std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
+    //std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
     mData.erase(n);
   }
 };

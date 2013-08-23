@@ -154,7 +154,6 @@ void Config::setAction(const Key& k, const action& a){
   m_mapping.insert( std::pair<Key, action>(k, a) );
 }
 
-//TODO
 std::string Config::toString(){
   std::ostringstream oss;
   oss << "Resolution : "<< m_windowWidth <<"x"<< m_windowHeight<< std::endl;
@@ -164,7 +163,6 @@ std::string Config::toString(){
   for (it = m_mapping.begin(); it != m_mapping.end(); ++it) {
     oss << (int)it->first << " : ";
     oss << Action::actionToString(it->second);
-    //oss << " ("<< (unsigned int)Action::getAction(it->second) <<")";
     oss << std::endl;
     
   }

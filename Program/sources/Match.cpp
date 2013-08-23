@@ -1,7 +1,6 @@
 #include "../headers/Match.hpp"
 #include "../headers/Game.hpp"
 
-#include <cstdio> //delete
 #include <sstream>
 /**
    Here we define a match : two players and gaming options 
@@ -53,7 +52,6 @@ void Match::checkHits(){
 }
 
 void Match::KO(const unsigned short& p){
-  printf("Player %d is KO.\n", p);
   Game::getInstance()->setState(GameState::CHARACTER_SELECT);
 }
 

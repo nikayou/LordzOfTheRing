@@ -12,8 +12,6 @@
 #define BASE_STRIKE 8
 #define NICE_STRIKE 12
 
-//typedef Player * [2] Players;
-
 namespace MatchOptions{
   typedef enum{ 
     KO, //only KOs count in victory

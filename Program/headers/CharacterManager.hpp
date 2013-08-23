@@ -1,8 +1,6 @@
 #ifndef CHARACTERMANAGER_HPP
 #define CHARACTERMANAGER_HPP
 
-
-#include <iostream> //delete
 #include <string>
 #include "../headers/CharacterManager.hpp"
 #include "../headers/Character.hpp"
@@ -23,7 +21,7 @@ class CharacterManager: public ResourceManager<Character>, public Singleton<Char
   //friend class ResourceManager<Character>;
 
 public:
-  CharacterManager(){ //std::cout<<"Character manager created" <<std::endl; 
+  CharacterManager(){ 
   };
   
 

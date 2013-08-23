@@ -3,7 +3,6 @@
  */
 #include "../headers/Player.hpp"
 
-#include <cstdio> //delete
 #include <sstream>
 #include <string>
 

@@ -7,7 +7,7 @@
 
 #include <cstring>
 #include <fstream>
-#include <iostream>
+#include <iostream> //delete or replace by error handling
 #include <sstream>
 #include <string>
 
@@ -69,8 +69,6 @@ std::string Character::toString(){
 }
 
 bool Character::loadFromFile(const std::string& f){
-  //std::cout<<"load from file (CharacterManager)"<<std::endl;
-  //std::cout<< "Loading Character "<<path<<std::endl;
   std::ifstream ifs;
   std::string file = CHAR_DIR + f;
   ifs.open(file.c_str() );

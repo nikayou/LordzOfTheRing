@@ -8,7 +8,6 @@
 #include "../headers/Spritesheet.hpp"
 #include "../headers/Misc.hpp"
 
-#include <iostream> //delete ?
 #include <fstream>
 #include <string>
 #include <vector>
@@ -41,7 +40,7 @@ bool Spritesheet::loadFromFile(const std::string& f){
     if( line[0] == '#' )
       continue;
     if(!maxsprt && contains(line, "maxsprt=") ){
-      m_sprites.resize(extractInt(line)+1 ); //+1 beacause the max indice has to be accessed
+      m_sprites.resize(extractInt(line)+1 ); //+1 because the max indice has to be accessed
       maxsprt = true;
       continue;
     }

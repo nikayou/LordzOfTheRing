@@ -6,7 +6,6 @@ Here we define a played character : they are like characters, but gets additiona
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
 
-#include <cstdio> //delete
 #include <sstream>
 #include <string>
 #include <vector>
@@ -77,7 +76,6 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
 }
 
 void CharacterPlayed::manage(){
-  //printf("Managing : action = %s\n", Action::typeToString(m_action).c_str() );
   Action::Framing f;
   switch(m_action){
   case Action::ATTACK_LEFT :

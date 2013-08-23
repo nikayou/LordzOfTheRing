@@ -9,8 +9,6 @@ used to tell, for instance : "the action has began, but not performed yet".
 The framing tells how many times does the "phase" of the action lasts
 */
 
-#include <cstdio> //DELETE
-
 #include "../headers/Action.hpp"
 
 #include <sstream>
