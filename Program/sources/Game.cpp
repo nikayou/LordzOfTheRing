@@ -270,7 +270,7 @@ void Game::loopProfileMenu(){
 
 void Game::loopCharacterSelect(){
   std::cout<<"Character selection"<<std::endl;
-  CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
+  CharacterPlayed c1(* (CharacterManager::getInstance()->get("vziggo.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
@@ -393,6 +393,7 @@ void Game::displayCharacters(){
   sf::Texture * t;
   //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
   std::string file = "characters/";
+  // character 2
   unsigned int frame = getMatch()->getCharacter2()->getFrame();
   file += getMatch()->getCharacter2()->getBasename();
   file += "_front.png";
@@ -401,17 +402,35 @@ void Game::displayCharacters(){
   file += "_front.sprt";
   ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
-  s.setPosition( 400, 300  );
+  s.setPosition( 400, 400  );
   unsigned short idSprite = ss->getAnimation(getMatch()->getCharacter2()->getAction() ).get(getMatch()->getCharacter2()->getFrame() ); 
   Sprite * sprt = ss->getSprite(idSprite);
   std::cout<<"id : "<<idSprite<<" sprt : "<<sprt<<std::endl;
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
     s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
+    s.scale(2.0, 2.0);
     m_window->draw(s);
-    
   }
-
+  // character 2
+  frame = getMatch()->getCharacter1()->getFrame();
+  file = "characters/";
+  file += getMatch()->getCharacter1()->getBasename();
+  file += "_back.png";
+  t = TextureManager::getInstance()->get(file)->getTexture();
+  file = getMatch()->getCharacter1()->getBasename();
+  file += "_back.sprt";
+  ss = SpritesheetManager::getInstance()->get(file);
+  s.setTexture(*t);
+  s.setPosition( 400, 600 );
+  idSprite = ss->getAnimation(getMatch()->getCharacter1()->getAction() ).get(getMatch()->getCharacter1()->getFrame() );
+  sprt = ss->getSprite(idSprite);
+  if(sprt){
+    s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
+    s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
+    s.scale(1.25, 1.25);
+    m_window->draw(s);
+  }
 }
 
 void Game::displayMatch(){

@@ -138,11 +138,11 @@ namespace Action{
 
   Framing initFramingAM(){
     Framing _f;
-    _f.nb_frames = 11;
-    _f.change_state = 5;
-    _f.return_state = 6;
+    _f.nb_frames = 12;
+    _f.change_state = 8;
+    _f.return_state = 9;
     _f.state = ATTACKING;
-    //preparing -3
+    //preparing -
     //striking -3
     //pausing -3
     //recovering -2
