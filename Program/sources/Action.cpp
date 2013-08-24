@@ -76,6 +76,33 @@ namespace Action{
   }
 
 
+  //returns the action associated with the string given
+  Action::Type stringToType(const std::string& s){
+    if(s.compare("stand") == 0)
+      return NONE;
+    if(s.compare("punchL") == 0 || s.compare("attackL") == 0)
+      return ATTACK_LEFT;
+    if(s.compare("punchR") == 0 || s.compare("attackR") == 0)
+      return ATTACK_RIGHT;
+    if(s.compare("punchM") == 0 || s.compare("attackM") == 0)
+      return ATTACK_MIDDLE;
+    if(s.compare("dodgeL") == 0)
+      return DODGE_LEFT;
+    if(s.compare("dodgeR") == 0)
+      return DODGE_RIGHT;
+    if(s.compare("dodgeM") == 0)
+      return DODGE_MIDDLE;
+    if(s.compare("stroke") == 0)
+      return STROKE;
+    if(s.compare("ko") == 0)
+      return KO;
+    if(s.compare("happy") == 0)
+      return HAPPY;
+    if(s.compare("raising") == 0)
+      return RAISING;
+    return UNKNOWN;
+  }
+
 
   // Here begin all the framing stuff, for synchro of actions (and animations)
 
@@ -171,5 +198,25 @@ namespace Action{
     return _f;
   }
 
-
+  /*
+  Framing * getFraming(const std::string& s){
+    if(s.compare("stand") == 0)
+      return &(Framing_None);
+    if(s.compare("punchL") == 0)
+      return &(Framing_AttackL);
+    if(s.compare("punchR") == 0)
+      return &(Framing_AttackR);
+    if(s.compare("punchM") == 0)
+      return &(Framing_AttackM);
+    if(s.compare("dodgeL") == 0)
+      return &(Framing_DodgeL);
+    if(s.compare("dodgeM") == 0)
+      return &(Framing_DodgeM);
+    if(s.compare("dodgeR") == 0)
+      return &(Framing_DodgeR);
+    if(s.compare("stroke") == 0)
+      return &(Framing_Stroke);
+    return NULL;
+  };
+  */
 }

@@ -52,6 +52,7 @@ public:
     m_character->setResistance( c.getResistance() );
     m_character->setAttack( c.getAttack() );
     m_character->setStamina( c.getStamina() );
+    m_character->setBasename( c.getBasename() );
   };
   //others
   void resetPoints(){

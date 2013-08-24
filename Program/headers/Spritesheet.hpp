@@ -8,10 +8,12 @@
 #ifndef SPRITESHEET_HPP
 #define SPRITESHEET_HPP
 
+#include "../headers/Action.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -75,7 +77,7 @@ public:
 class Spritesheet{
 private:
   std::vector<Sprite> m_sprites;
-  std::vector<Animation> m_animations;
+  std::map<Action::Type, Animation> m_animations;
   sf::Texture * m_texture;
 
 public:
@@ -93,10 +95,10 @@ public:
     else
       return NULL;
   };
-  std::vector<Animation> getAnimations(){
+  std::map<Action::Type, Animation> getAnimations(){
     return m_animations;
   };
-  Animation getAnimation(const unsigned int& i){
+  Animation getAnimation(const Action::Type& i){
     return m_animations[i];
   };
   sf::Texture * getTexture(){

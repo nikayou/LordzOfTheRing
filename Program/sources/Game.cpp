@@ -270,13 +270,10 @@ void Game::loopProfileMenu(){
 
 void Game::loopCharacterSelect(){
   std::cout<<"Character selection"<<std::endl;
-  //printf("Loading characters for %p (%p) and %p (%p)\n", getMatch()->getPlayer1(), getMatch()->getPlayer1()->getCharacter(), getMatch()->getPlayer2(), getMatch()->getPlayer2()->getCharacter() );
-  CharacterPlayed c1(* (CharacterManager::getInstance()->get("A. V. Rage.chara") )  );
-  CharacterPlayed c2(* (CharacterManager::getInstance()->get("V. Ziggo.chara") )  );
-  //printf("Character loaded %p & %p\n", &c1, &c2);
+  CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
+  CharacterPlayed c2(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
-  //printf("Characters defined\n");
   setState(GameState::MATCH);
   loopMatch();
 
@@ -373,7 +370,6 @@ void Game::displayClock(){
   time = getMatch()->getTimePerRound();
   if(time > 0){ // if time is infinity, we are not displaying time
     //get time remaining
-    printf("time remaining : %d -> %d_%d_%d\n", time, time/100, time%100/10, time %10);   time -= getClock().getElapsedTime().asSeconds();
     //displaying 100'
     s.setTextureRect(sf::IntRect(128+(28*(time/100) ), 80, 28, 36) );
     s.setPosition(width/2-64+16, 10+ 14);
@@ -393,11 +389,24 @@ void Game::displayClock(){
 void Game::displayCharacters(){
   float width = Config::getInstance()->getWindowWidth();
   sf::Sprite s;
-  //displaying players' sprites
-  std::string p = "characters/";
-  p += getMatch()->getCharacter1()->getName() + "_front.png";
-  s.setTextureRect(sf::IntRect(0,0, 150, 380) );
-  //s.setTexture(TextureManager::getInstance()->get(p)->getTexture() );
+  Spritesheet ss;
+  sf::Texture * t;
+  //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
+  std::string file = "characters/";
+  unsigned int frame = getMatch()->getCharacter2()->getFrame();
+  file += getMatch()->getCharacter2()->getBasename();
+  file += "_front.png";
+  t = TextureManager::getInstance()->get(file)->getTexture();
+  //s.setTexture(*t);
+  file = getMatch()->getCharacter2()->getBasename();
+  file += ".sprt";
+  //ss = SpritesheetManager::getInstance()->get(file);
+  s.setTexture(*t);
+  s.setPosition( 400, 300  );
+  /*unsigned short idSprite = ss.getAnimation(getMatch()->getCharacter2()->getAction() )[getMatch()->getCharacter2()->getFrame() ]; 
+  s.setTextureRect(sf::IntRect(posX, posY, 150, 380) );
+  s.setCenter(sf::Vector2i( hotX, hotY ) );*/
+  
 }
 
 void Game::displayMatch(){
@@ -441,8 +450,6 @@ void Game::close(){
 
 int main(){
   Game::getInstance()->init();
-  //sf::Vector2u v =  SpritesheetManager::getInstance()->get("A_back.sprt")->getSprite(57)->getHotpoint();
-  //std::cout<<"vérif : 3 = "<<v.x<<","<<v.y<<std::endl;
   return 0;
 }
 

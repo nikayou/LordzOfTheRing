@@ -31,6 +31,7 @@ CharacterPlayed::CharacterPlayed(
 
 CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
   m_name = c.getName();
+  m_basename = c.getBasename();
   m_health = c.getHealth();
   m_resistance = c.getResistance();
   m_attack = c.getAttack();
@@ -43,6 +44,7 @@ CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
 
 CharacterPlayed::CharacterPlayed(const Character& c){
   m_name = c.getName();
+  m_basename = c.getBasename();
   m_health = c.getHealth();
   m_resistance = c.getResistance();
   m_attack = c.getAttack();

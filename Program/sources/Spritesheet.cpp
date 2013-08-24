@@ -6,9 +6,12 @@
 */
 
 #include "../headers/Spritesheet.hpp"
+#include "../headers/Action.hpp"
 #include "../headers/Misc.hpp"
 
+#include <iostream> //delete
 #include <fstream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -34,19 +37,28 @@ bool Spritesheet::loadFromFile(const std::string& f){
     return false;
   }
   std::string line = "";
-  bool maxsprt = false, nbanim = false;
+  unsigned int nbanim;
+  bool maxsprt = false, boolnbanim = false, width = false, height = false;
   while( !ifs.eof() ){
     getline(ifs, line);
     if( line[0] == '#' )
       continue;
+    if(!width && contains(line, "width") ){
+      width = true;
+      continue;
+    }
+    if(!height && contains(line, "height") ){
+      height = true;
+      continue;
+    }
     if(!maxsprt && contains(line, "maxsprt=") ){
       m_sprites.resize(extractInt(line)+1 ); //+1 because the max indice has to be accessed
       maxsprt = true;
       continue;
     }
-    if(!nbanim && contains(line, "nbanim=") ){
-      m_animations.resize(extractInt(line) );
-      nbanim = true;
+    if(!boolnbanim && contains(line, "nbanim=") ){
+      nbanim = extractInt(line);
+      boolnbanim = true;
       continue;
     }
     if(contains(line, "s:") ){
@@ -57,7 +69,6 @@ bool Spritesheet::loadFromFile(const std::string& f){
       px = std::stoi(line, &separator);
       py = std::stoi(line.substr(separator+1) );
       getline(ifs, line); 
-     
       w = std::stoi(line, &separator);
       h = std::stoi(line.substr(separator+1) );
       getline(ifs, line);
@@ -66,6 +77,20 @@ bool Spritesheet::loadFromFile(const std::string& f){
 
       m_sprites[id] = Sprite(px, py, w, h, hx, hy);
       continue;
+    }
+    //otherwise, we can have just an animation
+    unsigned int anim_count = 0;
+    while(anim_count < nbanim){
+      if(line[0] == '#')
+	continue;
+      Action::Type t = Action::stringToType(line);
+      getline(ifs, line);
+      while(line.compare("") != 0 ){
+	m_animations[t].add( stoi(line) );
+	line = cutFrom(line, '-');
+      }
+      anim_count++;
+      getline(ifs, line);
     }
   }
   return true;

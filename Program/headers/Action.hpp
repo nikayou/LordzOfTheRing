@@ -21,7 +21,7 @@ typedef byte action;
 /** An action can be described in one byte:
     ABCDEFGH with
     A = 0-1 for action's maker (see typedef enum subject)
-    B= 0-1 for action's target (optionnal, see enum subject)
+    B = 0-1 for action's target (optionnal, see enum subject)
     CDEFGH = 000000-111111 for action term (up to 64 actions), see enum Type.
 */
 
@@ -38,6 +38,7 @@ namespace Action{
     STROKE,
     KO,
     HAPPY,
+    RAISING,
     PAUSE,
     ACTIONS_COUNT
   } Type; //all kind of actions, from the input to the end
@@ -73,6 +74,9 @@ namespace Action{
   //returns a string in format ACTION
   std::string typeToString(const Action::Type&);
 
+  //returns the action associated with the string given
+  Action::Type stringToType(const std::string&);
+
   // Here begin all the framing stuff, for synchro of actions (and animations)
   
   typedef enum{
@@ -87,7 +91,6 @@ namespace Action{
     unsigned short change_state; //index of the frame where the state changes (or not if >= nb_frames)
     unsigned short return_state; //index where the situation gets back to normal
     State state;
-    //animation
   } Framing;
 
   extern Framing Framing_None;
@@ -106,6 +109,7 @@ namespace Action{
   Framing initFramingDM();
   Framing initFramingDR();
   Framing initFramingStroke();
+  //Framing * getFraming(const std::string&);
 }
 
 

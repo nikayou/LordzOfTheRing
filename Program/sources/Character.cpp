@@ -53,6 +53,7 @@ Character::Character(
   m_resistance = r;
   m_attack = a;
   m_stamina = sta;
+  m_basename = n;
 }
 
 Character::~Character(){}
@@ -76,6 +77,9 @@ bool Character::loadFromFile(const std::string& f){
     return false;
   }
   Character c;
+  std::cout<<"before basenaming"<<std::endl;
+  c.m_basename = f.substr(0, f.find_first_of('.') ) ;
+  std::cout<<"after basenaming : "<<c.m_basename<<std::endl;
   bool defn = false, defh = false, defr = false, defa = false, defs = false;
   std::string line = "";
   while( !ifs.eof() ){
@@ -115,6 +119,8 @@ bool Character::loadFromFile(const std::string& f){
     m_resistance = c.getResistance();
     m_attack = c.getAttack();
     m_stamina = c.getStamina();
+    m_basename = c.getBasename();
+    std::cout<<"Complete charater file : "<< getBasename() <<std::endl;
     return true;
   }
   std::cout <<"Error : incomplete character file \""<< file<<"\""<< std::endl;

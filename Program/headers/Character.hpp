@@ -28,11 +28,11 @@ class Character{
 
 protected:
   std::string m_name;
+  std::string m_basename; //basename for related files searching
   unsigned short m_health;
   Stats::stats m_resistance; //amount of hits he can get before stunning
   Stats::stats m_attack; //Light punches strenght
   Stats::stats m_stamina; //recovery time when K.O
-  
 
 public:
   //constructors
@@ -58,6 +58,9 @@ public:
   Stats::stats getStamina() const{ 
     return m_stamina; 
   };
+  std::string getBasename() const{
+    return m_basename;
+  };
   //setters
   void setName(const std::string& value){  
     m_name = value; 
@@ -74,6 +77,9 @@ public:
   void setStamina(const Stats::stats& value){  
     m_stamina = value; 
   };
+  void setBasename(const std::string& value){
+    m_basename = value;
+    };
   //others
   static std::string getClass(){
     return "Character";
