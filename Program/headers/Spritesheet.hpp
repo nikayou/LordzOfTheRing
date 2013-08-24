@@ -63,7 +63,10 @@ private:
 
 public:
   Animation(){};
-  unsigned short get(const unsigned int& i){
+  std::vector<unsigned short> getIndexes() const{
+    return m_indexes;
+  };
+  unsigned short get(const unsigned int& i) const{
     return m_indexes[i];
   };
   void add(const unsigned short& v){
@@ -78,7 +81,6 @@ class Spritesheet{
 private:
   std::vector<Sprite> m_sprites;
   std::map<Action::Type, Animation> m_animations;
-  sf::Texture * m_texture;
 
 public:
   Spritesheet(){ };
@@ -90,7 +92,7 @@ public:
     return m_sprites;
   };
   Sprite * getSprite(const unsigned int& i){
-    if(i >= m_sprites.size() )
+    if(i < m_sprites.size() )
       return &m_sprites[i];
     else
       return NULL;
@@ -100,9 +102,6 @@ public:
   };
   Animation getAnimation(const Action::Type& i){
     return m_animations[i];
-  };
-  sf::Texture * getTexture(){
-    return m_texture;
   };
 
 };

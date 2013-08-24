@@ -389,7 +389,7 @@ void Game::displayClock(){
 void Game::displayCharacters(){
   float width = Config::getInstance()->getWindowWidth();
   sf::Sprite s;
-  Spritesheet ss;
+  Spritesheet * ss;
   sf::Texture * t;
   //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
   std::string file = "characters/";
@@ -397,16 +397,21 @@ void Game::displayCharacters(){
   file += getMatch()->getCharacter2()->getBasename();
   file += "_front.png";
   t = TextureManager::getInstance()->get(file)->getTexture();
-  //s.setTexture(*t);
   file = getMatch()->getCharacter2()->getBasename();
-  file += ".sprt";
-  //ss = SpritesheetManager::getInstance()->get(file);
+  file += "_front.sprt";
+  ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
   s.setPosition( 400, 300  );
-  /*unsigned short idSprite = ss.getAnimation(getMatch()->getCharacter2()->getAction() )[getMatch()->getCharacter2()->getFrame() ]; 
-  s.setTextureRect(sf::IntRect(posX, posY, 150, 380) );
-  s.setCenter(sf::Vector2i( hotX, hotY ) );*/
-  
+  unsigned short idSprite = ss->getAnimation(getMatch()->getCharacter2()->getAction() ).get(getMatch()->getCharacter2()->getFrame() ); 
+  Sprite * sprt = ss->getSprite(idSprite);
+  std::cout<<"id : "<<idSprite<<" sprt : "<<sprt<<std::endl;
+  if(sprt){
+    s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
+    s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
+    m_window->draw(s);
+    
+  }
+
 }
 
 void Game::displayMatch(){

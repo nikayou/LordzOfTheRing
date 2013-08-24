@@ -1,6 +1,7 @@
 #ifndef RESOURCEMANAGER_HPP
 #define RESOURCEMANAGER_HPP
 
+#include <iostream>
 #include <map>
 #include <string>
 
@@ -36,11 +37,11 @@ public:
     if(mData.find(n) == mData.end() ){
       //std::cout<< "not present"<<std::endl;
       if( t.loadFromFile(n) ){
-	//	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
+		std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
 	add(n, t);
 	return &mData[n];
       }else{
-	// std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
+	 std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
 	return NULL;
       }
     }

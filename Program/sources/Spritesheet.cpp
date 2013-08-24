@@ -93,5 +93,6 @@ bool Spritesheet::loadFromFile(const std::string& f){
       getline(ifs, line);
     }
   }
+  std::cout<<"loaded spritesheet "<<this<<std::endl;
   return true;
 }
