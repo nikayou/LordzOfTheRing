@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #My Bad Punch-Out
 
 ##Presentation
@@ -22,3 +23,9 @@ The game is developed in C++ language with SFML. All graphics will be in 2D, and
 *Improvements on details
 *Better graphics/sounds
 *(Netplay ?)
+=======
+MyBadPunchOut
+=============
+
+A simple fighting game in C++ based on SFML
+>>>>>>> 29e961c5614ac54889339cfae8ee5ab4ec10b21e
