@@ -39,6 +39,8 @@ namespace Action{
     KO,
     HAPPY,
     RAISING,
+    STUN,
+    BREATHING,
     PAUSE,
     ACTIONS_COUNT
   } Type; //all kind of actions, from the input to the end
@@ -113,6 +115,8 @@ namespace Action{
   Framing initFramingStroke();
   Framing initFramingKO();
   Framing initFramingRaising();
+  Framing initFramingStun();
+  Framing initFramingBreathing();
   //Framing * getFraming(const std::string&);
 }
 

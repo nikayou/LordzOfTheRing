@@ -18,6 +18,8 @@ protected:
   Action::Type m_action; //what is he doing
   unsigned short m_frame; //in which point of the action he is
   Action::State m_state; //the beggining of the real act (hit of a strike)
+  unsigned short m_currentStamina; //current stamina
+  unsigned short m_receivedHits; //the number of consecutive hits taken
 
 public:
   //constructors
@@ -25,12 +27,15 @@ public:
 		  const unsigned short& = 100, 
 		  const Stats::stats& = Stats::MEDIUM, 
 		  const Stats::stats& = Stats::MEDIUM, 
-		  const Stats::stats& = Stats::MEDIUM);
+		  const unsigned short& = 6);
   CharacterPlayed(const CharacterPlayed& c);
   CharacterPlayed(const Character& c);
   //getters
   unsigned short getCurrentHealth() const{
     return m_currentHealth;
+  };
+  unsigned short getCurrentStamina() const{
+    return m_currentStamina;
   };
   Action::Type getAction() const{
     return m_action;
@@ -56,6 +61,8 @@ public:
     m_state = v;
   };
   //others
+  void takeHit(const unsigned short&);
+  bool doHit();
   void checkActionEnd(const Action::Framing& t);
   void addFrame(const Action::Framing&);
   unsigned short loseHealth(const unsigned short&);

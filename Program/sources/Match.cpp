@@ -29,9 +29,9 @@ void Match::manage(){
 
 void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
-    getCharacter(b)->setAction(Action::STROKE);
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE:BASE_STRIKE;
-    getCharacter(b)->loseHealth(hit);
+    getCharacter(b)->takeHit(hit);
+    getCharacter(a)->doHit();
     if( checkKO(b) ){
       getCharacter(b)->setAction(Action::KO);
       getCharacter(a)->setAction(Action::HAPPY);

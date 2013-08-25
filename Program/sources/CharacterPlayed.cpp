@@ -16,13 +16,13 @@ CharacterPlayed::CharacterPlayed(
 				 const unsigned short& h, 
 				 const Stats::stats& r, 
 				 const Stats::stats& a, 
-				 const Stats::stats& sta): Character(n, h, r, a, sta){
+				 const unsigned short& sta): Character(n, h, r, a, sta){
   m_name = n;
   m_health = h;
   m_resistance = r;
   m_attack = a;
   m_stamina = sta;
-
+  m_currentStamina = sta;
   m_currentHealth = h;
   m_action = Action::NONE;
   m_frame = 0;
@@ -36,6 +36,7 @@ CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
   m_resistance = c.getResistance();
   m_attack = c.getAttack();
   m_stamina = c.getStamina();
+  m_currentStamina = m_stamina;
   m_currentHealth = c.getCurrentHealth();
   m_action = c.getAction();
   m_frame = c.getFrame();
@@ -50,6 +51,7 @@ CharacterPlayed::CharacterPlayed(const Character& c){
   m_attack = c.getAttack();
   m_stamina = c.getStamina();
   m_currentHealth = m_health;
+  m_currentStamina = m_stamina;
   m_action = Action::NONE;
   m_frame = 0;
   m_state = Action::NORMAL;
@@ -115,6 +117,21 @@ void CharacterPlayed::manage(){
 
   addFrame(f);
   checkActionEnd(f);
+}
+
+void CharacterPlayed::takeHit(const unsigned short& dmg){
+  setAction(Action::STROKE);
+  loseHealth(dmg);
+  m_receivedHits++;
+  if(m_receivedHits > m_resistance)
+    setAction(Action::STUN);
+}
+
+bool CharacterPlayed::doHit(){
+  if(m_stamina < 0) 
+    return false;
+  m_stamina -= 1;
+  return true;
 }
 
 void CharacterPlayed::checkActionEnd(const Action::Framing& f){

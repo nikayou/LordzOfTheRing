@@ -69,6 +69,8 @@ namespace Action{
     case STROKE: return "Stroke"; break;
     case KO: return "KO"; break;
     case HAPPY: return "Happy"; break;
+    case STUN: return "Stun"; break;
+    case BREATHING: return "Breathing"; break;
     case PAUSE: return "Pause"; break;
     default: return "Unknown"; break;
     }
@@ -96,6 +98,10 @@ namespace Action{
       return STROKE;
     if(s.compare("ko") == 0 || s.compare("KO") )
       return KO;
+    if(s.compare("stun") == 0 )
+      return STUN;
+    if(s.compare("breathing") == 0)
+      return BREATHING;
     if(s.compare("happy") == 0)
       return HAPPY;
     if(s.compare("raising") == 0)
@@ -116,6 +122,9 @@ namespace Action{
   Framing Framing_Stroke = initFramingStroke();
   Framing Framing_KO = initFramingKO();
   Framing Framing_Raising = initFramingRaising();
+  Framing Framing_Stun = initFramingStun();
+  Framing Framing_Breathing = initFramingBreathing();
+
 
   Framing initFramingN(){ 
     Framing _f;
@@ -218,6 +227,24 @@ namespace Action{
     return _f;
   }
 
+  Framing initFramingStun(){
+    Framing _f;
+    _f.nb_frames = 17;
+    _f.change_state = 0;
+    _f.return_state = 17;
+    _f.state = NORMAL;
+    return _f;
+  }
+
+
+  Framing initFramingBreathing(){
+    Framing _f;
+    _f.nb_frames = 19;
+    _f.change_state = 0;
+    _f.return_state = 19;
+    _f.state = NORMAL;
+    return _f;
+  }
   /*
   Framing * getFraming(const std::string& s){
     if(s.compare("stand") == 0)

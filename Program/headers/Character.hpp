@@ -32,15 +32,15 @@ protected:
   unsigned short m_health;
   Stats::stats m_resistance; //amount of hits he can get before stunning
   Stats::stats m_attack; //Light punches strenght
-  Stats::stats m_stamina; //recovery time when K.O
+  unsigned short m_stamina; //number of hits/dodge he can do (1 hit = 2 dodges)
 
 public:
   //constructors
   Character(const std::string& = "Unknown",
-		     const unsigned short& = 100, 
-		     const Stats::stats& = Stats::MEDIUM, 
-		     const Stats::stats& = Stats::MEDIUM, 
-		     const Stats::stats& = Stats::MEDIUM);
+	    const unsigned short& = 100, 
+	    const Stats::stats& = Stats::MEDIUM, 
+	    const Stats::stats& = Stats::MEDIUM, 
+	    const unsigned short& = 6);
   ~Character();
   //getters
   std::string getName() const{ 
@@ -55,7 +55,7 @@ public:
   Stats::stats getAttack() const{
     return m_attack; 
   };
-  Stats::stats getStamina() const{ 
+  unsigned short getStamina() const{ 
     return m_stamina; 
   };
   std::string getBasename() const{
@@ -74,12 +74,12 @@ public:
   void setAttack(const Stats::stats& value){  
     m_attack = value; 
   };
-  void setStamina(const Stats::stats& value){  
+  void setStamina(const unsigned short& value){  
     m_stamina = value; 
   };
   void setBasename(const std::string& value){
     m_basename = value;
-    };
+  };
   //others
   static std::string getClass(){
     return "Character";

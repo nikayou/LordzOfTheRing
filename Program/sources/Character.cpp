@@ -47,7 +47,7 @@ Character::Character(
 		     const unsigned short& h, 
 		     const Stats::stats& r, 
 		     const Stats::stats& a, 
-		     const Stats::stats& sta){
+		     const unsigned short& sta){
   m_name = n;
   m_health = h;
   m_resistance = r;
