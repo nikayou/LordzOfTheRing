@@ -10,15 +10,7 @@
 #include <string>
 
 #define BASE_STRIKE 8
-#define NICE_STRIKE 12
-
-namespace MatchOptions{
-  typedef enum{ 
-    KO, //only KOs count in victory
-    POINTS, //only points count in victory
-    BOTH //points count, and KOs give points
-  } scoreType;
-}
+#define NICE_STRIKE 14
 
 class Match{
 
@@ -27,14 +19,12 @@ private:
   unsigned short m_timePerRound; //time (in seconds). 0 = infinity
   unsigned short m_roundsNumber; //number of rounds to play
   unsigned short m_currentRound; 
-  MatchOptions::scoreType m_type; 
 
 public:
   //constructors
   Match(Player * p1 = NULL, Player * p2 = NULL, 
 const unsigned short& = 150, 
-const unsigned short& = 3, 
-const MatchOptions::scoreType& = MatchOptions::KO
+const unsigned short& = 3
 );
   ~Match();
   //getters
@@ -46,9 +36,6 @@ const MatchOptions::scoreType& = MatchOptions::KO
   };
   unsigned short getCurrentRound() const{
     return m_currentRound;
-  };
-  MatchOptions::scoreType getType() const{
-    return m_type;
   };
   Player * getPlayer(const unsigned short& n) const{
     return m_players[n];
@@ -77,9 +64,6 @@ const MatchOptions::scoreType& = MatchOptions::KO
   };
   void setCurrentRound(const unsigned short& value){
     m_currentRound = (value >= m_roundsNumber)?m_roundsNumber:value;
-  };
-  void setType(const MatchOptions::scoreType& value){
-    m_timePerRound = value;
   };
   void setPlayer1(Player * value){
     m_players[0] = value;

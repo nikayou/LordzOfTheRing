@@ -7,7 +7,7 @@ CC=g++ -std=c++0x
 CPPFLAGS=
 CFLAGS=-Wall -g
 IFLAGS= -I$(LIBREP)/include
-LDFLAGS=-L$(LIBREP)/lib -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS=-L$(LIBREP)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 all: clean show $(PROGRAM)
 

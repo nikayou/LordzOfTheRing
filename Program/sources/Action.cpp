@@ -94,7 +94,7 @@ namespace Action{
       return DODGE_MIDDLE;
     if(s.compare("stroke") == 0)
       return STROKE;
-    if(s.compare("ko") == 0)
+    if(s.compare("ko") == 0 || s.compare("KO") )
       return KO;
     if(s.compare("happy") == 0)
       return HAPPY;
@@ -114,10 +114,12 @@ namespace Action{
   Framing Framing_DodgeM = initFramingDM();
   Framing Framing_DodgeR = initFramingDR();
   Framing Framing_Stroke = initFramingStroke();
+  Framing Framing_KO = initFramingKO();
+  Framing Framing_Raising = initFramingRaising();
 
   Framing initFramingN(){ 
     Framing _f;
-    _f.nb_frames = 4;
+    _f.nb_frames = 8;
     _f.change_state = -1;
     _f.return_state = -1;
     return _f;
@@ -194,6 +196,24 @@ namespace Action{
     _f.nb_frames = 3; //crying (2) - recovering (1)
     _f.change_state = 0;
     _f.return_state = 2;
+    _f.state = CRYING;
+    return _f;
+  }
+
+  Framing initFramingKO(){
+    Framing _f;
+    _f.nb_frames = 7;
+    _f.change_state = 0;
+    _f.return_state = -1;
+    _f.state = CRYING;
+    return _f;
+  }
+
+  Framing initFramingRaising(){
+    Framing _f;
+    _f.nb_frames = 26;
+    _f.change_state = 0;
+    _f.return_state = 26;
     _f.state = CRYING;
     return _f;
   }

@@ -30,6 +30,7 @@ private:
   GameState::state m_state;
   Match * m_match;
   sf::Clock m_clock;
+  sf::Time m_timer;
 
 public:
   void start();
@@ -40,12 +41,14 @@ public:
   void loopOptionsMenu();
   void loopProfileMenu();
   void loopCharacterSelect();
+  void loadMatch();
   void loopMatch();
+  void endMatch();
   void displayGauges();
   void displayClock();
   void displayCharacters();
   void displayMatch();
-  void pause();
+  void pause(const sf::Int64&);
   void close();
   //getters
   Match * getMatch() const{
@@ -53,6 +56,9 @@ public:
   };
   GameState::state getState() const{
     return m_state;
+  };
+  sf::Time getTimer() const{
+    return m_timer;
   };
   sf::Clock getClock() const{
     return m_clock;

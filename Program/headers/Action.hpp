@@ -101,6 +101,8 @@ namespace Action{
   extern Framing Framing_DodgeM;
   extern Framing Framing_DodgeR;
   extern Framing Framing_Stroke;
+  extern Framing Framing_KO;
+  extern Framing Framing_Raising;
   Framing initFramingN();
   Framing initFramingAL();
   Framing initFramingAM();
@@ -109,6 +111,8 @@ namespace Action{
   Framing initFramingDM();
   Framing initFramingDR();
   Framing initFramingStroke();
+  Framing initFramingKO();
+  Framing initFramingRaising();
   //Framing * getFraming(const std::string&);
 }
 

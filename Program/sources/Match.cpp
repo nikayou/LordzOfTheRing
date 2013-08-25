@@ -9,14 +9,12 @@
 
 Match::Match(Player * p1, Player * p2, 
 	     const unsigned short& t,
-	     const unsigned short& r,
-	     const MatchOptions::scoreType& st){
+	     const unsigned short& r){
   m_players[0] = p1;
   m_players[1] = p2;
   m_timePerRound = t;
   m_roundsNumber = r;
   m_currentRound = 0;
-  m_type = st;
 }
 
 Match::~Match(){
@@ -52,7 +50,12 @@ void Match::checkHits(){
 }
 
 void Match::KO(const unsigned short& p){
-  Game::getInstance()->setState(GameState::CHARACTER_SELECT);
+  //Game::getInstance()->setState(GameState::CHARACTER_SELECT);
+  getCharacter(p)->setAction(Action::KO);
+  if(p == 0)
+    getCharacter(1)->setAction(Action::HAPPY);
+  else
+    getCharacter(0)->setAction(Action::HAPPY);
 }
 
 bool Match::checkHit(const unsigned short& a, const unsigned short& b){
@@ -81,6 +84,5 @@ std::string Match::toString(){
   oss<<"Match "<<m_players[0]->getName()<<" vs "<<m_players[1]->getName()<<std::endl;
   oss<<"Rounds : "<< m_currentRound << "/" <<m_roundsNumber << std::endl;
   oss<<"Time per round : "<< m_timePerRound<<" seconds" <<std::endl;
-  oss<<"Victory : "<< m_type<< std::endl;
   return oss.str();
 }
