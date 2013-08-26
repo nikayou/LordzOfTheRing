@@ -273,8 +273,8 @@ void Game::loopProfileMenu(){
 
 void Game::loopCharacterSelect(){
   std::cout<<"Character selection"<<std::endl;
-  CharacterPlayed c1(* (CharacterManager::getInstance()->get("sdard.chara") )  );
-  CharacterPlayed c2(* (CharacterManager::getInstance()->get("avrage.chara") )  );
+  CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
+  CharacterPlayed c2(* (CharacterManager::getInstance()->get("sdard.chara") )  );
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
   loadMatch();
