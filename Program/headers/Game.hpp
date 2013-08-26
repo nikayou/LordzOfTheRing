@@ -4,6 +4,7 @@
 #include "../headers/Singleton.hpp"
 #include "../headers/Match.hpp"
 
+#include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
@@ -31,6 +32,7 @@ private:
   Match * m_match;
   sf::Clock m_clock;
   sf::Time m_timer;
+  sf::Music m_music;
 
 public:
   void start();

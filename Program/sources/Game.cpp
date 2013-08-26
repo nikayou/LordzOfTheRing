@@ -52,6 +52,7 @@ void Game::init(){
   rw.setFramerateLimit( (float) FRAMERATE);
   rw.setPosition(sf::Vector2i(10, 10) ); //adjust
   m_window = &rw;
+  m_music.setVolume(Config::getInstance()->getMusicVolume() );
   //setting match settings
   Player p1("Aaron");
   Player p2("Barney");
@@ -282,6 +283,7 @@ void Game::loopCharacterSelect(){
 }
 
 void Game::loadMatch(){
+  m_music.stop();
   m_window->clear(sf::Color::Black);
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
@@ -311,27 +313,27 @@ void Game::loadMatch(){
   m_window->clear(sf::Color::Black);
   m_timer = sf::microseconds(0);
   m_clock.restart();
-  std::cout<<"restarted clock : "<<getClock().getElapsedTime().asMilliseconds() << std::endl;
-  sf::Music music;
-  if(music.openFromFile("../../resources/audio/battle1.ogg") )
-    music.play();
+  if(m_music.openFromFile("../../resources/audio/battle1.ogg") )
+    m_music.play();
   setState(GameState::MATCH);
 }
 
 
 void Game::loopMatch(){
   if(getClock().getElapsedTime().asSeconds() >= 1){
-    std::cout<<"1 seconde passe : "<<getTime()<<std::endl;
-    m_timer += m_clock.restart();
+    m_timer += sf::seconds(1);
+    m_clock.restart();
   }
-  //printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
-  //printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
+  printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
+  printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
   sf::Event event;
   while( m_window->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
       close();
     }else if(event.type ==sf::Event::KeyPressed ){
       action a = Config::getInstance()->getAction( (Key)event.key.code);
+      if(a == (action)0 )
+	break;
       if(Action::getType(a) == Action::PAUSE ){
 	setState(GameState::PAUSE);
 	break;
@@ -412,7 +414,6 @@ void Game::displayClock(){
   m_window->draw(s);  
   unsigned short time;
   time = getMatch()->getTimePerRound()-(getTimer().asSeconds() );
-  std::cout<<"remaining time : "<<time<<std::endl;
   if(time > 0){ // if time is infinity, we are not displaying time
     //get time remaining
     //displaying 100'
@@ -450,7 +451,6 @@ void Game::displayCharacters(){
   s.setPosition( 400, 400  );
   unsigned short idSprite = ss->getAnimation(getMatch()->getCharacter2()->getAction() ).get(getMatch()->getCharacter2()->getFrame() ); 
   Sprite * sprt = ss->getSprite(idSprite);
-  std::cout<<"id : "<<idSprite<<" sprt : "<<sprt<<std::endl;
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
     s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
@@ -490,6 +490,7 @@ void Game::displayMatch(){
 
 void Game::pause(const sf::Int64& t0){
   printf("pause\n");
+  displayMatch();
   sf::Event event;
   while( m_window->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
