@@ -36,7 +36,6 @@
 #include <iostream>
 #include <sstream>
 
-#define FREQUENCE 1/30
 #define FRAMERATE 10
 
 /** init all required the game : 
@@ -359,46 +358,58 @@ void Game::displayGauges(){
   sf::Sprite s;
   sf::Texture * t;
   float width = Config::getInstance()->getWindowWidth();
-  // background
-  t = TextureManager::getInstance()->get("background")->getTexture();
-  s.setTexture(*t);
-  s.setPosition(sf::Vector2f(0, 0) );
-  m_window->draw(s);
   // opponent
   //opponent's spec
   //player's spec
   //player
-
-  //red
+  float scale = 2.0;
+  s.scale(scale, scale);
+  //p1 red
   t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   s.setTexture(*t);
-  s.setTextureRect(sf::IntRect(0, 0, 312, 40) );
+  s.setTextureRect(sf::IntRect(0, 0, 156, 16) );
   s.setPosition (sf::Vector2f(0, 26) );
   m_window->draw(s);
-  s.setPosition (sf::Vector2f(width-312, 26) );
-  m_window->draw(s);
-  //green
-  s.setTextureRect(sf::IntRect(0, 40, 312, 40) );
-  //p1
-  float percent = 0.0+getMatch()->getCharacter1()->getHealth()-getMatch()->getCharacter1()->getCurrentHealth();
+  //p1 green
+  float percent = 0.0+getMatch()->getCharacter1()->getCurrentHealth();
   percent /= getMatch()->getCharacter1()->getHealth();
-  percent *= 300;
-  s.setPosition(sf::Vector2f(-percent, 26) );
+  percent *= 150;
+  std::cout<<"health : "<<percent<<"%"<<std::endl;
+  s.setTextureRect(sf::IntRect(0, 16, 3+(percent), 16) );
   m_window->draw(s);
-  //p2
-  percent = 0.0+getMatch()->getCharacter2()->getHealth()-getMatch()->getCharacter2()->getCurrentHealth();
+  //p2 red
+  s.setTextureRect(sf::IntRect(0, 0, 156, 16) );
+  s.setPosition (sf::Vector2f(width-156*scale, 26) );
+  m_window->draw(s);
+  //p2 green
+  percent = 0.0+getMatch()->getCharacter2()->getCurrentHealth();
   percent /= getMatch()->getCharacter2()->getHealth();
-  percent *= 300;
-  s.setPosition (sf::Vector2f(width-312+percent, 26) );
-  m_window->draw(s);
-  //borders
-  s.setTextureRect(sf::IntRect(128, 116, 8, 40 ) );
-  s.setPosition(0, 26);
-  m_window->draw(s);
-  s.setTextureRect(sf::IntRect(128+8, 116, 8, 40 ) );
-  s.setPosition(width-8, 26);
+  percent *= 150;
+  std::cout<<"health : "<<percent<<"%"<<std::endl;
+  s.setPosition (sf::Vector2f(width-(156-(150-percent) )*scale, 26) );
+  s.setTextureRect(sf::IntRect(0, 16, 4+percent, 16) );
   m_window->draw(s);
   
+  //stamina bars
+  s.setTextureRect(sf::IntRect(0, 32, 104, 8) );
+  s.setPosition(sf::Vector2f(0, 70) );
+  m_window->draw(s);
+  percent = 0.0+getMatch()->getCharacter1()->getCurrentStamina();
+  percent /= getMatch()->getCharacter1()->getStamina();
+  percent *= 100;
+  std::cout<<"Stamina : "<<percent<<"%"<<std::endl;
+  s.setTextureRect(sf::IntRect(0, 40, 102, 6) );
+  m_window->draw(s);
+  //p2
+  s.setTextureRect(sf::IntRect(0, 32, 104, 8) );
+  s.setPosition(sf::Vector2f(width-104*scale, 70) );
+  m_window->draw(s);
+  percent = 0.0+getMatch()->getCharacter1()->getCurrentStamina();
+  percent /= getMatch()->getCharacter1()->getStamina();
+  percent *= 100;
+  std::cout<<"Stamina : "<<percent<<"%"<<std::endl;
+  s.setTextureRect(sf::IntRect(0, 40, 102, 6) );
+  m_window->draw(s);
   
 }
 
@@ -408,7 +419,7 @@ void Game::displayClock(){
   sf::Sprite s;
   sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   float width = Config::getInstance()->getWindowWidth();
-  s.setTextureRect(sf::IntRect(0, 80, 128, 64) );
+  s.setTextureRect(sf::IntRect(0, 46, 128, 64) );
   s.setPosition(width/2-64, 10);
   s.setTexture(*t);
   m_window->draw(s);  
@@ -417,15 +428,15 @@ void Game::displayClock(){
   if(time > 0){ // if time is infinity, we are not displaying time
     //get time remaining
     //displaying 100'
-    s.setTextureRect(sf::IntRect(128+(28*(time/100) ), 80, 28, 36) );
+    s.setTextureRect(sf::IntRect( (28*(time/100) ), 111, 28, 36) );
     s.setPosition(width/2-64+16, 10+ 14);
     m_window->draw(s);
     //displaying 10'
-    s.setTextureRect(sf::IntRect(128+(28*(time%100/10) ), 80, 28, 36) );
+    s.setTextureRect(sf::IntRect((28*(time%100/10) ), 111, 28, 36) );
     s.setPosition(width/2-64+16+34, 10+ 14);
     m_window->draw(s);
     //displaying 1'
-    s.setTextureRect(sf::IntRect(128+(28*(time%10) ), 80, 28, 36) );
+    s.setTextureRect(sf::IntRect((28*(time%10) ), 111, 28, 36) );
     s.setPosition(width/2-64+16+68, 10+ 14);
     m_window->draw(s);
   }
@@ -481,6 +492,12 @@ void Game::displayCharacters(){
 void Game::displayMatch(){
   //drawing order : 
   //background, opponent, opponent's spec, player's spec, player,
+  // background
+  sf::Texture * t = TextureManager::getInstance()->get("background")->getTexture();
+  sf::Sprite s;
+  s.setTexture(*t);
+  s.setPosition(sf::Vector2f(0, 0) );
+  m_window->draw(s);
   displayGauges();
   displayClock();
   displayCharacters();
