@@ -5,6 +5,7 @@ Here we define a played character : they are like characters, but gets additiona
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
+#include "../headers/Game.hpp"
 
 #include <sstream>
 #include <string>
@@ -79,18 +80,30 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
   return (m_currentHealth = MIN(m_health, m_currentHealth+v) );
 }
 
+unsigned short CharacterPlayed::loseStamina(const unsigned short& v){
+  unsigned short nextStamina = m_currentStamina - v;
+  return (m_currentStamina = nextStamina < m_currentStamina? nextStamina:0);
+}
+
+unsigned short CharacterPlayed::gainStamina(const unsigned short& v){
+  return (m_currentStamina = MIN(m_stamina, m_currentStamina+v) );
+}
+
 void CharacterPlayed::manage(){
   Action::Framing f;
   switch(m_action){
   case Action::ATTACK_LEFT :
+    gainStamina(1);
     f = Action::Framing_AttackL;
     break;
 
   case Action::ATTACK_MIDDLE :
+    gainStamina(1);
     f = Action::Framing_AttackM;
     break;
 
   case Action::ATTACK_RIGHT :
+    gainStamina(1);
     f = Action::Framing_AttackR;
     break;
 
@@ -107,11 +120,36 @@ void CharacterPlayed::manage(){
     break;
 
   case Action::STROKE :
+    gainStamina(1);
     f = Action::Framing_Stroke;
+    break;
+
+  case Action::KO :
+    f = Action::Framing_KO;
+    break;
+
+  case Action::HAPPY :
+    f = Action::Framing_Happy;
+    gainStamina(1);
+    break;
+
+  case Action::RAISING :
+    f = Action::Framing_Raising;
+    gainStamina(1);
+    break;
+
+  case Action::STUN :
+    f = Action::Framing_Stun;
+    break;
+
+  case Action::BREATHING :
+    f = Action::Framing_Breathing;
+    gainStamina(1);
     break;
 
   default:
     f = Action::Framing_None;
+    gainStamina(1);
     break;
   }
 
@@ -128,9 +166,9 @@ void CharacterPlayed::takeHit(const unsigned short& dmg){
 }
 
 bool CharacterPlayed::doHit(){
-  if(m_stamina < 0) 
+  if(m_currentStamina < 2*FRAMERATE) 
     return false;
-  m_stamina -= 1;
+  loseStamina(2*FRAMERATE);
   return true;
 }
 

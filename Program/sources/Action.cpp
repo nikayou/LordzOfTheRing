@@ -122,6 +122,7 @@ namespace Action{
   Framing Framing_Stroke = initFramingStroke();
   Framing Framing_KO = initFramingKO();
   Framing Framing_Raising = initFramingRaising();
+  Framing Framing_Happy = initFramingHappy();
   Framing Framing_Stun = initFramingStun();
   Framing Framing_Breathing = initFramingBreathing();
 
@@ -222,8 +223,16 @@ namespace Action{
     Framing _f;
     _f.nb_frames = 26;
     _f.change_state = 0;
-    _f.return_state = 26;
+    _f.return_state = 25;
     _f.state = CRYING;
+    return _f;
+  }
+
+  Framing initFramingHappy(){
+    Framing _f;
+    _f.nb_frames = 33;
+    _f.change_state = 0;
+    _f.return_state = 32;
     return _f;
   }
 
@@ -231,7 +240,7 @@ namespace Action{
     Framing _f;
     _f.nb_frames = 17;
     _f.change_state = 0;
-    _f.return_state = 17;
+    _f.return_state = 16;
     _f.state = NORMAL;
     return _f;
   }
@@ -241,7 +250,7 @@ namespace Action{
     Framing _f;
     _f.nb_frames = 19;
     _f.change_state = 0;
-    _f.return_state = 19;
+    _f.return_state = 18;
     _f.state = NORMAL;
     return _f;
   }

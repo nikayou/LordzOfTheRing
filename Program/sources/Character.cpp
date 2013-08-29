@@ -69,6 +69,8 @@ std::string Character::toString(){
   return oss.str();
 }
 
+
+
 bool Character::loadFromFile(const std::string& f){
   std::ifstream ifs;
   std::string file = CHAR_DIR + f;
@@ -107,7 +109,7 @@ bool Character::loadFromFile(const std::string& f){
       continue;
     }
     if(!defs && contains(line, "stamina=") ){
-      c.setStamina( Stats::fromString( cutFrom(line, '=') )  );
+      c.setStamina(FRAMERATE*(4+Stats::fromString(cutFrom(line, '=')) ) );
       defs = true;
       continue;
     }

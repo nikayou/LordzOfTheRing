@@ -36,7 +36,6 @@
 #include <iostream>
 #include <sstream>
 
-#define FRAMERATE 10
 
 /** init all required the game : 
     -loads configuration
@@ -286,6 +285,8 @@ void Game::loadMatch(){
   m_window->clear(sf::Color::Black);
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
+  CharacterPlayed * c1 = getMatch()->getCharacter1();
+  CharacterPlayed * c2 = getMatch()->getCharacter2();
   s.setTexture(*t);
   s.setPosition(0,0);
   m_window->draw(s);
@@ -294,19 +295,19 @@ void Game::loadMatch(){
   TextureManager::getInstance()->get("sprites.png")->getTexture();
   std::string file = "characters/";
   // character 2
-  unsigned int frame = getMatch()->getCharacter2()->getFrame();
-  file += getMatch()->getCharacter2()->getBasename();
+  unsigned int frame = c2->getFrame();
+  file += c2->getBasename();
   file += "_front.png";
   TextureManager::getInstance()->get(file)->getTexture();
-  file = getMatch()->getCharacter2()->getBasename();
+  file = c2->getBasename();
   file += "_front.sprt";
   SpritesheetManager::getInstance()->get(file);
-  frame = getMatch()->getCharacter1()->getFrame();
+  frame = c1->getFrame();
   file = "characters/";
-  file += getMatch()->getCharacter1()->getBasename();
+  file += c1->getBasename();
   file += "_back.png";
   TextureManager::getInstance()->get(file)->getTexture();
-  file = getMatch()->getCharacter1()->getBasename();
+  file = c1->getBasename();
   file += "_back.sprt";
   SpritesheetManager::getInstance()->get(file);
   m_window->clear(sf::Color::Black);
@@ -314,6 +315,8 @@ void Game::loadMatch(){
   m_clock.restart();
   if(m_music.openFromFile("../../resources/audio/battle1.ogg") )
     m_music.play();
+  c1->gainStamina(600);
+  c2->gainStamina(600);
   setState(GameState::MATCH);
 }
 
@@ -339,7 +342,13 @@ void Game::loopMatch(){
       }
       
       if(getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NONE ){
-	getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
+	if(
+	   !( ( (Action::getType(a) == Action::ATTACK_LEFT)
+	     ||(Action::getType(a) == Action::ATTACK_MIDDLE)
+	     ||(Action::getType(a) == Action::ATTACK_RIGHT) )
+	      && !getMatch()->getCharacter(Action::getDoer(a) )->doHit() )
+	   )
+	  getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
       }else{
 	//player is already performing an action
 	printf("Cannot do an action until the curent is done\n");
@@ -353,7 +362,8 @@ void Game::loopMatch(){
 
 
 void Game::displayGauges(){
-  
+  CharacterPlayed * c1 = getMatch()->getCharacter1();
+  CharacterPlayed * c2 = getMatch()->getCharacter2();
   // health bars : red, green, border
   sf::Sprite s;
   sf::Texture * t;
@@ -371,8 +381,8 @@ void Game::displayGauges(){
   s.setPosition (sf::Vector2f(0, 26) );
   m_window->draw(s);
   //p1 green
-  float percent = 0.0+getMatch()->getCharacter1()->getCurrentHealth();
-  percent /= getMatch()->getCharacter1()->getHealth();
+  float percent = 0.0+c1->getCurrentHealth();
+  percent /= c1->getHealth();
   percent *= 150;
   std::cout<<"health : "<<percent<<"%"<<std::endl;
   s.setTextureRect(sf::IntRect(0, 16, 3+(percent), 16) );
@@ -382,8 +392,8 @@ void Game::displayGauges(){
   s.setPosition (sf::Vector2f(width-156*scale, 26) );
   m_window->draw(s);
   //p2 green
-  percent = 0.0+getMatch()->getCharacter2()->getCurrentHealth();
-  percent /= getMatch()->getCharacter2()->getHealth();
+  percent = 0.0+c2->getCurrentHealth();
+  percent /= c2->getHealth();
   percent *= 150;
   std::cout<<"health : "<<percent<<"%"<<std::endl;
   s.setPosition (sf::Vector2f(width-(156-(150-percent) )*scale, 26) );
@@ -394,27 +404,27 @@ void Game::displayGauges(){
   s.setTextureRect(sf::IntRect(0, 32, 104, 8) );
   s.setPosition(sf::Vector2f(0, 70) );
   m_window->draw(s);
-  percent = 0.0+getMatch()->getCharacter1()->getCurrentStamina();
-  percent /= getMatch()->getCharacter1()->getStamina();
+  percent = 0.0+c1->getCurrentStamina();
+  percent /= c1->getStamina();
   percent *= 100;
   std::cout<<"Stamina : "<<percent<<"%"<<std::endl;
-  s.setTextureRect(sf::IntRect(0, 40, 102, 6) );
+  s.setTextureRect(sf::IntRect(0, 40, 2+percent, 6) );
   m_window->draw(s);
   //p2
   s.setTextureRect(sf::IntRect(0, 32, 104, 8) );
   s.setPosition(sf::Vector2f(width-104*scale, 70) );
   m_window->draw(s);
-  percent = 0.0+getMatch()->getCharacter1()->getCurrentStamina();
-  percent /= getMatch()->getCharacter1()->getStamina();
+  percent = 0.0+c2->getCurrentStamina();
+  percent /= c2->getStamina();
   percent *= 100;
-  std::cout<<"Stamina : "<<percent<<"%"<<std::endl;
-  s.setTextureRect(sf::IntRect(0, 40, 102, 6) );
+  std::cout<<"Stamina : "<<c2->getCurrentStamina()<<" -> "<<percent<<"%"<<std::endl;
+  s.setPosition(sf::Vector2f(width-(104-(100-percent) )*scale, 70 ) );
+  s.setTextureRect(sf::IntRect(0, 40, 3+percent, 6) );
   m_window->draw(s);
   
 }
 
 void Game::displayClock(){
-  
   // chrono : back, second 100, second 10, second 1
   sf::Sprite s;
   sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
@@ -444,6 +454,8 @@ void Game::displayClock(){
 }
 
 void Game::displayCharacters(){
+  CharacterPlayed * c1 = getMatch()->getCharacter1();
+  CharacterPlayed * c2 = getMatch()->getCharacter2();
   float width = Config::getInstance()->getWindowWidth();
   sf::Sprite s;
   Spritesheet * ss;
@@ -451,16 +463,16 @@ void Game::displayCharacters(){
   //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
   std::string file = "characters/";
   // character 2
-  unsigned int frame = getMatch()->getCharacter2()->getFrame();
-  file += getMatch()->getCharacter2()->getBasename();
+  unsigned int frame = c2->getFrame();
+  file += c2->getBasename();
   file += "_front.png";
   t = TextureManager::getInstance()->get(file)->getTexture();
-  file = getMatch()->getCharacter2()->getBasename();
+  file = c2->getBasename();
   file += "_front.sprt";
   ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
   s.setPosition( 400, 400  );
-  unsigned short idSprite = ss->getAnimation(getMatch()->getCharacter2()->getAction() ).get(getMatch()->getCharacter2()->getFrame() ); 
+  unsigned short idSprite = ss->getAnimation(c2->getAction() ).get(c2->getFrame() ); 
   Sprite * sprt = ss->getSprite(idSprite);
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
@@ -469,17 +481,17 @@ void Game::displayCharacters(){
     m_window->draw(s);
   }
   // character 2
-  frame = getMatch()->getCharacter1()->getFrame();
+  frame = c1->getFrame();
   file = "characters/";
-  file += getMatch()->getCharacter1()->getBasename();
+  file += c1->getBasename();
   file += "_back.png";
   t = TextureManager::getInstance()->get(file)->getTexture();
-  file = getMatch()->getCharacter1()->getBasename();
+  file = c1->getBasename();
   file += "_back.sprt";
   ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
   s.setPosition( 400, 600 );
-  idSprite = ss->getAnimation(getMatch()->getCharacter1()->getAction() ).get(getMatch()->getCharacter1()->getFrame() );
+  idSprite = ss->getAnimation(c1->getAction() ).get(c1->getFrame() );
   sprt = ss->getSprite(idSprite);
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );

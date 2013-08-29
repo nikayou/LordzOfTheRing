@@ -9,6 +9,8 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
 
+#define FRAMERATE 10
+
 namespace GameState{
   typedef enum{
     SPLASH,

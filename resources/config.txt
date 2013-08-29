@@ -2,7 +2,7 @@
 width=800
 height=600
 #sound (in percents)
-music=75
+music=0
 sound=100
 #global inputs
 pause=36

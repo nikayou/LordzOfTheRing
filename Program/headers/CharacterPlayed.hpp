@@ -50,6 +50,9 @@ public:
   void setCurrentHealth(const unsigned short& v){
     m_currentHealth = v;
   };
+  void setCurrentStamina(const unsigned short& v){
+    m_currentStamina = v;
+  };
   void setAction(const Action::Type& v){
     m_action = v;
     m_frame = 0;
@@ -67,8 +70,11 @@ public:
   void addFrame(const Action::Framing&);
   unsigned short loseHealth(const unsigned short&);
   unsigned short gainHealth(const unsigned short&);
+  unsigned short loseStamina(const unsigned short&);
+  unsigned short gainStamina(const unsigned short&);
   void manage();
   std::string toString();
+  bool inEffort(); //tells if the character is doing an effort (in this case, no stamina gain)
 
 };
 
