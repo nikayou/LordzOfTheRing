@@ -30,6 +30,10 @@ public:
     return "CharacterManager"; 
   };
 
+  std::map<std::string, Character > getData(){
+    return mData;
+  };
+
 };
 
 

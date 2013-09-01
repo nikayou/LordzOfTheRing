@@ -4,6 +4,8 @@
 #include "../headers/Singleton.hpp"
 #include "../headers/Match.hpp"
 
+#include <iostream> //delete
+
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
@@ -44,6 +46,7 @@ public:
   void loopMainMenu();
   void loopOptionsMenu();
   void loopProfileMenu();
+  void loadCharacterSelect();
   void loopCharacterSelect();
   void loadMatch();
   void loopMatch();
@@ -78,6 +81,7 @@ public:
     m_match = m;
   };
   void setState(const GameState::state& s){
+    std::cout<<"new state : "<<s<<std::endl;
     m_state = s;
   };
 

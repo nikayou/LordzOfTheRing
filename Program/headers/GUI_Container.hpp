@@ -1,0 +1,48 @@
+#ifndef CONTAINER_HPP
+#define CONTAINER_HPP
+
+#include <vector>
+
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Window.hpp>
+
+#include "../headers/GUI_Component.hpp"
+#include "../headers/GUI_Container.hpp"
+#include "../headers/GUI_Window.hpp"
+
+class GUIWindow;
+
+class Container : public Component{
+private:
+  sf::RenderTexture * mContent; //where we are drawing the components
+  std::vector< Component * > mComponents; //all the components
+  Component * mFocused; //component on which mouse is positioned
+  GUIWindow * mContainer; //reference to the container (parent)
+
+public:
+  Container();
+  Container(sf::RenderTexture *);
+  // getters
+  inline sf::RenderTexture * getContent() const { return mContent; };
+  inline GUIWindow * getContainer() const { return mContainer; };
+  // setters
+  void setContent(sf::RenderTexture * rt){ mContent = rt; };
+  void setContainer(GUIWindow * w){ mContainer = w; };
+  // misc
+  bool add(Component *);
+  void updateFocus();
+  /* Clicks on the given position */
+  void click(const sf::Vector2i&);
+  /* Clicks on the mouse position (relative) */
+  void click();
+  /* returns relative position of mouse */
+  sf::Vector2i getLocalMouse();
+  /* displays all components' texts */
+  void drawTexts();
+  /* draw all the components in the content */
+  sf::VertexArray draw();
+
+};
+
+#endif

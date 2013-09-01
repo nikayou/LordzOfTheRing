@@ -16,9 +16,14 @@
 #include "../headers/SpritesheetManager.hpp"
 #include "../headers/Texture.hpp"
 #include "../headers/TextureManager.hpp"
+#include "../headers/GUI_Bordered.hpp"
+#include "../headers/GUI_Button.hpp"
+#include "../headers/GUI_Container.hpp"
+#include "../headers/FontManager.hpp"
 
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -34,6 +39,7 @@
 #include <cstdio> //DELETE
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <sstream>
 
 
@@ -54,12 +60,15 @@ void Game::init(){
   //setting match settings
   Player p1("Aaron");
   Player p2("Barney");
-  Match match(&p1, &p2, 210, 3);
+  Match match(&p1, &p2, 90, 3);
   setMatch(&match);
   //starting loop
-  setState(GameState::CHARACTER_SELECT);
-  //setState(GameState::MAIN_MENU);
+  //setState(GameState::CHARACTER_SELECT);
+  setState(GameState::MAIN_MENU);
   std::cout<<"Game initialized"<<std::endl;
+  m_music.openFromFile("../../resources/audio/menu1.ogg");
+  m_music.setVolume(Config::getInstance()->getMusicVolume() );
+  m_music.play();
   loop();
 }
 
@@ -77,7 +86,7 @@ void Game::loop(){
   while(m_window->isOpen() ){
     //we refresh at every time = frequency
     //read inputs
-    printf("Time : %d\n", getClock().getElapsedTime().asSeconds() );
+    printf("Time : %f\nState : %d\n", getClock().getElapsedTime().asSeconds(), getState() );
     m_window->clear();
     //switching looping with game state
     switch(m_state){
@@ -137,11 +146,17 @@ void Game::splash(){
   t = TextureManager::getInstance()->get("splashscreens/auth.splash")->getTexture();
   s.setTexture(*t );
   s.setOrigin(t->getSize().x/2, t->getSize().y/2);
-  s.setPosition(sf::Vector2f(300, 200) );
   rw.clear(sf::Color::White);
   rw.draw(s);
   rw.display();
   while(getTime() < 4.);
+  t = TextureManager::getInstance()->get("splashscreens/pixotters.splash")->getTexture();
+  s.setTexture(*t );
+  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
+  rw.clear(sf::Color::White);
+  rw.draw(s);
+  rw.display();
+  while(getTime() < 6.);
   rw.close();
   TextureManager::getInstance()->remove("splashscreens/sfml.splash");
   TextureManager::getInstance()->remove("splashscreens/auth.splash");
@@ -150,38 +165,46 @@ void Game::splash(){
 }
 
 void Game::loopMainMenu(){
-  char entry = '_';
-  do{
-    printf("\033c");
-    printf("Main menu\n");
-    printf("---------------\n");
-    printf("1-Start game\n");
-    printf("2-Options\n");
-    printf("0-Quit\n");
-    printf("---------------\n");
-    printf(">");
-    std::cin>>entry;
-  }while(entry != '1' && entry != '2' && entry != '0');
-  switch(entry){
-  case '1':
-    setState(GameState::PROFILE_MENU);
-    loopProfileMenu();
-    break;
-
-  case '2':
-    setState(GameState::OPTIONS_MENU);
-    loopOptionsMenu();
-    break;
-
-  case '0':
-    close();
-    break;
-
-  default:
-    loopMainMenu();
-    break;
-  }
-
+  sf::RenderTexture render;
+  render.create(800, 600);
+  render.clear(sf::Color::White);
+  sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
+  Button b_play(sf::Vector2u(200, 70) , sf::Vector2f(300, 200), sf::Color(60, 60, 60) );
+  b_play.setBorderThickness(1);
+  b_play.setText(sf::Text("Play", *font, 32 ) );
+  b_play.setTextToCenter();
+  b_play.setAction( [ this]() -> void{
+      loadCharacterSelect();
+    } );
+  Button b_net(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), sf::Color(60, 60, 60) );
+  b_net.setBorderThickness(1);
+  b_net.setText(sf::Text("Net", *font, 32 ) );
+  b_net.setTextToCenter();
+  b_net.setAction( [&b_net, this]() ->void{
+      
+    } );
+  Button b_options(sf::Vector2u(200, 70) , sf::Vector2f(300, 400), sf::Color(60, 60, 60) );
+  b_options.setBorderThickness(1);
+  b_options.setText(sf::Text("Options", *font, 32 ) );
+  b_options.setTextToCenter();
+  b_options.setAction( [this]()->void{
+      Game::getInstance()->setState(GameState::OPTIONS_MENU);
+    } );
+  Button b_quit(sf::Vector2u(200, 70) , sf::Vector2f(300, 500), sf::Color(60, 60, 60) );
+  b_quit.setBorderThickness(1);
+  b_quit.setText(sf::Text("Quit", *font, 32 ) );
+  b_quit.setTextToCenter();
+  b_quit.setAction( [this]()->void{
+      Game::getInstance()->close();
+    }
+    );
+  Container ct(&render);
+  ct.add(&b_play);
+  ct.add(&b_net);
+  ct.add(&b_options);
+  ct.add(&b_quit);
+  GUIWindow gw(m_window, &ct);
+  gw.draw();
 }
 
 void Game::loopOptionsMenu(){  
@@ -270,14 +293,95 @@ void Game::loopProfileMenu(){
 
 }
 
-void Game::loopCharacterSelect(){
-  std::cout<<"Character selection"<<std::endl;
+void Game::loadCharacterSelect(){
   CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("sdard.chara") )  );
   getMatch()->getPlayer2()->setCharacter(c2);
   getMatch()->getPlayer1()->setCharacter(c1);
-  loadMatch();
+  std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
+  for(std::map<std::string, Character >::iterator it = chars.begin() ; it != chars.end() ; ++it)
+    {
+      std::string file = "characters/"+it->second.getBasename();
+      file += "_menu.png";
+      if(TextureManager::getInstance()->get(file) != NULL){
+	TextureManager::getInstance()->remove(it->first);
+      }
+    }
 
+  Game::getInstance()->setState(GameState::CHARACTER_SELECT);
+}
+
+void Game::loopCharacterSelect(){
+  m_window->clear();
+  sf::RenderTexture rt;
+  rt.create(800, 600);
+  rt.clear(sf::Color::Black);
+  std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
+  sf::Sprite s;
+  sf::Texture * t;
+  t = TextureManager::getInstance()->get("background")->getTexture();
+  s.setTexture(*t);
+  rt.draw(s);
+  //displaying characters labels
+  float scale = 2.0;
+  s.scale(scale, scale);
+  s.setPosition(sf::Vector2f(400, -16) );
+  s.move(0, scale*32);
+  bool found1 = false, found2 = false; //will tell if we already know the character
+  for(std::map<std::string, Character >::iterator it = chars.begin() ; it != chars.end() ; ++it)
+    {
+      std::string tex = "characters/" + it->second.getBasename() + "_menu.png";
+      t = TextureManager::getInstance()->get(tex)->getTexture();
+      s.setTexture(*t);
+      s.setTextureRect(sf::IntRect(0, 0, 32, 32 ) );
+      s.setOrigin(16, 16);
+      rt.draw(s);
+      t = TextureManager::getInstance()->get("sprites.png")->getTexture();
+      s.setTextureRect(sf::IntRect(156, 0, 32, 32 ) );
+      s.setTexture(*t);
+      rt.draw(s);
+      //displaying little arrows if character is the current one
+      s.setOrigin(3, 5);
+      if(!found1 && getMatch()->getCharacter1()->getBasename().compare(it->second.getBasename() ) == 0 ){
+	found1 = true;
+	s.move(-20*scale, 0);
+	s.setTextureRect(sf::IntRect(188, 0, 6, 9) );	
+	rt.draw(s);
+	s.move(20*scale, 0);
+	std::cout<<"found1 : "<<getMatch()->getCharacter1()->getBasename()<<"-"<<it->second.getBasename()<<std::endl;
+      }
+      if(!found2 && getMatch()->getCharacter2()->getBasename().compare(it->second.getBasename() ) == 0 ){
+	found2 = true;
+	s.setTextureRect(sf::IntRect(188, 9, 6, 9) );
+	s.move(20*scale, 0);
+	rt.draw(s);
+	s.move(-20*scale, 0);
+	std::cout<<"found2 : "<<getMatch()->getCharacter2()->getBasename()<<"-"<<it->second.getBasename()<<std::endl;
+      }
+      s.move(0, scale*32);
+    }
+sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
+  Button b_back(sf::Vector2u(80, 40), sf::Vector2f(350, 550), sf::Color(100, 50, 50) );
+  b_back.setBorderThickness(1);
+  b_back.setText(sf::Text("Back", *font, 22) );
+  b_back.setTextToCenter();
+  b_back.setAction( [this]()-> void{
+      Game::getInstance()->setState(GameState::MAIN_MENU);
+    } );
+  Button b_play(sf::Vector2u(80, 40), sf::Vector2f(450, 550), sf::Color(50,50, 100) );
+  b_play.setBorderThickness(1);
+  b_play.setText(sf::Text("Play", *font, 22) );
+  b_play.setTextToCenter();
+  b_play.setAction( [this]()-> void{
+      Game::getInstance()->loadMatch();
+    } );
+  Container ct(&rt);
+  ct.setPosition(0, 0);
+  GUIWindow gw(m_window, &ct);
+  gw.getContentPane()->add(&b_back);
+  gw.getContentPane()->add(&b_play);
+  gw.open(false);
+  gw.draw();
 }
 
 void Game::loadMatch(){
@@ -510,9 +614,11 @@ void Game::displayMatch(){
   s.setTexture(*t);
   s.setPosition(sf::Vector2f(0, 0) );
   m_window->draw(s);
+  std::cout<<"displaying characters"<<std::endl;
+  displayCharacters();
+  std::cout<<"displayed characters"<<std::endl;
   displayGauges();
   displayClock();
-  displayCharacters();
 }
   
 
@@ -549,7 +655,7 @@ void Game::close(){
 
 
 int main(){
-  Game::getInstance()->init();
+  Game::getInstance()->splash();
   return 0;
 }
 

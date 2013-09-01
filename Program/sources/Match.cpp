@@ -1,6 +1,7 @@
 #include "../headers/Match.hpp"
 #include "../headers/Game.hpp"
 
+#include <iostream> //delete
 #include <sstream>
 /**
    Here we define a match : two players and gaming options 
@@ -24,7 +25,7 @@ void Match::manage(){
   m_players[0]->manage();
   m_players[1]->manage();
   checkHits();
-  
+  std::cout<<"match managed"<<std::endl;
 }
 
 void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
@@ -50,11 +51,7 @@ void Match::checkHits(){
 
 void Match::KO(const unsigned short& p){
   //Game::getInstance()->setState(GameState::CHARACTER_SELECT);
-  getCharacter(p)->setAction(Action::KO);
-  if(p == 0)
-    getCharacter(1)->setAction(Action::HAPPY);
-  else
-    getCharacter(0)->setAction(Action::HAPPY);
+  std::cout<<"KO - GAME OVER"<<std::endl;
 }
 
 bool Match::checkHit(const unsigned short& a, const unsigned short& b){

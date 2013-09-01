@@ -5,22 +5,19 @@
 
 #include <SFML/Graphics/Font.hpp>
 
-#include "ResourceManager.hpp"
+#include "../headers/ResourceManager.hpp"
+#include "../headers/Singleton.hpp"
 
 #define FONT_DIR "../../resources/"
-#define DEFAULT_FONT "ArialPixel.TTF"
+#define DEFAULT_FONT "../../resources/ArialPixel.ttf"
 
 
-class FontManager: public ResourceManager<sf::Font>{
-private:
-  bool loadFromFile(const std::string& path){
-    sf::Font t;
-    if(!t.loadFromFile(path) ){
-      return false;
-    }
-    add(path, t);
-    return true;
-  }
+class FontManager: public ResourceManager<sf::Font>, public Singleton<FontManager>{
+public :
+	FontManager(){ };
+	std::string getClass(){ 
+	return "FontManager";
+	}
 
 };
 

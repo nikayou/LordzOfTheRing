@@ -2,7 +2,7 @@
 width=800
 height=600
 #sound (in percents)
-music=0
+music=100
 sound=100
 #global inputs
 pause=36
@@ -14,10 +14,10 @@ pause=36
 1-dodgeM=18
 1-dodgeR=3
 #player 2 inputs
-2-attackL=8
+2-attackL=15
 2-attackM=14
-2-attackR=15
-2-dodgeL=10
+2-attackR=8
+2-dodgeL=12
 2-dodgeM=11
-2-dodgeR=12
+2-dodgeR=10
 

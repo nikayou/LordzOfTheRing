@@ -6,6 +6,16 @@
 typedef char byte;
 
 #include <string>
+#include <SFML/Graphics/Color.hpp>
+
+#define LUMINESCENCE 3*128
+
+namespace Color{
+  sf::Color brighter(const sf::Color&);
+  sf::Color darker(const sf::Color&);
+  sf::Color denser(const sf::Color&);
+  sf::Color gauzier(const sf::Color&);
+}
 
 /**
    Cuts the given string from the given char to the end

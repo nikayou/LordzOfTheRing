@@ -96,7 +96,7 @@ namespace Action{
       return DODGE_MIDDLE;
     if(s.compare("stroke") == 0)
       return STROKE;
-    if(s.compare("ko") == 0 || s.compare("KO") )
+    if(s.compare("ko") == 0 || s.compare("KO") == 0)
       return KO;
     if(s.compare("stun") == 0 )
       return STUN;
