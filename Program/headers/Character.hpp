@@ -22,6 +22,16 @@ namespace Stats{
   } stats;
 
   stats fromString(const std::string&);
+  
+  unsigned short toHealth(const Stats::stats& v);
+  unsigned short toStamina(const Stats::stats& v);
+  unsigned short toResistance(const Stats::stats& v);
+  unsigned short toAttack(const Stats::stats& v);
+
+  stats baseHealth(const unsigned short&);
+  stats baseStamina(const unsigned short&);
+  stats baseResistance(const unsigned short&);
+  stats baseAttack(const unsigned short&);
 }
 
 class Character{
@@ -30,17 +40,17 @@ protected:
   std::string m_name;
   std::string m_basename; //basename for related files searching
   unsigned short m_health;
-  Stats::stats m_resistance; //amount of hits he can get before stunning
-  Stats::stats m_attack; //Light punches strenght
+  unsigned short m_resistance; //amount of hits he can get before stunning
+  unsigned short m_attack; //Light punches strenght
   unsigned short m_stamina; //number of hits/dodge he can do (1 hit = 2 dodges)
 
 public:
   //constructors
   Character(const std::string& = "Unknown",
 	    const unsigned short& = 100, 
-	    const Stats::stats& = Stats::MEDIUM, 
-	    const Stats::stats& = Stats::MEDIUM, 
-	    const unsigned short& = 6);
+	    const unsigned short& = 25, 
+	    const unsigned short& = 3,
+	    const unsigned short& = 70);
   ~Character();
   //getters
   std::string getName() const{ 
@@ -49,10 +59,10 @@ public:
   unsigned short getHealth() const{ 
     return m_health; 
   };
-  Stats::stats getResistance() const{ 
+  unsigned short getResistance() const{ 
     return m_resistance; 
   };
-  Stats::stats getAttack() const{
+  unsigned short getAttack() const{
     return m_attack; 
   };
   unsigned short getStamina() const{ 
@@ -68,10 +78,10 @@ public:
   void setHealth(const unsigned short& value){  
     m_health = value; 
   };
-  void setResistance(const Stats::stats& value){  
+  void setResistance(const unsigned short& value){  
     m_resistance = value; 
   };
-  void setAttack(const Stats::stats& value){  
+  void setAttack(const unsigned short& value){  
     m_attack = value; 
   };
   void setStamina(const unsigned short& value){  

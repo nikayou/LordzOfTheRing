@@ -25,12 +25,13 @@ void Match::manage(){
   m_players[0]->manage();
   m_players[1]->manage();
   checkHits();
-  std::cout<<"match managed"<<std::endl;
 }
 
 void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE:BASE_STRIKE;
+    hit += getCharacter(a)->getAttack();
+    std::cout<<b<<" takes a hit of "<<hit<<std::endl;
     getCharacter(b)->takeHit(hit);
     if( checkKO(b) ){
       getCharacter(b)->setAction(Action::KO);

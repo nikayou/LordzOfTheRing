@@ -9,8 +9,8 @@
 
 #include <string>
 
-#define BASE_STRIKE 8
-#define NICE_STRIKE 14
+#define BASE_STRIKE 3
+#define NICE_STRIKE 6
 
 class Match{
 

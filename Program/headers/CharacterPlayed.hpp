@@ -25,9 +25,9 @@ public:
   //constructors
   CharacterPlayed(const std::string& = "Unknown",
 		  const unsigned short& = 100, 
-		  const Stats::stats& = Stats::MEDIUM, 
-		  const Stats::stats& = Stats::MEDIUM, 
-		  const unsigned short& = 6);
+		  const unsigned short& = 25, 
+		  const unsigned short& = 3, 
+		  const unsigned short& = 70);
   CharacterPlayed(const CharacterPlayed& c);
   CharacterPlayed(const Character& c);
   //getters

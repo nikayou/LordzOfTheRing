@@ -15,8 +15,8 @@ Here we define a played character : they are like characters, but gets additiona
 CharacterPlayed::CharacterPlayed(
 				 const std::string& n,
 				 const unsigned short& h, 
-				 const Stats::stats& r, 
-				 const Stats::stats& a, 
+				 const unsigned short& r, 
+				 const unsigned short& a, 
 				 const unsigned short& sta): Character(n, h, r, a, sta){
   m_name = n;
   m_health = h;
@@ -72,7 +72,7 @@ void CharacterPlayed::addFrame(const Action::Framing& f){
 }
 
 unsigned short CharacterPlayed::loseHealth(const unsigned short& v){
-  unsigned short nextHealth = m_currentHealth - v + m_resistance;
+  unsigned short nextHealth = m_currentHealth - v;
   return (m_currentHealth = nextHealth<m_currentHealth? nextHealth:0 );
 }
 

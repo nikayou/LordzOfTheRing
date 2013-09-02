@@ -4,6 +4,7 @@
 #include "../headers/Character.hpp"
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Game.hpp"
+#include "../headers/Misc.hpp"
 
 #include <cstring>
 #include <fstream>
@@ -37,16 +38,52 @@ namespace Stats{
       return Stats::WEAKEST;
     }
     return Stats::MEDIUM;
-
   }
+
+  unsigned short toHealth(const Stats::stats& v){
+    return 52+((unsigned short)v*16);
+  }
+
+  unsigned short toStamina(const Stats::stats& v){
+    return  (4+(unsigned short)v)*FRAMERATE;
+  }
+
+  unsigned short toResistance(const Stats::stats& v){
+    return  (-(unsigned short)v+8)*5;
+  }
+
+  unsigned short toAttack(const Stats::stats& v){
+    return (unsigned short)v ;
+  }
+
+  stats baseHealth(const unsigned short& value){
+    //health = 52+(16*stat)
+    return (stats)( (unsigned short)(value-52)/16);
+  }
+
+  stats baseStamina(const unsigned short& value){
+    //stamina = (4+stat)*framerate
+    return (stats)( (unsigned short)(value/FRAMERATE)-4 );
+  }
+ 
+  stats baseResistance(const unsigned short& value){
+    //resistance = (-stat+8) * 5
+    return (stats) ( (unsigned short) ABS( (value/5)-8 ) );
+  }
+  
+  stats baseAttack(const unsigned short& value){
+    //attack = stat
+    return (stats)(value);
+  }
+
 }
 
 
 Character::Character(
 		     const std::string& n,
 		     const unsigned short& h, 
-		     const Stats::stats& r, 
-		     const Stats::stats& a, 
+		     const unsigned short& r, 
+		     const unsigned short& a, 
 		     const unsigned short& sta){
   m_name = n;
   m_health = h;
@@ -79,9 +116,7 @@ bool Character::loadFromFile(const std::string& f){
     return false;
   }
   Character c;
-  std::cout<<"before basenaming"<<std::endl;
   c.m_basename = f.substr(0, f.find_first_of('.') ) ;
-  std::cout<<"after basenaming : "<<c.m_basename<<std::endl;
   bool defn = false, defh = false, defr = false, defa = false, defs = false;
   std::string line = "";
   while( !ifs.eof() ){
@@ -94,22 +129,22 @@ bool Character::loadFromFile(const std::string& f){
       continue;
     }
     if(!defh && contains(line, "health=") ){
-      c.setHealth( extractInt(line)  );
+      c.setHealth( toHealth(Stats::fromString( cutFrom(line, '=') )   ) );
       defh = true;
       continue;
     }
     if(!defr && contains(line, "resistance=") ){
-      c.setResistance( Stats::fromString( cutFrom(line, '=') )  );
+      c.setResistance( toResistance(Stats::fromString( cutFrom(line, '=') )  ) );
       defr = true;
       continue;
     }
     if(!defa && contains(line, "attack=") ){
-      c.setAttack( Stats::fromString( cutFrom(line, '=') )  );
+      c.setAttack( toAttack(Stats::fromString( cutFrom(line, '=') )  ) );
       defa = true;
       continue;
     }
     if(!defs && contains(line, "stamina=") ){
-      c.setStamina(FRAMERATE*(4+Stats::fromString(cutFrom(line, '=')) ) );
+      c.setStamina( toStamina(Stats::fromString(cutFrom(line, '=')) ) );
       defs = true;
       continue;
     }
