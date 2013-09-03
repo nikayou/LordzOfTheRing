@@ -41,6 +41,7 @@
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <vector>
 
 
 /** init all required the game : 
@@ -86,7 +87,7 @@ void Game::loop(){
   while(m_window->isOpen() ){
     //we refresh at every time = frequency
     //read inputs
-    printf("Time : %f\nState : %d\n", getClock().getElapsedTime().asSeconds(), getState() );
+    //printf("Time : %f\nState : %d\n", getClock().getElapsedTime().asSeconds(), getState() );
     m_window->clear();
     //switching looping with game state
     switch(m_state){
@@ -108,7 +109,7 @@ void Game::loop(){
       break;
 
     case GameState::CHARACTER_SELECT :
-      loopCharacterSelect();
+      loopCharacterSelect( );
       break;
 
     case GameState::MATCH :
@@ -248,48 +249,6 @@ void Game::loopOptionsMenu(){
 }
 
 void Game::loopProfileMenu(){ 
-  char entry = '_';
-  do{
-    printf("\033c");
-    printf("Profile menu\n");
-    printf("---------------\n");
-    printf("1-Player 1's name : %s\n", getMatch()->getPlayer1()->getName().c_str() );
-    printf("2-Player 2's name : %s\n", getMatch()->getPlayer2()->getName().c_str() );
-    printf("3-Choose characters\n" );
-    printf("0-Quit\n");
-    printf("---------------\n");
-    printf(">");
-    std::cin>>entry;
-  }while(entry != '1' && entry != '2' && entry != '3' && entry != '0');
-  std::string s = "";
-  switch(entry){
-  case '1':
-    printf("New name : ");
-    std::cin>>s;
-    getMatch()->getPlayer1()->setName(s);
-    loopProfileMenu();
-    break;
-
-  case '2':
-    printf("New name : ");
-    std::cin>>s;
-    getMatch()->getPlayer2()->setName(s);
-    loopProfileMenu();
-    break;
-
-  case '3':
-    setState(GameState::CHARACTER_SELECT);
-    loopCharacterSelect();
-    break;
-
-  case '0':
-    close();
-    break;
-
-  default:
-    loopMainMenu();
-    break;
-  }
 
 }
 
@@ -307,77 +266,157 @@ void Game::loadCharacterSelect(){
 	TextureManager::getInstance()->remove(it->first);
       }
     }
-
+  CharacterManager::getInstance()->computeArray();
   Game::getInstance()->setState(GameState::CHARACTER_SELECT);
 }
 
 void Game::loopCharacterSelect(){
-  m_window->clear();
-  sf::RenderTexture rt;
-  rt.create(800, 600);
-  rt.clear(sf::Color::Black);
-  std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
+  sf::Event event;
+  while( m_window->pollEvent(event) ){
+    if(event.type == sf::Event::Closed){
+      close();
+    }else if(event.type ==sf::Event::KeyPressed ){
+      action a = Config::getInstance()->getAction( (Key)event.key.code);
+      if(a == (action)0 )
+	break;
+      if(Action::getType(a) == Action::ATTACK_MIDDLE ){
+        if(Action::getDoer(a) == 0){
+
+	}else{
+	  
+	}
+      }
+    }
+  }
+  sf::RenderTexture render;
+  render.create(800, 600);
+  render.clear(sf::Color::Black);
   sf::Sprite s;
   sf::Texture * t;
-  t = TextureManager::getInstance()->get("background")->getTexture();
-  s.setTexture(*t);
-  rt.draw(s);
+  Container ct(&render);
+  ct.setPosition(0, 0);
+  GUIWindow gw(m_window, &ct);
   //displaying characters labels
   float scale = 2.0;
   s.scale(scale, scale);
   s.setPosition(sf::Vector2f(400, -16) );
-  s.move(0, scale*32);
+  s.move(0, 32*scale);
   bool found1 = false, found2 = false; //will tell if we already know the character
-  for(std::map<std::string, Character >::iterator it = chars.begin() ; it != chars.end() ; ++it)
+  std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
+  for(std::vector< Character * >::iterator it = chars.begin() ; it != chars.end() ; ++it)
     {
-      std::string tex = "characters/" + it->second.getBasename() + "_menu.png";
+      std::string tex = "characters/" + (*it)->getBasename() + "_menu.png";
       t = TextureManager::getInstance()->get(tex)->getTexture();
       s.setTexture(*t);
       s.setTextureRect(sf::IntRect(0, 0, 32, 32 ) );
       s.setOrigin(16, 16);
-      rt.draw(s);
+      s.setScale(1, 1);
+      render.draw(s);
       t = TextureManager::getInstance()->get("sprites.png")->getTexture();
       s.setTextureRect(sf::IntRect(156, 0, 32, 32 ) );
       s.setTexture(*t);
-      rt.draw(s);
+      s.scale(scale, scale);
+      render.draw(s);
       //displaying little arrows if character is the current one
       s.setOrigin(3, 5);
-      if(!found1 && getMatch()->getCharacter1()->getBasename().compare(it->second.getBasename() ) == 0 ){
+      if(!found1 && getMatch()->getCharacter1()->getBasename().compare((*it)->getBasename() ) == 0 ){
 	found1 = true;
 	s.move(-20*scale, 0);
 	s.setTextureRect(sf::IntRect(188, 0, 6, 9) );	
-	rt.draw(s);
+	render.draw(s);
 	s.move(20*scale, 0);
-	std::cout<<"found1 : "<<getMatch()->getCharacter1()->getBasename()<<"-"<<it->second.getBasename()<<std::endl;
       }
-      if(!found2 && getMatch()->getCharacter2()->getBasename().compare(it->second.getBasename() ) == 0 ){
+      if(!found2 && getMatch()->getCharacter2()->getBasename().compare((*it)->getBasename() ) == 0 ){
 	found2 = true;
 	s.setTextureRect(sf::IntRect(188, 9, 6, 9) );
 	s.move(20*scale, 0);
-	rt.draw(s);
+	render.draw(s);
 	s.move(-20*scale, 0);
-	std::cout<<"found2 : "<<getMatch()->getCharacter2()->getBasename()<<"-"<<it->second.getBasename()<<std::endl;
       }
       s.move(0, scale*32);
     }
-sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
-  Button b_back(sf::Vector2u(80, 40), sf::Vector2f(350, 550), sf::Color(100, 50, 50) );
+  //displaying stats rulers
+  t = TextureManager::getInstance()->get("sprites.png")->getTexture();
+  s.setTexture(*t);
+  s.setTextureRect(sf::IntRect(128, 46, 99, 9) );
+  s.setOrigin(45, 5);
+  s.setPosition(sf::Vector2f(230, 480) );
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);  
+  s.setPosition(sf::Vector2f(570, 480) );
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);  
+  s.move(0, 32);
+  render.draw(s);
+  //displaying stats markers
+  s.setTextureRect(sf::IntRect(128, 55, 3, 13) );
+  s.setOrigin(2, 7);
+  s.setPosition(sf::Vector2f(230-(40*scale), 480) );
+  unsigned short value = 
+    value = (unsigned short)(Stats::baseHealth(getMatch()->getCharacter1()->getHealth() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseStamina(getMatch()->getCharacter1()->getStamina() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseResistance(getMatch()->getCharacter1()->getResistance() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseAttack(getMatch()->getCharacter1()->getAttack() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  //p2
+  s.setPosition(sf::Vector2f(570-(40*scale), 480) );
+  value = (unsigned short)(Stats::baseHealth(getMatch()->getCharacter2()->getHealth() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseStamina(getMatch()->getCharacter2()->getStamina() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseResistance(getMatch()->getCharacter2()->getResistance() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+  s.move(-value, 32);
+  value = (unsigned short)(Stats::baseAttack(getMatch()->getCharacter2()->getAttack() ) );
+  value *= 15*scale;
+  s.move(value, 0);
+  render.draw(s);
+
+  sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
+  Button b_back(sf::Vector2u(25, 25), sf::Vector2f(370, 550), sf::Color(100, 50, 50) );
   b_back.setBorderThickness(1);
-  b_back.setText(sf::Text("Back", *font, 22) );
+  b_back.setText(sf::Text("<-", *font, 16) );
   b_back.setTextToCenter();
   b_back.setAction( [this]()-> void{
       Game::getInstance()->setState(GameState::MAIN_MENU);
     } );
-  Button b_play(sf::Vector2u(80, 40), sf::Vector2f(450, 550), sf::Color(50,50, 100) );
+  Button b_play(sf::Vector2u(25, 25), sf::Vector2f(430, 550), sf::Color(50,50, 100) );
   b_play.setBorderThickness(1);
-  b_play.setText(sf::Text("Play", *font, 22) );
+  b_play.setText(sf::Text("->", *font, 16) );
   b_play.setTextToCenter();
   b_play.setAction( [this]()-> void{
       Game::getInstance()->loadMatch();
     } );
-  Container ct(&rt);
-  ct.setPosition(0, 0);
-  GUIWindow gw(m_window, &ct);
   gw.getContentPane()->add(&b_back);
   gw.getContentPane()->add(&b_play);
   gw.open(false);
@@ -448,8 +487,8 @@ void Game::loopMatch(){
       if(getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NONE ){
 	if(
 	   !( ( (Action::getType(a) == Action::ATTACK_LEFT)
-	     ||(Action::getType(a) == Action::ATTACK_MIDDLE)
-	     ||(Action::getType(a) == Action::ATTACK_RIGHT) )
+		||(Action::getType(a) == Action::ATTACK_MIDDLE)
+		||(Action::getType(a) == Action::ATTACK_RIGHT) )
 	      && !getMatch()->getCharacter(Action::getDoer(a) )->doHit() )
 	   )
 	  getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
@@ -635,7 +674,7 @@ void Game::pause(const sf::Int64& t0){
       if(Action::getType(a) == Action::PAUSE ){
 	setState(GameState::MATCH);
 	m_timer = sf::microseconds(t0);
-        break;
+	break;
       }
     }
 

@@ -7,6 +7,7 @@ Here we define a played character : they are like characters, but gets additiona
 #include "../headers/Character.hpp"
 #include "../headers/Game.hpp"
 
+#include <iostream> //delete
 #include <sstream>
 #include <string>
 #include <vector>
@@ -81,8 +82,14 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
 }
 
 unsigned short CharacterPlayed::loseStamina(const unsigned short& v){
-  unsigned short nextStamina = m_currentStamina - v;
-  return (m_currentStamina = nextStamina < m_currentStamina? nextStamina:0);
+  /* unsigned short nextStamina = m_currentStamina - v;
+  m_currentStamina = (nextStamina > m_currentStamina)?0:nextStamina;
+  if(0.0+(float)m_currentStamina/m_stamina <= 0.02){
+    std::cout<<"Stamina under 2%"<<std::endl;
+    setAction(Action::BREATHING);
+  }
+  return m_currentStamina;*/
+  return (m_currentStamina = (m_currentStamina-v)>m_currentStamina?0:m_currentStamina-v);
 }
 
 unsigned short CharacterPlayed::gainStamina(const unsigned short& v){
@@ -91,19 +98,21 @@ unsigned short CharacterPlayed::gainStamina(const unsigned short& v){
 
 void CharacterPlayed::manage(){
   Action::Framing f;
+  if(m_currentStamina == 0 && m_action != Action::ATTACK_LEFT && m_action != Action::ATTACK_MIDDLE && m_action != Action::ATTACK_RIGHT)
+    m_action = Action::BREATHING;
   switch(m_action){
   case Action::ATTACK_LEFT :
-    gainStamina(1);
+    //gainStamina(1);
     f = Action::Framing_AttackL;
     break;
 
   case Action::ATTACK_MIDDLE :
-    gainStamina(1);
+    //gainStamina(1);
     f = Action::Framing_AttackM;
     break;
 
   case Action::ATTACK_RIGHT :
-    gainStamina(1);
+    //gainStamina(1);
     f = Action::Framing_AttackR;
     break;
 

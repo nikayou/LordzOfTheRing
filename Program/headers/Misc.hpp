@@ -3,6 +3,7 @@
 
 #define MAX(x, y) ( (x)>(y) )?(x):(y)
 #define MIN(x,y) ( (x)>(y) )?(y):(x)
+#define ABS(x) ( (x) > 0)?(x):(-(x))
 typedef char byte;
 
 #include <string>
