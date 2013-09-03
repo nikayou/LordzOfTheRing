@@ -1,6 +1,6 @@
 /**
-Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
- */
+   Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
+*/
 
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Action.hpp"
@@ -83,12 +83,12 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
 
 unsigned short CharacterPlayed::loseStamina(const unsigned short& v){
   /* unsigned short nextStamina = m_currentStamina - v;
-  m_currentStamina = (nextStamina > m_currentStamina)?0:nextStamina;
-  if(0.0+(float)m_currentStamina/m_stamina <= 0.02){
-    std::cout<<"Stamina under 2%"<<std::endl;
-    setAction(Action::BREATHING);
-  }
-  return m_currentStamina;*/
+     m_currentStamina = (nextStamina > m_currentStamina)?0:nextStamina;
+     if(0.0+(float)m_currentStamina/m_stamina <= 0.02){
+     std::cout<<"Stamina under 2%"<<std::endl;
+     setAction(Action::BREATHING);
+     }
+     return m_currentStamina;*/
   return (m_currentStamina = (m_currentStamina-v)>m_currentStamina?0:m_currentStamina-v);
 }
 
@@ -104,20 +104,21 @@ void CharacterPlayed::manage(){
   switch(m_action){
   case Action::ATTACK_LEFT :
     if(m_currentStamina > 0)
-      gainStamina(1);
+      gainStamina(FRAMERATE/10);
     f = Action::Framing_AttackL;
     break;
 
   case Action::ATTACK_MIDDLE :
+    
     if(m_currentStamina > 0)
-      gainStamina(1);
+      gainStamina(FRAMERATE/10);
     f = Action::Framing_AttackM;
     break;
 
   case Action::ATTACK_RIGHT :
-    if(m_currentStamina > 0)
-      gainStamina(1);
     
+    if(m_currentStamina > 0)
+      gainStamina(FRAMERATE/10);
     f = Action::Framing_AttackR;
     break;
 
@@ -134,7 +135,7 @@ void CharacterPlayed::manage(){
     break;
 
   case Action::STROKE :
-    gainStamina(1);
+    gainStamina(FRAMERATE/10);
     f = Action::Framing_Stroke;
     break;
 
@@ -144,12 +145,12 @@ void CharacterPlayed::manage(){
 
   case Action::HAPPY :
     f = Action::Framing_Happy;
-    gainStamina(1);
+    gainStamina(FRAMERATE/10);
     break;
 
   case Action::RAISING :
     f = Action::Framing_Raising;
-    gainStamina(1);
+    gainStamina(FRAMERATE/10);
     break;
 
   case Action::STUN :
@@ -158,12 +159,12 @@ void CharacterPlayed::manage(){
 
   case Action::BREATHING :
     f = Action::Framing_Breathing;
-    gainStamina(1);
+    gainStamina(FRAMERATE/10);
     break;
 
   default:
     f = Action::Framing_None;
-    gainStamina(1);
+    gainStamina(FRAMERATE/10);
     break;
   }
 
