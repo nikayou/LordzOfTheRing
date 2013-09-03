@@ -96,23 +96,28 @@ unsigned short CharacterPlayed::gainStamina(const unsigned short& v){
   return (m_currentStamina = MIN(m_stamina, m_currentStamina+v) );
 }
 
+
 void CharacterPlayed::manage(){
   Action::Framing f;
   if(m_currentStamina == 0 && m_action != Action::ATTACK_LEFT && m_action != Action::ATTACK_MIDDLE && m_action != Action::ATTACK_RIGHT)
     m_action = Action::BREATHING;
   switch(m_action){
   case Action::ATTACK_LEFT :
-    //gainStamina(1);
+    if(m_currentStamina > 0)
+      gainStamina(1);
     f = Action::Framing_AttackL;
     break;
 
   case Action::ATTACK_MIDDLE :
-    //gainStamina(1);
+    if(m_currentStamina > 0)
+      gainStamina(1);
     f = Action::Framing_AttackM;
     break;
 
   case Action::ATTACK_RIGHT :
-    //gainStamina(1);
+    if(m_currentStamina > 0)
+      gainStamina(1);
+    
     f = Action::Framing_AttackR;
     break;
 
