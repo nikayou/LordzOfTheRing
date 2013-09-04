@@ -84,6 +84,7 @@ namespace Action{
   typedef enum{
     NORMAL = 0,
     ATTACKING,
+    
     DODGING,
     CRYING
   } State; //effective action (ex : the hit is not given when we press the key)

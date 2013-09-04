@@ -63,6 +63,9 @@ void Game::init(){
   Player p2("Barney");
   Match match(&p1, &p2, 90, 3);
   setMatch(&match);
+  sf::RenderTexture rt;
+  rt.create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
+  m_render = &rt;
   //starting loop
   //setState(GameState::CHARACTER_SELECT);
   setState(GameState::MAIN_MENU);
@@ -166,9 +169,7 @@ void Game::splash(){
 }
 
 void Game::loopMainMenu(){
-  sf::RenderTexture render;
-  render.create(800, 600);
-  render.clear(sf::Color::White);
+  m_render->clear(sf::Color::White);
   sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
   Button b_play(sf::Vector2u(200, 70) , sf::Vector2f(300, 200), sf::Color(60, 60, 60) );
   b_play.setBorderThickness(1);
@@ -199,7 +200,7 @@ void Game::loopMainMenu(){
       Game::getInstance()->close();
     }
     );
-  Container ct(&render);
+  Container ct(m_render);
   ct.add(&b_play);
   ct.add(&b_net);
   ct.add(&b_options);
@@ -255,8 +256,8 @@ void Game::loopProfileMenu(){
 void Game::loadCharacterSelect(){
   CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("sdard.chara") )  );
-  getMatch()->getPlayer2()->setCharacter(c2);
-  getMatch()->getPlayer1()->setCharacter(c1);
+  // getMatch()->getPlayer2()->setCharacter(c2);
+  //getMatch()->getPlayer1()->setCharacter(c1);
   std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
   for(std::map<std::string, Character >::iterator it = chars.begin() ; it != chars.end() ; ++it)
     {
@@ -271,29 +272,44 @@ void Game::loadCharacterSelect(){
 }
 
 void Game::loopCharacterSelect(){
+  std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
+  unsigned int size = chars.size();
   sf::Event event;
+  static unsigned int index1 = 0, index2 = 0;
+  
   while( m_window->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
       close();
     }else if(event.type ==sf::Event::KeyPressed ){
+      if(event.key.code == sf::Keyboard::Space){
+	CharacterPlayed c1 = (*chars[index1]);
+	CharacterPlayed c2 = (*chars[index2]);
+	getMatch()->getPlayer1()->setCharacter(c1);
+	getMatch()->getPlayer2()->setCharacter(c2);
+	loadMatch();
+	return;
+      }
       action a = Config::getInstance()->getAction( (Key)event.key.code);
-      if(a == (action)0 )
-	break;
       if(Action::getType(a) == Action::ATTACK_MIDDLE ){
         if(Action::getDoer(a) == 0){
-
+	  index1 = (index1 == 0 )?size-1:index1-1;
 	}else{
-	  
+	  index2 = (index2 == 0 )?size-1:index2-1;
+	}
+      }
+      if(Action::getType(a) == Action::DODGE_MIDDLE ){
+        if(Action::getDoer(a) == 0){
+	  index1 = (index1 == size-1 )?0:index1+1;
+	}else{
+	  index2 = (index2 == size-1 )?0:index2+1;
 	}
       }
     }
   }
-  sf::RenderTexture render;
-  render.create(800, 600);
-  render.clear(sf::Color::Black);
+  m_render->clear(sf::Color::Black);
   sf::Sprite s;
   sf::Texture * t;
-  Container ct(&render);
+  Container ct(m_render);
   ct.setPosition(0, 0);
   GUIWindow gw(m_window, &ct);
   //displaying characters labels
@@ -301,8 +317,6 @@ void Game::loopCharacterSelect(){
   s.scale(scale, scale);
   s.setPosition(sf::Vector2f(400, -16) );
   s.move(0, 32*scale);
-  bool found1 = false, found2 = false; //will tell if we already know the character
-  std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
   for(std::vector< Character * >::iterator it = chars.begin() ; it != chars.end() ; ++it)
     {
       std::string tex = "characters/" + (*it)->getBasename() + "_menu.png";
@@ -311,96 +325,87 @@ void Game::loopCharacterSelect(){
       s.setTextureRect(sf::IntRect(0, 0, 32, 32 ) );
       s.setOrigin(16, 16);
       s.setScale(1, 1);
-      render.draw(s);
+      m_render->draw(s);
       t = TextureManager::getInstance()->get("sprites.png")->getTexture();
       s.setTextureRect(sf::IntRect(156, 0, 32, 32 ) );
       s.setTexture(*t);
       s.scale(scale, scale);
-      render.draw(s);
-      //displaying little arrows if character is the current one
-      s.setOrigin(3, 5);
-      if(!found1 && getMatch()->getCharacter1()->getBasename().compare((*it)->getBasename() ) == 0 ){
-	found1 = true;
-	s.move(-20*scale, 0);
-	s.setTextureRect(sf::IntRect(188, 0, 6, 9) );	
-	render.draw(s);
-	s.move(20*scale, 0);
-      }
-      if(!found2 && getMatch()->getCharacter2()->getBasename().compare((*it)->getBasename() ) == 0 ){
-	found2 = true;
-	s.setTextureRect(sf::IntRect(188, 9, 6, 9) );
-	s.move(20*scale, 0);
-	render.draw(s);
-	s.move(-20*scale, 0);
-      }
-      s.move(0, scale*32);
-    }
+      m_render->draw(s);
+      s.move(0, 32*scale);
+    }	
+  //displaying little arrows 
+  s.setOrigin(3, 5);
+  s.setTextureRect(sf::IntRect(188, 0, 6, 9) );
+  s.setPosition(sf::Vector2f(400-20*scale, -16+(32*scale*(index1+1)) ) );
+  m_render->draw(s);
+  s.setTextureRect(sf::IntRect(188, 9, 6, 9) );
+  s.setPosition(sf::Vector2f(400+20*scale, -16+(32*scale*(index2+1)) ) );
+  m_render->draw(s);
   //displaying stats rulers
   t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   s.setTexture(*t);
   s.setTextureRect(sf::IntRect(128, 46, 99, 9) );
   s.setOrigin(45, 5);
   s.setPosition(sf::Vector2f(230, 480) );
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);  
+  m_render->draw(s);  
   s.setPosition(sf::Vector2f(570, 480) );
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);  
+  m_render->draw(s);  
   s.move(0, 32);
-  render.draw(s);
+  m_render->draw(s);
   //displaying stats markers
   s.setTextureRect(sf::IntRect(128, 55, 3, 13) );
   s.setOrigin(2, 7);
   s.setPosition(sf::Vector2f(230-(40*scale), 480) );
-  unsigned short value = 
-    value = (unsigned short)(Stats::baseHealth(getMatch()->getCharacter1()->getHealth() ) );
+  unsigned short value = (unsigned short)(Stats::baseHealth(chars[index1]->getHealth() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseStamina(getMatch()->getCharacter1()->getStamina() ) );
+  value = (unsigned short)(Stats::baseStamina(chars[index1]->getStamina() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseResistance(getMatch()->getCharacter1()->getResistance() ) );
+  value = (unsigned short)(Stats::baseResistance(chars[index1]->getResistance() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseAttack(getMatch()->getCharacter1()->getAttack() ) );
+  value = (unsigned short)(Stats::baseAttack(chars[index1]->getAttack() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   //p2
   s.setPosition(sf::Vector2f(570-(40*scale), 480) );
-  value = (unsigned short)(Stats::baseHealth(getMatch()->getCharacter2()->getHealth() ) );
+  value = (unsigned short)(Stats::baseHealth(chars[index2]->getHealth() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseStamina(getMatch()->getCharacter2()->getStamina() ) );
+  value = (unsigned short)(Stats::baseStamina(chars[index2]->getStamina() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseResistance(getMatch()->getCharacter2()->getResistance() ) );
+  value = (unsigned short)(Stats::baseResistance(chars[index2]->getResistance() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
   s.move(-value, 32);
-  value = (unsigned short)(Stats::baseAttack(getMatch()->getCharacter2()->getAttack() ) );
+  value = (unsigned short)(Stats::baseAttack(chars[index2]->getAttack() ) );
   value *= 15*scale;
   s.move(value, 0);
-  render.draw(s);
+  m_render->draw(s);
 
   sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
   Button b_back(sf::Vector2u(25, 25), sf::Vector2f(370, 550), sf::Color(100, 50, 50) );

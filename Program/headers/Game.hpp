@@ -9,6 +9,7 @@
 
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
 
@@ -33,6 +34,7 @@ private:
   Game() { sf::RenderWindow r; m_window = &r; };
   ~Game(){ };
   sf::RenderWindow * m_window;
+  sf::RenderTexture * m_render;
   GameState::state m_state;
   Match * m_match;
   sf::Clock m_clock;
