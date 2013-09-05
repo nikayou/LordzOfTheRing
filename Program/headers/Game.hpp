@@ -3,6 +3,7 @@
  */
 #include "../headers/Singleton.hpp"
 #include "../headers/Match.hpp"
+#include "../headers/StateHandler.hpp"
 
 #include <iostream> //delete
 #include <vector>
@@ -15,17 +16,6 @@
 
 #define FRAMERATE 10
 
-namespace GameState{
-  typedef enum{
-    SPLASH,
-    MAIN_MENU,
-    OPTIONS_MENU,
-    PROFILE_MENU,
-    CHARACTER_SELECT,
-    MATCH,
-    PAUSE
-  } state;
-}
 
 class Game : public Singleton<Game>{
   friend class Singleton<Game>;
@@ -35,25 +25,18 @@ private:
   ~Game(){ };
   sf::RenderWindow * m_window;
   sf::RenderTexture * m_render;
-  GameState::state m_state;
+  //GameState::state m_state;
+  StateHandler * m_stateHandler;
   Match * m_match;
-  sf::Clock m_clock;
-  sf::Time m_timer;
-  sf::Music m_music;
+  sf::Clock * m_clock;
+  sf::Time * m_timer;
+  sf::Music * m_music;
 
 public:
   void start();
   void init();
   void loop();
   void splash();
-  void loopMainMenu();
-  void loopOptionsMenu();
-  void loopProfileMenu();
-  void loadCharacterSelect();
-  void loopCharacterSelect();
-  void loadMatch();
-  void loopMatch();
-  void endMatch();
   void displayGauges();
   void displayClock();
   void displayCharacters();
@@ -64,28 +47,37 @@ public:
   Match * getMatch() const{
     return m_match;
   };
-  GameState::state getState() const{
-    return m_state;
+  StateHandler * getStateHandler() const{
+    return m_stateHandler;
   };
-  sf::Time getTimer() const{
+  sf::Time * getTimer() const{
     return m_timer;
   };
-  sf::Clock getClock() const{
+  sf::Clock * getClock() const{
     return m_clock;
   };
   sf::Int32 getMsTime() const{
-    return m_clock.getElapsedTime().asMilliseconds();
+    return m_clock->getElapsedTime().asMilliseconds();
   };
   float getTime() const{
-    return m_clock.getElapsedTime().asSeconds();
+    return m_clock->getElapsedTime().asSeconds();
   };
+  sf::RenderTexture * getRender() const{
+    return m_render;
+  };
+  sf::RenderWindow * getWindow() const{
+    return m_window;
+  };
+  sf::Music * getMusic() const{
+      return m_music;
+    };
   //setters
   void setMatch(Match * m){
     m_match = m;
   };
-  void setState(const GameState::state& s){
-    std::cout<<"new state : "<<s<<std::endl;
-    m_state = s;
+  //others
+  void addTime(const sf::Time &s){
+
   };
 
 };

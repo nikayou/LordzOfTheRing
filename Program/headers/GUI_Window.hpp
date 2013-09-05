@@ -2,6 +2,7 @@
 #define GUIWINDOW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Mouse.hpp>
 
 #include "../headers/GUI_Container.hpp"
 
