@@ -69,7 +69,6 @@ void Game::init(){
   //starting loop
   //setState(GameState::CHARACTER_SELECT);
   setState(GameState::MAIN_MENU);
-  std::cout<<"Game initialized"<<std::endl;
   m_music.openFromFile("../../resources/audio/menu1.ogg");
   m_music.setVolume(Config::getInstance()->getMusicVolume() );
   m_music.play();
@@ -210,43 +209,6 @@ void Game::loopMainMenu(){
 }
 
 void Game::loopOptionsMenu(){  
-  char entry = '_';
-  do{
-    printf("\033c");
-    printf("Options menu\n");
-    printf("---------------\n");
-    printf("Resolution : %d x %d\n", Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
-    printf("Volume : music = %d - sound = %d\n", Config::getInstance()->getMusicVolume(), Config::getInstance()->getSoundVolume() );
-    printf("Inputs : \n");
-    printf("Volume : music = %d - sound = %d\n", Config::getInstance()->getMusicVolume(), Config::getInstance()->getSoundVolume() );
-    printf("---------------\n");
-    printf("1-Change resolution\n");
-    printf("2-Change volume\n");
-    printf("3-Change inputs\n");
-    printf("0-Quit\n");
-    printf("---------------\n");
-    printf(">");
-    std::cin>>entry;
-  }while(entry != '1' && entry != '2' && entry != '3' && entry != '0');
-  switch(entry){
-  case '1':
-    break;
-
-  case '2':
-    break;
-
-  case '3':
-    break;
-
-  case '0':
-    close();
-    break;
-
-  default:
-    loopMainMenu();
-    break;
-  }
-
 }
 
 void Game::loopProfileMenu(){ 
@@ -256,8 +218,6 @@ void Game::loopProfileMenu(){
 void Game::loadCharacterSelect(){
   CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("sdard.chara") )  );
-  // getMatch()->getPlayer2()->setCharacter(c2);
-  //getMatch()->getPlayer1()->setCharacter(c1);
   std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
   for(std::map<std::string, Character >::iterator it = chars.begin() ; it != chars.end() ; ++it)
     {
@@ -443,14 +403,12 @@ void Game::loadMatch(){
   TextureManager::getInstance()->get("sprites.png")->getTexture();
   std::string file = "characters/";
   // character 2
-  unsigned int frame = c2->getFrame();
   file += c2->getBasename();
   file += "_front.png";
   TextureManager::getInstance()->get(file)->getTexture();
   file = c2->getBasename();
   file += "_front.sprt";
   SpritesheetManager::getInstance()->get(file);
-  frame = c1->getFrame();
   file = "characters/";
   file += c1->getBasename();
   file += "_back.png";
@@ -474,8 +432,8 @@ void Game::loopMatch(){
     m_timer += sf::seconds(1);
     m_clock.restart();
   }
-  printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
-  printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
+  //printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
+  // printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
   sf::Event event;
   while( m_window->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
@@ -499,7 +457,6 @@ void Game::loopMatch(){
 	  getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
       }else{
 	//player is already performing an action
-	printf("Cannot do an action until the curent is done\n");
       }
     }
 
@@ -532,7 +489,6 @@ void Game::displayGauges(){
   float percent = 0.0+c1->getCurrentHealth();
   percent /= c1->getHealth();
   percent *= 150;
-  std::cout<<"health : "<<percent<<"%"<<std::endl;
   s.setTextureRect(sf::IntRect(0, 16, 3+(percent), 16) );
   m_window->draw(s);
   //p2 red
@@ -543,11 +499,10 @@ void Game::displayGauges(){
   percent = 0.0+c2->getCurrentHealth();
   percent /= c2->getHealth();
   percent *= 150;
-  std::cout<<"health : "<<percent<<"%"<<std::endl;
   s.setPosition (sf::Vector2f(width-(156-(150-percent) )*scale, 26) );
   s.setTextureRect(sf::IntRect(0, 16, 4+percent, 16) );
   m_window->draw(s);
-  
+ 
   //stamina bars
   s.setTextureRect(sf::IntRect(0, 32, 104, 8) );
   s.setPosition(sf::Vector2f(0, 70) );
@@ -555,7 +510,6 @@ void Game::displayGauges(){
   percent = 0.0+c1->getCurrentStamina();
   percent /= c1->getStamina();
   percent *= 100;
-  std::cout<<"Stamina : "<<percent<<"%"<<std::endl;
   s.setTextureRect(sf::IntRect(0, 40, 2+percent, 6) );
   m_window->draw(s);
   //p2
@@ -565,7 +519,6 @@ void Game::displayGauges(){
   percent = 0.0+c2->getCurrentStamina();
   percent /= c2->getStamina();
   percent *= 100;
-  std::cout<<"Stamina : "<<c2->getCurrentStamina()<<" -> "<<percent<<"%"<<std::endl;
   s.setPosition(sf::Vector2f(width-(104-(100-percent) )*scale, 70 ) );
   s.setTextureRect(sf::IntRect(0, 40, 3+percent, 6) );
   m_window->draw(s);
@@ -604,14 +557,12 @@ void Game::displayClock(){
 void Game::displayCharacters(){
   CharacterPlayed * c1 = getMatch()->getCharacter1();
   CharacterPlayed * c2 = getMatch()->getCharacter2();
-  float width = Config::getInstance()->getWindowWidth();
   sf::Sprite s;
   Spritesheet * ss;
   sf::Texture * t;
   //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
   std::string file = "characters/";
   // character 2
-  unsigned int frame = c2->getFrame();
   file += c2->getBasename();
   file += "_front.png";
   t = TextureManager::getInstance()->get(file)->getTexture();
@@ -628,8 +579,7 @@ void Game::displayCharacters(){
     s.scale(2.0, 2.0);
     m_window->draw(s);
   }
-  // character 2
-  frame = c1->getFrame();
+  // character 1
   file = "characters/";
   file += c1->getBasename();
   file += "_back.png";
@@ -658,9 +608,7 @@ void Game::displayMatch(){
   s.setTexture(*t);
   s.setPosition(sf::Vector2f(0, 0) );
   m_window->draw(s);
-  std::cout<<"displaying characters"<<std::endl;
   displayCharacters();
-  std::cout<<"displayed characters"<<std::endl;
   displayGauges();
   displayClock();
 }
@@ -668,7 +616,6 @@ void Game::displayMatch(){
 
 
 void Game::pause(const sf::Int64& t0){
-  printf("pause\n");
   displayMatch();
   sf::Event event;
   while( m_window->pollEvent(event) ){
@@ -682,15 +629,12 @@ void Game::pause(const sf::Int64& t0){
 	break;
       }
     }
-
   }
-
 }
 
 /** Closes the game
  **/
 void Game::close(){
-  std::cout<<"closing"<<std::endl;
   TextureManager::getInstance()->remove("background.png");
   TextureManager::getInstance()->remove("sprites.png");
   m_window->close();
