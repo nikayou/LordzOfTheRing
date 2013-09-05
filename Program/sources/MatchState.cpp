@@ -25,6 +25,7 @@ void MatchState::update(){
     Game::getInstance()->addTime(sf::seconds(1) );
     Game::getInstance()->getClock()->restart();
   }
+  std::cout<<"update says : "<<Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() )<<std::endl;
   sf::Event event;
   while( Game::getInstance()->getWindow()->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
@@ -145,6 +146,7 @@ void MatchState::displayClock(){
   m_render->draw(s);  
   unsigned short time;
   time = Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() );
+  std::cout<<"render says : "<<Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) <<std::endl;
   if(time > 0){ // if time is infinity, we are not displaying time
     //get time remaining
     //displaying 100'

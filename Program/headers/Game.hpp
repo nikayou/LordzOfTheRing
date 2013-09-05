@@ -77,7 +77,7 @@ public:
   };
   //others
   void addTime(const sf::Time &s){
-
+    *m_timer += s;
   };
 
 };
