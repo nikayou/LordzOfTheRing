@@ -23,6 +23,7 @@ private:
 public:
   Container();
   Container(sf::RenderTexture *);
+  ~Container();
   // getters
   inline sf::RenderTexture * getContent() const { return mContent; };
   inline GUIWindow * getContainer() const { return mContainer; };

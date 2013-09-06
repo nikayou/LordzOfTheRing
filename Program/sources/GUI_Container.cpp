@@ -21,6 +21,10 @@ Container::Container(sf::RenderTexture* rt){
   mContainer = NULL;
 }
 
+Container::~Container(){
+
+}
+
 bool Container::add(Component * c){
   mComponents.push_back(c);
   return true;
@@ -42,6 +46,8 @@ void Container::updateFocus(){
 void Container::click(const sf::Vector2i& pos){
   unsigned int nb = mComponents.size();
   for(unsigned int i = 0; i < nb; i++){
+    if(i >= mComponents.size() || mComponents[i] == NULL)
+      return;
     if(mComponents[i]->getClass().compare("Button") == 0){
       Button * b = (Button *) mComponents[i];
       if(b->contains(pos) )

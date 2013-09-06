@@ -13,13 +13,11 @@
 const std::string MainMenuState::m_mainMenuID = "MAIN_MENU";
 
 void MainMenuState::update(){
-std::cout<<"update menu state"<<std::endl;
+  m_window->update();
 }
 
 void MainMenuState::render(){
-  std::cout<<"rendering menu state"<<std::endl;
   m_window->draw();
-  std::cout<<"rendered menu state"<<std::endl;
 }
 
 bool MainMenuState::enter(){
@@ -29,15 +27,16 @@ bool MainMenuState::enter(){
   b_play->setText(sf::Text("Play", *font, 32 ) );
   b_play->setTextToCenter();
   b_play->setAction( [ this]() -> void{
+      m_window->setContentPane(NULL);
+      std::cout<<"content pane nulled"<<std::endl;
       Game::getInstance()->getStateHandler()->change( new CharacterState() ) ;
-      std::cout<<"menu char"<<std::endl;
     } );
   Button * b_net = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), sf::Color(60, 60, 60) );
   b_net->setBorderThickness(1);
   b_net->setText(sf::Text("Net", *font, 32 ) );
   b_net->setTextToCenter();
   b_net->setAction( [&b_net, this]() ->void{
-      
+      //
     } );
   Button * b_options = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 400), sf::Color(60, 60, 60) );
   b_options->setBorderThickness(1);
@@ -54,8 +53,9 @@ bool MainMenuState::enter(){
       Game::getInstance()->close();
     }
     );
-  m_render = new sf::RenderTexture();
-  m_render->create(800, 600);
+  //m_render = new sf::RenderTexture();
+  //m_render->create(800, 600);
+  m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_container->add(b_play);
   m_container->add(b_net);
@@ -66,18 +66,25 @@ bool MainMenuState::enter(){
   m_buttons.push_back(b_options);
   m_buttons.push_back(b_quit);
   m_window = new GUIWindow(Game::getInstance()->getWindow(), m_container);
-  std::cout << "entering MenuState\n";
   return true;
 }
 
 bool MainMenuState::exit(){
-  std::cout << "exiting MenuState\n"<<std::endl;
-  /*delete m_window;
-  delete m_container;
-  delete m_buttons[3];
-  delete m_buttons[2];
-  delete m_buttons[1];
-  delete m_buttons[0];*/
-  std::cout<< "exited menustate"<<std::endl;
-  return true;
+    //delete m_window;
+  //delete m_container;
+  //delete m_buttons[3];
+  //delete m_buttons[2];
+  //delete m_buttons[1];
+  //delete m_buttons[0];
+    return true;
+}
+
+void MainMenuState::deleteAll(){
+  //delete m_buttons[3];
+  //delete m_buttons[2];
+  //delete m_buttons[1];
+  //delete m_buttons[0];
+  //delete m_container;
+  //delete m_window;
+  //delete m_render;
 }

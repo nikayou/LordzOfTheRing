@@ -155,18 +155,23 @@ void Game::close(){
   TextureManager::getInstance()->remove("background.png");
   TextureManager::getInstance()->remove("sprites.png");
   m_window->close();
-  delete m_music;
-  delete m_timer;
-  delete m_clock;
-  delete m_match;
-  delete m_stateHandler;
-  delete m_render;
-  delete m_window;
+  delete( m_music);
+  delete( m_timer);
+  delete( m_clock);
+  delete(m_match);
+  delete(m_stateHandler);
+  delete( m_render);
+  delete( m_window);
 }
 
 
 
 int main(){
+  Character * c = new Character();
+  std::cout << "c ="<<c<<std::endl;
+  delete c;
+  c = NULL;
+  std::cout << "c ="<<c<<std::endl;
   Game::getInstance()->start();
   return 0;
 }

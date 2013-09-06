@@ -33,23 +33,30 @@ GUIWindow::GUIWindow(sf::RenderWindow * w, Container * c){
   mContentPane->setContainer(this);
 }
 
+GUIWindow::~GUIWindow(){
+  //mContentPane->~Container();
+}
+
 void GUIWindow::setContentPane(Container * c ){
   mContentPane = c;
   if(mContentPane != NULL)
     mContentPane->setContainer(this);
 }
 
+void GUIWindow::update(){
+  if(sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+    mContentPane->click( );
+}
+
 void GUIWindow::draw(){
   sf::Sprite s;
-    //controls
-    sf::Event event;
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left) )
-	  mContentPane->click( );
-    mContentPane->draw();
-    s.setTexture( mContentPane->getContent()->getTexture()  );
-    s.setPosition( sf::Vector2f(mContentPane->getX(), mContentPane->getY() )  );
-    mWindow->draw(s);
-  }
+  //controls
+  sf::Event event;
+  mContentPane->draw();
+  s.setTexture( mContentPane->getContent()->getTexture()  );
+  s.setPosition( sf::Vector2f(mContentPane->getX(), mContentPane->getY() )  );
+  mWindow->draw(s);
+}
 
 
 /* opens the window and gives it forced focus (or not) */

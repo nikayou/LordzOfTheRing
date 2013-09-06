@@ -10,11 +10,13 @@ void StateHandler::push(GameState * s){
 }
 
 void StateHandler::change(GameState * s){
+  GameState * g = NULL;
   if(!m_states.empty() ){
     if(m_states.back()->getID().compare( s->getID() ) == 0){
       return;
     }
-    if(m_states.back() ->exit() ){
+    if(m_states.back()->exit() ){
+      m_states.back()->deleteAll();
       delete m_states.back();
       m_states.pop_back();
       std::cout<<"deleted state"<<std::endl;

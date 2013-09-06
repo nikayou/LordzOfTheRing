@@ -249,7 +249,7 @@ namespace Action{
   Framing initFramingBreathing(){
     Framing _f;
     _f.nb_frames = 18;
-    _f.change_state = -1;
+    _f.change_state = 0;
     _f.return_state = 17;
     _f.state = NORMAL;
     return _f;

@@ -23,6 +23,7 @@ public:
   GUIWindow();
   GUIWindow(sf::RenderWindow *);
   GUIWindow(sf::RenderWindow *, Container *);
+  ~GUIWindow();
   // getters
   inline Container * getContentPane() const { return mContentPane; }
   inline sf::RenderWindow * getWindow() const { return mWindow; };
@@ -33,6 +34,7 @@ public:
   /* opens the window and gives it forced focus (or not) */
   void open(const bool&);
   sf::Vector2i getMouse() const { return sf::Mouse::getPosition(*mWindow); }; 
+  void update();
   /* running drawings and displaying */
   void draw();
 

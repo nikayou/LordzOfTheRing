@@ -31,7 +31,6 @@ void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE:BASE_STRIKE;
     hit += getCharacter(a)->getAttack();
-    std::cout<<b<<" takes a hit of "<<hit<<std::endl;
     getCharacter(b)->takeHit(hit);
     if( checkKO(b) ){
       getCharacter(b)->setAction(Action::KO);
@@ -64,8 +63,14 @@ bool Match::checkHit(const unsigned short& a, const unsigned short& b){
       || 
       ( ( p1->getAction() == Action::ATTACK_RIGHT ) && (p2->getAction() != Action::DODGE_RIGHT) )
       ){
-    if(p1->getState() == Action::ATTACKING && p2->getState() != Action::DODGING ){
-    return true;
+    if(p1->getState() == Action::ATTACKING) {
+      if(p2->getState() != Action::DODGING ){
+	return true;
+      }
+      else{
+	p2->zeroHits();
+	return false;
+      }
     }
   }
   return false;

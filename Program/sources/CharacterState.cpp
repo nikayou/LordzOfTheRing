@@ -33,7 +33,6 @@ void CharacterState::confirmCharacters(){
 }
 
 void CharacterState::update(){
-  std::cout<<"updating char"<<std::endl;
   std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
   unsigned int size = chars.size();
   sf::Event event;
@@ -68,8 +67,7 @@ void CharacterState::update(){
 }
 
 void CharacterState::render(){
-  std::cout<<"rendering char"<<std::endl;
-  m_render->clear(sf::Color::Black);
+   m_render->clear(sf::Color::Black);
   sf::Sprite s;
   sf::Texture * t;
   //displaying characters labels
@@ -184,7 +182,6 @@ bool CharacterState::enter(){
       }
     }
   CharacterManager::getInstance()->computeArray();
-  //Game::getInstance()->setState(GameState::CHARACTER_SELECT);
   m_index1 = 0;
   m_index2 = 1;
 
@@ -205,25 +202,32 @@ bool CharacterState::enter(){
       Game::getInstance()->getStateHandler()->change(new MatchState() );
       return;
     } );
-  m_render = new sf::RenderTexture();
-  m_render->create(800, 600);
+  //m_render = new sf::RenderTexture();
+  //m_render->create(800, 600);
+  m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_container->add(b_back);
   m_container->add(b_play);
   m_buttons.push_back(b_back);
   m_buttons.push_back(b_play);
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
-  std::cout<<"loaded menu char"<<std::endl;
-  return true;
+    return true;
 }
 
 bool CharacterState::exit(){
-  std::cout << "exiting Charstate\n";
-  /* delete m_window;
-  delete m_container;
-  delete m_render;
-  delete m_buttons[1];
-  delete m_buttons[0];*/
+   //delete m_window;
+  //delete m_container;
+  //delete m_render;
+  //delete m_buttons[1];
+  //delete m_buttons[0];
 
   return true;
+}
+
+void CharacterState::deleteAll(){
+  delete m_window;
+  delete m_container;
+  //delete m_render;
+  delete m_buttons[1];
+  delete m_buttons[0];
 }

@@ -21,7 +21,7 @@ class Game : public Singleton<Game>{
   friend class Singleton<Game>;
 
 private:
-  Game() { sf::RenderWindow r; m_window = &r; };
+  Game() { };
   ~Game(){ };
   sf::RenderWindow * m_window;
   sf::RenderTexture * m_render;

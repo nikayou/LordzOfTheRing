@@ -18,14 +18,10 @@
 const std::string MatchState::m_matchID = "MATCH";
 
 void MatchState::update(){
-  std::cout<<"updating matchState"<<std::endl;
-  
   if(Game::getInstance()->getClock()->getElapsedTime().asSeconds() >= 1){
-    std::cout<<"1 sec pasts"<<std::endl;
     Game::getInstance()->addTime(sf::seconds(1) );
     Game::getInstance()->getClock()->restart();
   }
-  std::cout<<"update says : "<<Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() )<<std::endl;
   sf::Event event;
   while( Game::getInstance()->getWindow()->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
@@ -58,9 +54,6 @@ void MatchState::update(){
 
 
 void MatchState::render(){
-  std::cout<<"rendering matchState"<<std::endl;
-  //printf("player1 : %p\n%s\n", getMatch()->getCharacter1(), getMatch()->getCharacter1()->toString().c_str() );
-  // printf("player2 : %p\n%s\n", getMatch()->getCharacter2(), getMatch()->getCharacter2()->toString().c_str() );
   //drawing order : 
   //background, opponent, opponent's spec, player's spec, player,
   // background
@@ -146,9 +139,7 @@ void MatchState::displayClock(){
   m_render->draw(s);  
   unsigned short time;
   time = Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() );
-  std::cout<<"render says : "<<Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) <<std::endl;
   if(time > 0){ // if time is infinity, we are not displaying time
-    //get time remaining
     //displaying 100'
     s.setTextureRect(sf::IntRect( (28*(time/100) ), 111, 28, 36) );
     s.setPosition(width/2-64+16, 10+ 14);
@@ -212,7 +203,6 @@ void MatchState::displayCharacters(){
 
 
 bool MatchState::enter(){
-  std::cout<<"entering matchState"<<std::endl;
   Game::getInstance()->getMusic()->stop();
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
@@ -245,8 +235,9 @@ bool MatchState::enter(){
     Game::getInstance()->getMusic()->play();
   c1->gainStamina(600);
   c2->gainStamina(600);
-  m_render = new sf::RenderTexture();
-  m_render->create(800, 600);
+  //m_render = new sf::RenderTexture();
+  //m_render->create(800, 600);
+  m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
   return true;
@@ -254,6 +245,15 @@ bool MatchState::enter(){
 
 
 bool MatchState::exit(){
-  std::cout<<"exiting matchState"<<std::endl;
+  //delete m_container;
+  //delete m_window;
+  //delete m_render;
   return true;
+}
+
+void MatchState::deleteAll(){
+  delete m_container;
+  delete m_window;
+  // delete m_render;
+
 }

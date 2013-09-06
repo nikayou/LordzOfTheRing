@@ -6,6 +6,7 @@
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
 #include "../headers/Game.hpp"
+#include "../headers/Random.hpp"
 
 #include <iostream> //delete
 #include <sstream>
@@ -29,6 +30,7 @@ CharacterPlayed::CharacterPlayed(
   m_action = Action::NONE;
   m_frame = 0;
   m_state = Action::NORMAL;
+  m_receivedHits = 0;
 }
 
 CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
@@ -43,6 +45,7 @@ CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
   m_action = c.getAction();
   m_frame = c.getFrame();
   m_state = c.getState();
+  m_receivedHits = 0;
 }
 
 CharacterPlayed::CharacterPlayed(const Character& c){
@@ -57,14 +60,13 @@ CharacterPlayed::CharacterPlayed(const Character& c){
   m_action = Action::NONE;
   m_frame = 0;
   m_state = Action::NORMAL;
+  m_receivedHits = 0;
 }
 
 void CharacterPlayed::addFrame(const Action::Framing& f){
   m_frame++;
   if(m_frame >= f.nb_frames){
-    m_frame = 0;
-    m_action = Action::NONE; //action is over, come back to normal
-    m_state = Action::NORMAL;
+    actionEnd();
   }else if(m_frame == f.change_state){
     setState(f.state);
   }else if(m_frame == f.return_state){
@@ -169,15 +171,12 @@ void CharacterPlayed::manage(){
   }
 
   addFrame(f);
-  checkActionEnd(f);
 }
 
 void CharacterPlayed::takeHit(const unsigned short& dmg){
   setAction(Action::STROKE);
   loseHealth(dmg);
   m_receivedHits++;
-  if(m_receivedHits > m_resistance)
-    setAction(Action::STUN);
 }
 
 bool CharacterPlayed::doHit(){
@@ -187,11 +186,20 @@ bool CharacterPlayed::doHit(){
   return true;
 }
 
-void CharacterPlayed::checkActionEnd(const Action::Framing& f){
-  if( m_frame >= f.nb_frames){
-    setAction(Action::NONE);
-    m_state = Action::NORMAL;
+void CharacterPlayed::actionEnd(){
+  if(m_action == Action::STROKE && m_receivedHits >= 3){
+    unsigned int r = Random::getInstance()->get(0, 100);
+    if(r <= 50.0 + ( (m_receivedHits-3)*m_resistance) ){
+      zeroHits();
+      m_action = Action::STUN;
+      m_state = Action::NORMAL;
+      m_frame = 0;
+      return;
+    }
   }
+  m_frame = 0;
+  setAction(Action::NONE);
+  m_state = Action::NORMAL;
 }
 
 std::string CharacterPlayed::toString(){

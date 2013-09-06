@@ -23,6 +23,7 @@ public:
   virtual bool enter() = 0;
   virtual bool exit() = 0;
   virtual std::string getID() const = 0;
+  virtual void deleteAll() = 0;
 
 
 };

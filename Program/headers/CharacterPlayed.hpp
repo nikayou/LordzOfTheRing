@@ -8,6 +8,7 @@ Here we define a played character : they are like characters, but gets additiona
 #include "../headers/Character.hpp"
 #include "../headers/Action.hpp"
 
+#include <iostream> //delete
 #include <string>
 #include <vector>
 
@@ -56,6 +57,7 @@ public:
   void setAction(const Action::Type& v){
     m_action = v;
     m_frame = 0;
+    std::cout<<"new action"<<v<<std::endl;
   };
   void setFrame(const unsigned short& v){
     m_frame = v;
@@ -66,7 +68,7 @@ public:
   //others
   void takeHit(const unsigned short&);
   bool doHit();
-  void checkActionEnd(const Action::Framing& t);
+  void actionEnd();
   void addFrame(const Action::Framing&);
   unsigned short loseHealth(const unsigned short&);
   unsigned short gainHealth(const unsigned short&);
@@ -74,7 +76,8 @@ public:
   unsigned short gainStamina(const unsigned short&);
   void manage();
   std::string toString();
-  bool inEffort(); //tells if the character is doing an effort (in this case, no stamina gain)
+  //bool inEffort(); //tells if the character is doing an effort (in this case, no stamina gain)
+  void zeroHits(){ m_receivedHits = 0; };
 
 };
 

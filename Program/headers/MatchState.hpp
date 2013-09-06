@@ -13,6 +13,7 @@ public:
   virtual void render();
   virtual bool enter();
   virtual bool exit();
+  virtual void deleteAll();
   virtual std::string getID() const { return m_matchID; }
 
 private:
