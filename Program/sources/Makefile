@@ -21,6 +21,7 @@ show:
 $(PROGRAM):$(OBJECTS)
 	@echo "building "$@;
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
+	cp $(PROGRAM) ../$(PROGRAM)
 
 %.o:%.cpp
 	@echo "building "$@;

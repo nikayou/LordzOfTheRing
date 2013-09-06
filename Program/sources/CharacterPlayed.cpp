@@ -84,14 +84,8 @@ unsigned short CharacterPlayed::gainHealth(const unsigned short& v){
 }
 
 unsigned short CharacterPlayed::loseStamina(const unsigned short& v){
-  /* unsigned short nextStamina = m_currentStamina - v;
-     m_currentStamina = (nextStamina > m_currentStamina)?0:nextStamina;
-     if(0.0+(float)m_currentStamina/m_stamina <= 0.02){
-     std::cout<<"Stamina under 2%"<<std::endl;
-     setAction(Action::BREATHING);
-     }
-     return m_currentStamina;*/
-  return (m_currentStamina = (m_currentStamina-v)>m_currentStamina?0:m_currentStamina-v);
+  unsigned short nextStamina = m_currentStamina - v;
+  return (m_currentStamina = nextStamina<m_currentStamina? nextStamina:0 );
 }
 
 unsigned short CharacterPlayed::gainStamina(const unsigned short& v){
@@ -180,7 +174,7 @@ void CharacterPlayed::takeHit(const unsigned short& dmg){
 }
 
 bool CharacterPlayed::doHit(){
-  if(m_currentStamina < 2*FRAMERATE) 
+  if(m_currentStamina < FRAMERATE) 
     return false;
   loseStamina(2*FRAMERATE);
   return true;
