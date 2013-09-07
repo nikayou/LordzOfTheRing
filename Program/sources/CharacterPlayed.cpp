@@ -2,13 +2,17 @@
    Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
 */
 
+/*
+CharacterPlayed are Characters with additionnal attributes necessary for match.
+
+ */
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
 #include "../headers/Game.hpp"
 #include "../headers/Random.hpp"
 
-#include <iostream> //delete
+//#include <iostream> //delete
 #include <sstream>
 #include <string>
 #include <vector>

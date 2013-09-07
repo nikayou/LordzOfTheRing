@@ -167,11 +167,6 @@ void Game::close(){
 
 
 int main(){
-  Character * c = new Character();
-  std::cout << "c ="<<c<<std::endl;
-  delete c;
-  c = NULL;
-  std::cout << "c ="<<c<<std::endl;
   Game::getInstance()->start();
   return 0;
 }

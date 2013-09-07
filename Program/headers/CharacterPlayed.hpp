@@ -1,6 +1,6 @@
 /**
-Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
- */
+   Here we define a played character : they are like characters, but gets additional attributes, necessary for in-game treatment
+*/
 
 #ifndef CHARACTERPLAYED_HPP
 #define CHARACTERPLAYED_HPP
@@ -8,7 +8,6 @@ Here we define a played character : they are like characters, but gets additiona
 #include "../headers/Character.hpp"
 #include "../headers/Action.hpp"
 
-#include <iostream> //delete
 #include <string>
 #include <vector>
 
@@ -57,7 +56,6 @@ public:
   void setAction(const Action::Type& v){
     m_action = v;
     m_frame = 0;
-    std::cout<<"new action"<<v<<std::endl;
   };
   void setFrame(const unsigned short& v){
     m_frame = v;
@@ -76,7 +74,6 @@ public:
   unsigned short gainStamina(const unsigned short&);
   void manage();
   std::string toString();
-  //bool inEffort(); //tells if the character is doing an effort (in this case, no stamina gain)
   void zeroHits(){ m_receivedHits = 0; };
 
 };

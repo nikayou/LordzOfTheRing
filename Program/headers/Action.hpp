@@ -122,7 +122,6 @@ namespace Action{
   Framing initFramingHappy();
   Framing initFramingStun();
   Framing initFramingBreathing();
-  //Framing * getFraming(const std::string&);
 }
 
 

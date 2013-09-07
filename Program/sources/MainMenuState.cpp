@@ -1,3 +1,4 @@
+/* Main menu gamestate */
 #include "../headers/MainMenuState.hpp"
 #include "../headers/GameState.hpp"
 #include "../headers/CharacterState.hpp"
@@ -28,7 +29,6 @@ bool MainMenuState::enter(){
   b_play->setTextToCenter();
   b_play->setAction( [ this]() -> void{
       m_window->setContentPane(NULL);
-      std::cout<<"content pane nulled"<<std::endl;
       Game::getInstance()->getStateHandler()->change( new CharacterState() ) ;
     } );
   Button * b_net = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), sf::Color(60, 60, 60) );
@@ -53,8 +53,6 @@ bool MainMenuState::enter(){
       Game::getInstance()->close();
     }
     );
-  //m_render = new sf::RenderTexture();
-  //m_render->create(800, 600);
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_container->add(b_play);

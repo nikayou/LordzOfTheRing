@@ -1,5 +1,5 @@
 #ifndef MAINMENUSTATE_HPP
-#define MAINEMENUSTATE_HPP
+#define MAINMENUSTATE_HPP
 
 #include "../headers/GameState.hpp"
 #include "../headers/GUI_Button.hpp"

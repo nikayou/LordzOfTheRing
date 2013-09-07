@@ -1,7 +1,6 @@
 #include "../headers/StateHandler.hpp"
 #include "../headers/GameState.hpp"
 
-#include <iostream> //delete
 #include <vector>
 
 void StateHandler::push(GameState * s){
@@ -19,7 +18,6 @@ void StateHandler::change(GameState * s){
       m_states.back()->deleteAll();
       delete m_states.back();
       m_states.pop_back();
-      std::cout<<"deleted state"<<std::endl;
     }
   }
   m_states.push_back(s);

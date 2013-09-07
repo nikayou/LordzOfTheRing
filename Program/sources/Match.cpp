@@ -1,7 +1,6 @@
 #include "../headers/Match.hpp"
 #include "../headers/Game.hpp"
 
-#include <iostream> //delete
 #include <sstream>
 /**
    Here we define a match : two players and gaming options 
@@ -46,12 +45,10 @@ void Match::checkHits(){
   //check if someone hits, loses health and is KO
   subCheckHits(0, 1);
   subCheckHits(1, 0);
-
 }
 
 void Match::KO(const unsigned short& p){
   //Game::getInstance()->setState(GameState::CHARACTER_SELECT);
-  std::cout<<"KO - GAME OVER"<<std::endl;
 }
 
 bool Match::checkHit(const unsigned short& a, const unsigned short& b){

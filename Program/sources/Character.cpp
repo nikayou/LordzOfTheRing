@@ -1,4 +1,12 @@
-/** Here we define a character. They are kind of constants, because these are not those who "play", just the general attributes.
+/** Here we define a character. They are kind of constants, because these are not those who "play", just the general attributes. 
+They are loaded from a special format of files :
+<
+name=character's name
+health=medium
+resistance=medium
+attack=medium
+stamina=medium
+>
  */
 
 #include "../headers/Character.hpp"
@@ -8,7 +16,7 @@
 
 #include <cstring>
 #include <fstream>
-#include <iostream> //delete or replace by error handling
+//#include <iostream> //delete or replace by error handling
 #include <sstream>
 #include <string>
 
@@ -157,10 +165,10 @@ bool Character::loadFromFile(const std::string& f){
     m_attack = c.getAttack();
     m_stamina = c.getStamina();
     m_basename = c.getBasename();
-    std::cout<<"Complete charater file : "<< getBasename() <<std::endl;
+    //std::cout<<"Complete charater file : "<< getBasename() <<std::endl;
     return true;
   }
-  std::cout <<"Error : incomplete character file \""<< file<<"\""<< std::endl;
+  //std::cout <<"Error : incomplete character file \""<< file<<"\""<< std::endl;
   return false;
 }
 

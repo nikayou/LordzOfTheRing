@@ -1,3 +1,4 @@
+/* better random system */
 #include "../headers/Random.hpp"
 #include <cstdlib>
 #include <cstdlib>

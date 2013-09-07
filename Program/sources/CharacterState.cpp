@@ -1,3 +1,6 @@
+/*
+CharacterState is the gamestate of characters selection
+ */
 #include "../headers/CharacterState.hpp"
 #include "../headers/GameState.hpp"
 #include "../headers/Action.hpp"

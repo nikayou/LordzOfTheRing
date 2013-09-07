@@ -1,4 +1,4 @@
-/** here we define actions : 
+/** Here we define actions : 
 a doer, an action, and a target.
 An action can be handled in one byte, so we provide functions to
 convert all these elements from/to bytes.
@@ -6,14 +6,14 @@ convert all these elements from/to bytes.
 To help with synchronisation, we also provides "states" : they can be
 used to tell, for instance : "the action has began, but not performed yet".
 
-The framing tells how many times does the "phase" of the action lasts
+The framing tells how many times does the "phase" of the action lasts, and has
+to be sync with animations
 */
 
 #include "../headers/Action.hpp"
 
 #include <sstream>
 #include <string>
-#include <vector>
 
 namespace Action{
 
@@ -255,25 +255,5 @@ namespace Action{
     return _f;
   }
 
-  /*
-  Framing * getFraming(const std::string& s){
-    if(s.compare("stand") == 0)
-      return &(Framing_None);
-    if(s.compare("punchL") == 0)
-      return &(Framing_AttackL);
-    if(s.compare("punchR") == 0)
-      return &(Framing_AttackR);
-    if(s.compare("punchM") == 0)
-      return &(Framing_AttackM);
-    if(s.compare("dodgeL") == 0)
-      return &(Framing_DodgeL);
-    if(s.compare("dodgeM") == 0)
-      return &(Framing_DodgeM);
-    if(s.compare("dodgeR") == 0)
-      return &(Framing_DodgeR);
-    if(s.compare("stroke") == 0)
-      return &(Framing_Stroke);
-    return NULL;
-  };
-  */
+
 }

@@ -5,7 +5,6 @@
 #include "../headers/Match.hpp"
 #include "../headers/StateHandler.hpp"
 
-#include <iostream> //delete
 #include <vector>
 
 #include <SFML/Audio/Music.hpp>

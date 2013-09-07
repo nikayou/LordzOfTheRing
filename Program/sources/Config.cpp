@@ -10,7 +10,6 @@
 #include <sstream>
 #include <string>
 
-//TODO complete default input
 void Config::init(){
   m_musicVolume = 70;
   m_soundVolume = 100;

@@ -31,7 +31,7 @@ void MatchState::update(){
       if(a == (action)0 )
 	break;
       if(Action::getType(a) == Action::PAUSE ){
-	//setState(GameState::PAUSE);
+	//Game::getInstance()->getStateHandler()->push(new PauseState() );
 	break;
       }
       
@@ -60,7 +60,8 @@ void MatchState::render(){
   sf::Texture * t = TextureManager::getInstance()->get("background")->getTexture();
   sf::Sprite s;
   s.setTexture(*t);
-  s.setPosition(sf::Vector2f(0, 0) );
+  s.setPosition(sf::Vector2f(0, 100) );
+  m_render->clear();
   m_render->draw(s);
   displayCharacters();
   displayGauges();
@@ -178,7 +179,7 @@ void MatchState::displayCharacters(){
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
     s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
-    s.scale(2.0, 2.0);
+    //s.scale(2.0, 2.0);
     m_render->draw(s);
   }
   // character 1
@@ -196,7 +197,7 @@ void MatchState::displayCharacters(){
   if(sprt){
     s.setTextureRect(sf::IntRect(sprt->getPositionX(), sprt->getPositionY(), sprt->getWidth(), sprt->getHeight() ) );
     s.setOrigin( sprt->getHotpointX(), sprt->getHotpointY()  );
-    s.scale(1.25, 1.25);
+    //s.scale(1.25, 1.25);
     m_render->draw(s);
   }
 }
@@ -235,8 +236,6 @@ bool MatchState::enter(){
     Game::getInstance()->getMusic()->play();
   c1->gainStamina(600);
   c2->gainStamina(600);
-  //m_render = new sf::RenderTexture();
-  //m_render->create(800, 600);
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);

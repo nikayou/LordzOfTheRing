@@ -14,10 +14,10 @@
 
 class FontManager: public ResourceManager<sf::Font>, public Singleton<FontManager>{
 public :
-	FontManager(){ };
-	std::string getClass(){ 
-	return "FontManager";
-	}
+  FontManager(){ };
+  std::string getClass(){ 
+    return "FontManager";
+  }
 
 };
 

@@ -9,7 +9,6 @@
 #include "../headers/Action.hpp"
 #include "../headers/Misc.hpp"
 
-#include <iostream> //delete
 #include <fstream>
 #include <map>
 #include <string>
@@ -93,6 +92,5 @@ bool Spritesheet::loadFromFile(const std::string& f){
       getline(ifs, line);
     }
   }
-  std::cout<<"loaded spritesheet "<<this<<std::endl;
   return true;
 }
