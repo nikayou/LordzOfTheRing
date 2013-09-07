@@ -60,7 +60,7 @@ void MatchState::render(){
   sf::Texture * t = TextureManager::getInstance()->get("background")->getTexture();
   sf::Sprite s;
   s.setTexture(*t);
-  s.setPosition(sf::Vector2f(0, 100) );
+  s.setPosition(sf::Vector2f(0, 50) );
   m_render->clear();
   m_render->draw(s);
   displayCharacters();

@@ -129,48 +129,55 @@ namespace Action{
 
   Framing initFramingN(){ 
     Framing _f;
-    _f.nb_frames = 8;
-    _f.change_state = -1;
+    _f.nb_frames = 6;
+    _f.change_state = 0;
     _f.return_state = -1;
+    _f.state = NORMAL;
     return _f;
   }
 
   Framing initFramingAL(){
     Framing _f;
-    _f.nb_frames = 9;
-    _f.change_state = 5;
-    _f.return_state = 6;
+    _f.nb_frames = 10;
+    _f.change_state = 4;
+    _f.return_state = 5;
     _f.state = ATTACKING;
-    //preparing -2
-    //striking -4
-    //pausing -2
-    //recovering -1
+    //preparing -1
+    //pausing - 2
+    //launching - 1
+    //striking - 1
+    //pausing - 3
+    //recovering -2
     return _f;
   }
 
   Framing initFramingAM(){
     Framing _f;
-    _f.nb_frames = 12;
-    _f.change_state = 8;
-    _f.return_state = 9;
+    _f.nb_frames = 14;
+    _f.change_state = 6;
+    _f.return_state = 7;
     _f.state = ATTACKING;
-    //preparing -
-    //striking -3
-    //pausing -3
-    //recovering -2
+    //preparing -1
+    //pausing - 4
+    //launching - 1
+    //striking - 1
+    //pausing -4
+    //recovering -3
     return _f;
   }
 
   Framing initFramingAR(){
     Framing _f;
-    _f.nb_frames = 9;
-    _f.change_state = 5;
-    _f.return_state = 6;
+    _f.nb_frames = 10;
+    _f.change_state = 4;
+    _f.return_state = 5;
     _f.state = ATTACKING;
-    //preparing -2
-    //striking -4
-    //pausing -2
-    //recovering -1
+    //preparing -1
+    //pausing - 2
+    //launching - 1
+    //striking - 1
+    //pausing - 3
+    //recovering -2
     return _f;
   }
 
@@ -212,7 +219,7 @@ namespace Action{
 
   Framing initFramingKO(){
     Framing _f;
-    _f.nb_frames = 7;
+    _f.nb_frames = 15; //fallling (2+2+1+1+1) + 8 of pausing
     _f.change_state = 0;
     _f.return_state = -1;
     _f.state = CRYING;
@@ -221,26 +228,26 @@ namespace Action{
 
   Framing initFramingRaising(){
     Framing _f;
-    _f.nb_frames = 26;
+    _f.nb_frames = 10; // 3+3+1+1+1
     _f.change_state = 0;
-    _f.return_state = 25;
+    _f.return_state = 8;
     _f.state = CRYING;
     return _f;
   }
 
   Framing initFramingHappy(){
     Framing _f;
-    _f.nb_frames = 33;
+    _f.nb_frames = 25; //cycles of 6 (2+1+2+1)
     _f.change_state = 0;
-    _f.return_state = 32;
+    _f.return_state = 24;
     return _f;
   }
 
   Framing initFramingStun(){
     Framing _f;
-    _f.nb_frames = 17;
+    _f.nb_frames = 16;
     _f.change_state = 0;
-    _f.return_state = 16;
+    _f.return_state = 15;
     _f.state = NORMAL;
     return _f;
   }
@@ -248,9 +255,9 @@ namespace Action{
 
   Framing initFramingBreathing(){
     Framing _f;
-    _f.nb_frames = 18;
+    _f.nb_frames = 16;
     _f.change_state = 0;
-    _f.return_state = 17;
+    _f.return_state = 15;
     _f.state = NORMAL;
     return _f;
   }
