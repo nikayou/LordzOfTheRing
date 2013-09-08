@@ -57,13 +57,11 @@ void MatchState::render(){
   //drawing order : 
   //background, opponent, opponent's spec, player's spec, player,
   // background
-  sf::Texture * t = TextureManager::getInstance()->get("background")->getTexture();
-  sf::Sprite s;
-  s.setTexture(*t);
-  s.setPosition(sf::Vector2f(0, 50) );
   m_render->clear();
-  m_render->draw(s);
-  displayCharacters();
+  //m_view1->setViewport(sf::FloatRect(0, 0, 800, 600) );
+  displayCharacters(0, 1, -200, 0);
+  //displayCharacters(1, 0, Config::getInstance()->getWindowWidth(), 0 ); 
+  displayCharacters(1, 0, 200, 0 );
   displayGauges();
   displayClock();
   m_window->draw();
@@ -157,12 +155,16 @@ void MatchState::displayClock(){
   
 }
 
-void MatchState::displayCharacters(){
-  CharacterPlayed * c1 = Game::getInstance()->getMatch()->getCharacter1();
-  CharacterPlayed * c2 = Game::getInstance()->getMatch()->getCharacter2();
+void MatchState::displayCharacters(const unsigned short& p_front, const unsigned short& p_back, const float& decX, const float& decY){
+  CharacterPlayed * c1 = Game::getInstance()->getMatch()->getCharacter(p_front);
+  CharacterPlayed * c2 = Game::getInstance()->getMatch()->getCharacter(p_back);
   sf::Sprite s;
   Spritesheet * ss;
-  sf::Texture * t;
+  //displaying background
+  sf::Texture * t = TextureManager::getInstance()->get("background.png")->getTexture();
+  s.setTexture(*t);
+  s.setPosition(sf::Vector2f(200+decX, 50+decY) );
+  m_render->draw(s);
   //displaying players' sprites : we need the image, the spritesheet, and the current frame of the action
   std::string file = "characters/";
   // character 2
@@ -173,7 +175,7 @@ void MatchState::displayCharacters(){
   file += "_front.sprt";
   ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
-  s.setPosition( 400, 400  );
+  s.setPosition( 400+decX, 400+decY  );
   unsigned short idSprite = ss->getAnimation(c2->getAction() ).get(c2->getFrame() ); 
   Sprite * sprt = ss->getSprite(idSprite);
   if(sprt){
@@ -191,7 +193,7 @@ void MatchState::displayCharacters(){
   file += "_back.sprt";
   ss = SpritesheetManager::getInstance()->get(file);
   s.setTexture(*t);
-  s.setPosition( 400, 600 );
+  s.setPosition( 400+decX, 600+decY );
   idSprite = ss->getAnimation(c1->getAction() ).get(c1->getFrame() );
   sprt = ss->getSprite(idSprite);
   if(sprt){
@@ -213,7 +215,7 @@ bool MatchState::enter(){
   s.setPosition(0,0);
   Game::getInstance()->getWindow()->draw(s);
   Game::getInstance()->getWindow()->display();
-  TextureManager::getInstance()->get("background")->getTexture();
+  TextureManager::getInstance()->get("background.png")->getTexture();
   TextureManager::getInstance()->get("sprites.png")->getTexture();
   std::string file = "characters/";
   // character 2

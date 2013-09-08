@@ -23,6 +23,6 @@ private:
   GUIWindow * m_window;
   void displayGauges();
   void displayClock();
-  void displayCharacters();
+  void displayCharacters(const unsigned short&, const unsigned short&, const float&, const float&);
 
 };

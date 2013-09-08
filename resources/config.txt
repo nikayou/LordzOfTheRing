@@ -14,10 +14,10 @@ pause=36
 1-dodgeM=18
 1-dodgeR=3
 #player 2 inputs
-2-attackL=15
+2-attackL=8
 2-attackM=14
-2-attackR=8
-2-dodgeL=12
+2-attackR=15
+2-dodgeL=10
 2-dodgeM=11
-2-dodgeR=10
+2-dodgeR=12
 
