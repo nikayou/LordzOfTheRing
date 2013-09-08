@@ -59,7 +59,7 @@ void Game::init(){
   m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "MyBadPunchOut"); 
   m_window->setFramerateLimit( (float) FRAMERATE);
   m_window->setPosition(sf::Vector2i(10, 10) ); //adjust
-  m_render->create(Config::getInstance()->getWindowWidth()*2, Config::getInstance()->getWindowHeight() );
+  m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
   //starting loop
   m_stateHandler->change(new MainMenuState() );
   m_music->setVolume(Config::getInstance()->getMusicVolume() );
@@ -88,7 +88,6 @@ void Game::start(){
     -print situation
 **/
 void Game::loop(){
-  std::cout<<"looping"<<std::endl;
   while(m_window->isOpen() ){
     m_window->clear(sf::Color::Black);
     m_stateHandler->update();
