@@ -228,18 +228,18 @@ namespace Action{
 
   Framing initFramingRaising(){
     Framing _f;
-    _f.nb_frames = 10; // 3+3+1+1+1
+    _f.nb_frames = 16; // 3+3+1+1+1
     _f.change_state = 0;
-    _f.return_state = 8;
+    _f.return_state = 15;
     _f.state = CRYING;
     return _f;
   }
 
   Framing initFramingHappy(){
     Framing _f;
-    _f.nb_frames = 25; //cycles of 6 (2+1+2+1)
+    _f.nb_frames = 31; //cycles of 6 (2+1+2+1)
     _f.change_state = 0;
-    _f.return_state = 24;
+    _f.return_state = 30;
     return _f;
   }
 

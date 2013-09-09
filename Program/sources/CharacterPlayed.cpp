@@ -12,7 +12,7 @@ CharacterPlayed are Characters with additionnal attributes necessary for match.
 #include "../headers/Game.hpp"
 #include "../headers/Random.hpp"
 
-//#include <iostream> //delete
+#include <iostream> //delete
 #include <sstream>
 #include <string>
 #include <vector>
@@ -35,6 +35,7 @@ CharacterPlayed::CharacterPlayed(
   m_frame = 0;
   m_state = Action::NORMAL;
   m_receivedHits = 0;
+  m_kos = 0;
 }
 
 CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
@@ -65,6 +66,7 @@ CharacterPlayed::CharacterPlayed(const Character& c){
   m_frame = 0;
   m_state = Action::NORMAL;
   m_receivedHits = 0;
+  m_kos = 0;
 }
 
 void CharacterPlayed::addFrame(const Action::Framing& f){
@@ -150,6 +152,7 @@ void CharacterPlayed::manage(){
 
   case Action::RAISING :
     f = Action::Framing_Raising;
+    gainHealth( (m_health*(MAX(0.2, 1-0.2*m_kos )) )/(f.nb_frames) );
     gainStamina(FRAMERATE/10);
     break;
 
@@ -185,19 +188,24 @@ bool CharacterPlayed::doHit(){
 }
 
 void CharacterPlayed::actionEnd(){
+  m_frame = 0;
   if(m_action == Action::STROKE && m_receivedHits >= 3){
     unsigned int r = Random::getInstance()->get(0, 100);
     if(r <= 50.0 + ( (m_receivedHits-3)*m_resistance) ){
       zeroHits();
-      m_action = Action::STUN;
       m_state = Action::NORMAL;
-      m_frame = 0;
+      m_action = Action::STUN;
       return;
     }
   }
-  m_frame = 0;
-  setAction(Action::NONE);
+  if(m_action == Action::KO){
+    m_state = Action::CRYING;
+    setAction(Action::RAISING);
+    m_kos++;
+    return;
+  }
   m_state = Action::NORMAL;
+  setAction(Action::NONE);
 }
 
 std::string CharacterPlayed::toString(){

@@ -9,7 +9,6 @@ void StateHandler::push(GameState * s){
 }
 
 void StateHandler::change(GameState * s){
-  GameState * g = NULL;
   if(!m_states.empty() ){
     if(m_states.back()->getID().compare( s->getID() ) == 0){
       return;

@@ -20,6 +20,7 @@ protected:
   Action::State m_state; //the beggining of the real act (hit of a strike)
   unsigned short m_currentStamina; //current stamina
   unsigned short m_receivedHits; //the number of consecutive hits taken
+  unsigned short m_kos; //the number of KOs took
 
 public:
   //constructors
