@@ -1,6 +1,6 @@
 /*
-CharacterState is the gamestate of characters selection
- */
+  CharacterState is the gamestate of characters selection
+*/
 #include "../headers/CharacterState.hpp"
 #include "../headers/GameState.hpp"
 #include "../headers/Action.hpp"
@@ -39,16 +39,35 @@ void CharacterState::update(){
   std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
   unsigned int size = chars.size();
   sf::Event event;
-  while( m_window->getWindow()->pollEvent(event) ){
-    if(event.type == sf::Event::Closed){
-      Game::getInstance()->close();
-      return;
-    }else if(event.type ==sf::Event::KeyPressed ){
-      if(event.key.code == sf::Keyboard::Space){
-	confirmCharacters();      
-	Game::getInstance()->getStateHandler()->change(new MatchState() );
-	return;
+  while( m_window && m_window->getWindow() && m_window->getWindow()->pollEvent(event) ){
+
+    if (event.type == sf::Event::Closed){
+      m_window->getWindow()->close();
+      continue;
+    }
+    if (event.type == sf::Event::MouseMoved){
+      m_container->updateFocus();
+    }
+    if (event.type == sf::Event::MouseButtonPressed){
+      if(event.mouseButton.button == sf::Mouse::Left){
+	m_container->click( );
+	continue;
       }
+    }
+    if (event.type == sf::Event::KeyPressed){
+      if(event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Left){
+	m_container->focusUp();
+	continue;
+      }
+      if(event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::Right){
+	m_container->focusDown();
+	continue;
+      }
+      if(event.key.code == sf::Keyboard::Space){
+	m_container->click();
+	continue;
+      }
+
       action a = Config::getInstance()->getAction( (Key)event.key.code);
       if(Action::getType(a) == Action::ATTACK_MIDDLE ){
         if(Action::getDoer(a) == 0){
@@ -70,7 +89,7 @@ void CharacterState::update(){
 }
 
 void CharacterState::render(){
-   m_render->clear(sf::Color::Black);
+  m_render->clear(sf::Color::Black);
   sf::Sprite s;
   sf::Texture * t;
   //displaying characters labels
@@ -214,7 +233,7 @@ bool CharacterState::enter(){
   m_buttons.push_back(b_back);
   m_buttons.push_back(b_play);
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
-    return true;
+  return true;
 }
 
 bool CharacterState::exit(){

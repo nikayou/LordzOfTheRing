@@ -14,11 +14,13 @@ Container::Container(){
   mContent->create(1, 1);
   //mContent->setFramerateLimit(35);
   mContainer = NULL;
+  mFocused = 0;
 }
 
 Container::Container(sf::RenderTexture* rt){
   mContent = rt;
   mContainer = NULL;
+  mFocused = 0;
 }
 
 Container::~Container(){
@@ -31,16 +33,25 @@ bool Container::add(Component * c){
 }
 
 void Container::updateFocus(){
-  /* sf::Vector2i pos = sf::Mouse::getPosition(*mWindow);
-     unsigned int s = mButtons.size();
-     for(unsigned int i = 0; i < s; i++){
-     if(contains(mButtons[i], pos) ){
-     mFocused = mButtons[i];
-     return;
-     }
-     }   
-     mFocused = NULL;
-  */
+  sf::Vector2i pos = getLocalMouse();
+  unsigned int s = mComponents.size();
+  for(unsigned int i = 0; i < s; i++){
+    if(mComponents[i]->getClass().compare("Button") && mComponents[i]->contains(pos) ){
+      mFocused = i+1;
+      return;
+    }
+  }   
+  mFocused = 0;
+  
+}
+
+void Container::focusUp(){
+  if(mFocused)
+    mFocused = (mFocused == 1)?(unsigned int)mComponents.size()-1:mFocused-1;
+}
+
+void Container::focusDown(){
+  mFocused = (mFocused == (unsigned int)mComponents.size() )?0:mFocused+1;
 }
 
 void Container::click(const sf::Vector2i& pos){
@@ -48,10 +59,9 @@ void Container::click(const sf::Vector2i& pos){
   for(unsigned int i = 0; i < nb; i++){
     if(i >= mComponents.size() || mComponents[i] == NULL)
       return;
-    printf("button : %p : %p\n", &mComponents, mComponents[i] );
     if(mComponents[i]->getClass().compare("Button") == 0){
       Button * b = (Button *) mComponents[i];
-      if(b->contains(pos) )
+      if( (mFocused != 0 && mComponents[mFocused-1] == b ) || b->contains(pos) )
 	b->action();
     }else if(mComponents[i]->getClass().compare("Checkbox") == 0){
       Checkbox * c = (Checkbox *) mComponents[i];
@@ -108,7 +118,7 @@ sf::VertexArray Container::draw(){
       for(unsigned int j = 0; j < 16; j++){
 	quads.append( va[j] );
       }
-      if( b->contains( mouse ) ){
+      if( (mFocused && mComponents[mFocused-1] == b) || b->contains( mouse ) ){
 	for(unsigned int j = 16; j < 20; j++){
 	  va[j].color = b->getFocus();
 	  quads.append( va[j] );

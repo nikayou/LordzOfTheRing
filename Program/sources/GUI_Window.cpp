@@ -52,10 +52,29 @@ void GUIWindow::update(){
     while(mWindow && mWindow->pollEvent(event) ){
       if (event.type == sf::Event::Closed){
 	mWindow->close();
+	continue;
+      }
+      if (event.type == sf::Event::MouseMoved){
+	mContentPane->updateFocus();
       }
       if (event.type == sf::Event::MouseButtonPressed){
 	if(event.mouseButton.button == sf::Mouse::Left){
 	  mContentPane->click( );
+	  continue;
+	}
+      }
+      if (event.type == sf::Event::KeyPressed){
+	if(event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Left){
+	  mContentPane->focusUp();
+	  continue;
+	}
+	if(event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::Right){
+	  mContentPane->focusDown();
+	  continue;
+	}
+	if(event.key.code == sf::Keyboard::Space){
+	  mContentPane->click();
+	  continue;
 	}
       }
     }

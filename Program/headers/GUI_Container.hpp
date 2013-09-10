@@ -17,7 +17,7 @@ class Container : public Component{
 private:
   sf::RenderTexture * mContent; //where we are drawing the components
   std::vector< Component * > mComponents; //all the components
-  Component * mFocused; //component on which mouse is positioned
+  unsigned int mFocused; //component on which mouse is positioned (0 for not)
   GUIWindow * mContainer; //reference to the container (parent)
 
 public:
@@ -33,6 +33,8 @@ public:
   // misc
   bool add(Component *);
   void updateFocus();
+  void focusUp();
+  void focusDown();
   /* Clicks on the given position */
   void click(const sf::Vector2i&);
   /* Clicks on the mouse position (relative) */
