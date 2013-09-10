@@ -68,21 +68,21 @@ bool MainMenuState::enter(){
 }
 
 bool MainMenuState::exit(){
-    //delete m_window;
-  //delete m_container;
-  //delete m_buttons[3];
-  //delete m_buttons[2];
-  //delete m_buttons[1];
-  //delete m_buttons[0];
-    return true;
+  return true;
 }
 
 void MainMenuState::deleteAll(){
-  //delete m_buttons[3];
-  //delete m_buttons[2];
-  //delete m_buttons[1];
-  //delete m_buttons[0];
-  //delete m_container;
-  //delete m_window;
-  //delete m_render;
+  delete m_buttons[3];
+  delete m_buttons[2];
+  delete m_buttons[1];
+  delete m_buttons[0];
+  m_buttons[3] = NULL;
+  m_buttons[2] = NULL;
+  m_buttons[1] = NULL;
+  m_buttons[0] = NULL;
+  m_buttons.clear();
+  delete m_container;
+  m_container = NULL;
+  delete m_window;
+  m_window = NULL;
 }

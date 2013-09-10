@@ -44,14 +44,26 @@ void GUIWindow::setContentPane(Container * c ){
 }
 
 void GUIWindow::update(){
-  if(sf::Mouse::isButtonPressed(sf::Mouse::Left) )
-    mContentPane->click( );
+  //if(sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+  //  mContentPane->click( );
+  sf::Event event;
+  if(mWindow->isOpen() ){
+    //controls
+    while(mWindow && mWindow->pollEvent(event) ){
+      if (event.type == sf::Event::Closed){
+	mWindow->close();
+      }
+      if (event.type == sf::Event::MouseButtonPressed){
+	if(event.mouseButton.button == sf::Mouse::Left){
+	  mContentPane->click( );
+	}
+      }
+    }
+  }
 }
 
 void GUIWindow::draw(){
   sf::Sprite s;
-  //controls
-  sf::Event event;
   mContentPane->draw();
   s.setTexture( mContentPane->getContent()->getTexture()  );
   s.setPosition( sf::Vector2f(mContentPane->getX(), mContentPane->getY() )  );

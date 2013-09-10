@@ -48,6 +48,7 @@ void Container::click(const sf::Vector2i& pos){
   for(unsigned int i = 0; i < nb; i++){
     if(i >= mComponents.size() || mComponents[i] == NULL)
       return;
+    printf("button : %p : %p\n", &mComponents, mComponents[i] );
     if(mComponents[i]->getClass().compare("Button") == 0){
       Button * b = (Button *) mComponents[i];
       if(b->contains(pos) )

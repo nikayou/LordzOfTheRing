@@ -218,19 +218,16 @@ bool CharacterState::enter(){
 }
 
 bool CharacterState::exit(){
-   //delete m_window;
-  //delete m_container;
-  //delete m_render;
-  //delete m_buttons[1];
-  //delete m_buttons[0];
-
   return true;
 }
 
 void CharacterState::deleteAll(){
-  delete m_window;
-  delete m_container;
-  //delete m_render;
   delete m_buttons[1];
+  m_buttons[1] = NULL;
   delete m_buttons[0];
+  m_buttons[0] = NULL;
+  delete m_container;
+  m_container = NULL;
+  delete m_window;
+  m_window = NULL;
 }

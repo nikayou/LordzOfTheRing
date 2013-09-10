@@ -31,6 +31,8 @@ void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE:BASE_STRIKE;
     hit += getCharacter(a)->getAttack();
     getCharacter(b)->takeHit(hit);
+    if(m_type == MatchType::DAMAGE)
+      m_players[a]->addPoints(hit);
     if( checkKO(b) ){
       getCharacter(b)->setAction(Action::KO);
       getCharacter(a)->setAction(Action::HAPPY);
@@ -48,7 +50,8 @@ void Match::checkHits(){
 }
 
 void Match::KO(const unsigned short& p){
-  //Game::getInstance()->setState(GameState::CHARACTER_SELECT);
+  if(m_type == MatchType::KO)
+    m_players[1^p]->addPoints(1);
 }
 
 bool Match::checkHit(const unsigned short& a, const unsigned short& b){

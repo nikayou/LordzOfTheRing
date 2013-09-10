@@ -4,7 +4,9 @@
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Config.hpp"
 #include "../headers/Game.hpp"
+#include "../headers/RoundEndState.hpp"
 #include "../headers/SpritesheetManager.hpp"
+#include "../headers/StateHandler.hpp"
 #include "../headers/TextureManager.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -21,6 +23,10 @@ void MatchState::update(){
   if(Game::getInstance()->getClock()->getElapsedTime().asSeconds() >= 1){
     Game::getInstance()->addTime(sf::seconds(1) );
     Game::getInstance()->getClock()->restart();
+  }
+  if(Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) < 0){
+    //time's up
+    Game::getInstance()->getStateHandler()->change(new RoundEndState() );
   }
   sf::Event event;
   while( Game::getInstance()->getWindow()->pollEvent(event) ){
@@ -50,6 +56,12 @@ void MatchState::update(){
 
   }
   Game::getInstance()->getMatch()->manage();
+  
+  if( 
+     (Game::getInstance()->getMatch()->getCharacter(0)->getKOs() >= 5) ||
+     (Game::getInstance()->getMatch()->getCharacter(1)->getKOs() >= 5)
+      )
+    Game::getInstance()->getStateHandler()->change(new RoundEndState() );
 }
 
 
@@ -58,9 +70,9 @@ void MatchState::render(){
   //background, opponent, opponent's spec, player's spec, player,
   // background
   m_render->clear();
-  //m_view1->setViewport(sf::FloatRect(0, 0, 800, 600) );
+  //displayCharacters(0, 1, -(Config::getInstance()->getWindowWidth()/4), 0);
+  //displayCharacters(1, 0, -(Config::getInstance()->getWindowWidth()/4), 0 );
   displayCharacters(0, 1, -200, 0);
-  //displayCharacters(1, 0, Config::getInstance()->getWindowWidth(), 0 ); 
   displayCharacters(1, 0, 200, 0 );
   displayGauges();
   displayClock();
@@ -246,15 +258,16 @@ bool MatchState::enter(){
 
 
 bool MatchState::exit(){
-  //delete m_container;
-  //delete m_window;
-  //delete m_render;
+  Game::getInstance()->getClock()->restart();
+  while(Game::getInstance()->getTime()< 2.);
+  deleteAll();
   return true;
 }
 
 void MatchState::deleteAll(){
   delete m_container;
+  m_container = NULL;
   delete m_window;
-  // delete m_render;
+  m_window = NULL;
 
 }

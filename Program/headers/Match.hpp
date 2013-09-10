@@ -12,6 +12,12 @@
 #define BASE_STRIKE 3
 #define NICE_STRIKE 6
 
+typedef enum{
+  KO, //each KO counts as 1 point 
+  ROUND, //1 point for the one who makes more KO in this round
+  DAMAGE //damages count as score
+} MatchType;
+
 class Match{
 
 private:
@@ -19,6 +25,8 @@ private:
   unsigned short m_timePerRound; //time (in seconds). 0 = infinity
   unsigned short m_roundsNumber; //number of rounds to play
   unsigned short m_currentRound; 
+  MatchType m_type; //type of scoring
+  
 
 public:
   //constructors
@@ -70,7 +78,10 @@ const unsigned short& = 3
   };
   void setPlayer2(Player * value){
     m_players[1] = value;
-};
+  };
+  void setType(const MatchType& t){
+    m_type = t;
+  };
   //others
   bool isFinished(){
     return m_currentRound >= m_roundsNumber;

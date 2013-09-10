@@ -47,6 +47,9 @@ public:
   Action::State getState() const{
     return m_state;
   };
+  unsigned short getKOs() const{
+    return m_kos;
+  };
   //setters
   void setCurrentHealth(const unsigned short& v){
     m_currentHealth = v;
@@ -63,6 +66,9 @@ public:
   };
   void setState(const Action::State& v){
     m_state = v;
+  };
+  void setKOs(const unsigned short& v){
+    m_kos = v;
   };
   //others
   void takeHit(const unsigned short&);

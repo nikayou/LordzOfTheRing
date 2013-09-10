@@ -15,6 +15,7 @@
 //#include "../headers/MusicManager.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/ResourceManager.hpp"
+#include "../headers/RoundEndState.hpp"
 #include "../headers/SpritesheetManager.hpp"
 #include "../headers/StateHandler.hpp"
 #include "../headers/Texture.hpp"
@@ -127,7 +128,6 @@ void Game::splash(){
   rw.close();
   TextureManager::getInstance()->remove("splashscreens/sfml.splash");
   TextureManager::getInstance()->remove("splashscreens/auth.splash");
-  
   init();
 }  
 
