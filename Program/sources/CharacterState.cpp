@@ -32,6 +32,7 @@ void CharacterState::confirmCharacters(){
   Character c2 = *chars[m_index2];
   Game::getInstance()->getMatch()->getPlayer1()->setCharacter(c1);
   Game::getInstance()->getMatch()->getPlayer2()->setCharacter(c2);
+  Game::getInstance()->getMatch()->setLoaded(false);
   Game::getInstance()->getStateHandler()->change(new MatchState() );
 }
 

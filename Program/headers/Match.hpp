@@ -26,14 +26,14 @@ private:
   unsigned short m_roundsNumber; //number of rounds to play
   unsigned short m_currentRound; 
   MatchType m_type; //type of scoring
-  
+  bool m_loaded;
 
 public:
   //constructors
   Match(Player * p1 = NULL, Player * p2 = NULL, 
-const unsigned short& = 90, 
-const unsigned short& = 3
-);
+	const unsigned short& = 90, 
+	const unsigned short& = 3
+	);
   ~Match();
   //getters
   unsigned short getTimePerRound() const{
@@ -85,6 +85,9 @@ const unsigned short& = 3
   void setType(const MatchType& t){
     m_type = t;
   };
+  void setLoaded(const bool& b){
+    m_loaded = b;
+  };
   //others
   void newRound(){
     setCurrentRound( m_currentRound +1 );
@@ -96,6 +99,9 @@ const unsigned short& = 3
   bool checkHit(const unsigned short&, const unsigned short&);
   bool checkKO(const unsigned short&);
   bool isFinished();
+  bool hasLoaded(){
+    return m_loaded;
+  };
 };
 
 #endif

@@ -219,44 +219,114 @@ void MatchState::displayCharacters(const unsigned short& p_front, const unsigned
 
 
 bool MatchState::enter(){
+
+  m_render = Game::getInstance()->getRender();
+  m_container = new Container(m_render );
+  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
   Game::getInstance()->getMusic()->stop();
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
   CharacterPlayed * c1 = Game::getInstance()->getMatch()->getCharacter1();
   CharacterPlayed * c2 =Game::getInstance()-> getMatch()->getCharacter2();
+  c1->reset();
+  c2->reset();
   s.setTexture(*t);
-  s.setPosition(0,0);
-  Game::getInstance()->getWindow()->draw(s);
-  Game::getInstance()->getWindow()->display();
-  TextureManager::getInstance()->get("background.png")->getTexture();
-  TextureManager::getInstance()->get("sprites.png")->getTexture();
-  std::string file = "characters/";
-  // character 2
-  file += c2->getBasename();
-  file += "_front.png";
-  TextureManager::getInstance()->get(file)->getTexture();
-  file = c2->getBasename();
-  file += "_front.sprt";
-  SpritesheetManager::getInstance()->get(file);
-  file = "characters/";
-  file += c1->getBasename();
-  file += "_back.png";
-  TextureManager::getInstance()->get(file)->getTexture();
-  file = c1->getBasename();
-  file += "_back.sprt";
-  SpritesheetManager::getInstance()->get(file);
+  if(!Game::getInstance()->getMatch()->hasLoaded() ){
+    s.setPosition(0,0);
+    Game::getInstance()->getWindow()->draw(s);
+    Game::getInstance()->getWindow()->display();
+    TextureManager::getInstance()->get("background.png")->getTexture();
+    TextureManager::getInstance()->get("sprites.png")->getTexture();
+    std::string file = "characters/";
+    // character 2
+    file += c2->getBasename();
+    file += "_front.png";
+    TextureManager::getInstance()->get(file)->getTexture();
+    file = c2->getBasename();
+    file += "_front.sprt";
+    SpritesheetManager::getInstance()->get(file);
+    file = "characters/";
+    file += c1->getBasename();
+    file += "_back.png";
+    TextureManager::getInstance()->get(file)->getTexture();
+    file = c1->getBasename();
+    file += "_back.sprt";
+    SpritesheetManager::getInstance()->get(file);
+    Game::getInstance()->getMatch()->setLoaded(true);
+  }
+  Game::getInstance()->getMatch()->newRound();
+  sf::Event event;
+  while( Game::getInstance()->getWindow()->pollEvent(event) ){
+    if(event.type == sf::Event::Closed)
+      Game::getInstance()->close();
+   
+  }
+  //ended loading, collasping screen
+  *Game::getInstance()->getTimer() = sf::microseconds(0);
+  Game::getInstance()->getClock()->restart();
+  s.setTextureRect(sf::IntRect(0, 0, 800, 200) );
+  s.setPosition(0, 0);
+  s.setPosition(0, 200);
+  s.setPosition(0, 400);
+  m_render->draw(s);
+  m_window->draw();
+  int dec = 0;
+  Game::getInstance()->getClock()->restart();
+  while(dec <= 800){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue; 
+    displayCharacters(0, 1, -200, 0);
+    displayCharacters(1, 0, 200, 0 );
+    displayGauges();
+    displayClock();
+    s.setPosition(dec, 0);
+    m_render->draw(s);
+    s.setPosition(0, 200);
+    m_render->draw(s);
+    s.setPosition(0, 400);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec += 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  dec = 0;
+  while(dec <= 800){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue;
+    displayCharacters(0, 1, -200, 0);
+    displayCharacters(1, 0, 200, 0 );
+    displayGauges();
+    displayClock();
+    s.setPosition(-dec, 200);
+    m_render->draw(s);
+    s.setPosition(0, 400);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec += 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  dec = 0;
+  while(dec <= 800){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue;
+    displayCharacters(0, 1, -200, 0);
+    displayCharacters(1, 0, 200, 0 );
+    displayGauges();
+    displayClock();
+    s.setPosition(dec, 400);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec += 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  // quick settings
   *Game::getInstance()->getTimer() = sf::microseconds(0);
   Game::getInstance()->getClock()->restart();
   if(Game::getInstance()->getMusic()->openFromFile("../../resources/audio/battle1.ogg") )
     Game::getInstance()->getMusic()->play();
-  c1->reset();
-  c2->reset();
-  Game::getInstance()->getMatch()->newRound();
-  //Game::getInstance()->getMatch()->getPlayer1()->resetPoints();
-  //Game::getInstance()->getMatch()->getPlayer2()->resetPoints();
-  m_render = Game::getInstance()->getRender();
-  m_container = new Container(m_render );
-  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
   return true;
 }
 

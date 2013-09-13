@@ -15,6 +15,7 @@ Match::Match(Player * p1, Player * p2,
   m_timePerRound = t;
   m_roundsNumber = r;
   m_currentRound = 0;
+  m_loaded = false;
 }
 
 Match::~Match(){

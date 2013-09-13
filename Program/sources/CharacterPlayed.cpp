@@ -223,6 +223,7 @@ void CharacterPlayed::reset(){
   m_currentStamina = m_stamina;
   m_action = Action::NONE;
   m_state = Action::NORMAL;
+  m_frame = 0;
   m_receivedHits = 0;
   m_kos = 0;
 };
