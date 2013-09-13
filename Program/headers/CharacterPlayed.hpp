@@ -80,7 +80,6 @@ public:
   unsigned short loseStamina(const unsigned short&);
   unsigned short gainStamina(const unsigned short&);
   void manage();
-  std::string toString();
   void zeroHits(){ m_receivedHits = 0; };
 
 };

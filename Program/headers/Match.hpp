@@ -93,8 +93,7 @@ const unsigned short& = 3
   void subCheckHits(const unsigned short&, const unsigned short&);
   void checkHits();
   void KO(const unsigned short&);
-  std::string toString();
-  bool checkHit(const unsigned short&, const unsigned short&);
+   bool checkHit(const unsigned short&, const unsigned short&);
   bool checkKO(const unsigned short&);
 };
 

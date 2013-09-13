@@ -81,10 +81,3 @@ bool Match::checkKO(const unsigned short& p){
     
 }
 
-std::string Match::toString(){
-  std::ostringstream oss;
-  oss<<"Match "<<m_players[0]->getName()<<" vs "<<m_players[1]->getName()<<std::endl;
-  oss<<"Rounds : "<< m_currentRound << "/" <<m_roundsNumber << std::endl;
-  oss<<"Time per round : "<< m_timePerRound<<" seconds" <<std::endl;
-  return oss.str();
-}

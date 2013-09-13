@@ -49,19 +49,7 @@ public:
   }
 
 
-  virtual std::string toString(){
-    typename std::map<std::string, T>::iterator it;
-    std::string res = "";
-    for(it = mData.begin(); it != mData.end(); ++it){
-      res += it->first;
-      res += " = \n";
-      //res += it->second.toString();
-      res += "\n";
-    }
-    return res;
-  };
-
-  virtual std::string getClass(){ 
+   virtual std::string getClass(){ 
     return "ResourceManager"; 
   };
 

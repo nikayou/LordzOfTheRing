@@ -65,7 +65,6 @@ public:
   };
   //others
   void init();
-  std::string toString();
 };
 
 #endif

@@ -40,9 +40,7 @@
 #include <SFML/Window/Window.hpp>
 
 
-#include <cstdio> //DELETE
 #include <cstdlib>
-#include <iostream>
 #include <map>
 #include <sstream>
 #include <vector>

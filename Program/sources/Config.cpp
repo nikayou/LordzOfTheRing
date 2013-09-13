@@ -153,17 +153,4 @@ void Config::setAction(const Key& k, const action& a){
   m_mapping.insert( std::pair<Key, action>(k, a) );
 }
 
-std::string Config::toString(){
-  std::ostringstream oss;
-  oss << "Resolution : "<< m_windowWidth <<"x"<< m_windowHeight<< std::endl;
-  oss << "Volume - Music : "<< (unsigned int)m_musicVolume<<" Sound : "<< (unsigned int)m_soundVolume<< std::endl;
-  oss << "Key mapping : "<< std::endl;
-  std::map<Key,action>::iterator it;
-  for (it = m_mapping.begin(); it != m_mapping.end(); ++it) {
-    oss << (int)it->first << " : ";
-    oss << Action::actionToString(it->second);
-    oss << std::endl;
-    
-  }
-  return oss.str();
-}
+

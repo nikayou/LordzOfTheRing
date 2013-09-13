@@ -104,18 +104,6 @@ Character::Character(
 Character::~Character(){}
 
 
-std::string Character::toString(){
-  std::ostringstream oss;
-  oss<<"Character : "<< m_name << std::endl;
-  oss<<"Health = "<< m_health << std::endl;
-  oss<<"Resistance (L/H) = "<< m_resistance << std::endl;
-  oss<<"Strength (L/H) = "<< m_attack << std::endl;
-  oss<<"Stamina = "<< m_stamina << std::endl;
-  return oss.str();
-}
-
-
-
 bool Character::loadFromFile(const std::string& f){
   std::ifstream ifs;
   std::string file = CHAR_DIR + f;

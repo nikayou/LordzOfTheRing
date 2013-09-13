@@ -25,11 +25,3 @@ void Player::manage(){
   m_character->manage();
 }
 
-std::string Player::toString(){
-  std::ostringstream oss;
-  oss<<"Player \""<< m_name << "\""<<std::endl;
-  oss<<"Character : "<< m_character << std::endl;
-  oss<<"Victories = "<< m_victories << std::endl;
-  oss<<"Points = "<< m_points << std::endl;
-  return oss.str();
-}

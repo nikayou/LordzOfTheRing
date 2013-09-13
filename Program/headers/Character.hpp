@@ -94,7 +94,6 @@ public:
   static std::string getClass(){
     return "Character";
   };
-  std::string toString();
   bool loadFromFile(const std::string&);
 
 };

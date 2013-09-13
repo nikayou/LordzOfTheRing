@@ -208,10 +208,3 @@ void CharacterPlayed::actionEnd(){
   setAction(Action::NONE);
 }
 
-std::string CharacterPlayed::toString(){
-  std::ostringstream oss;
-  oss << m_name << " : " << m_currentHealth<< "/"<< m_health << " - " << m_currentStamina << "/" << m_stamina << std::endl;
-  oss << "Framing : action = "<< Action::typeToString(m_action) << "-"<< m_frame <<":"<< m_state <<std::endl;
-  return oss.str();
-}
-

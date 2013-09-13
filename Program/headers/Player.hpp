@@ -65,7 +65,6 @@ public:
     m_victories = (m_victories == -1) ? -1 : m_victories+1;
   }
   void manage();
-  std::string toString();
 };
 
 
