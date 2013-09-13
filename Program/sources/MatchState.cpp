@@ -4,6 +4,7 @@
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Config.hpp"
 #include "../headers/Game.hpp"
+#include "../headers/Match.hpp"
 #include "../headers/RoundEndState.hpp"
 #include "../headers/SpritesheetManager.hpp"
 #include "../headers/StateHandler.hpp"
@@ -248,8 +249,11 @@ bool MatchState::enter(){
   Game::getInstance()->getClock()->restart();
   if(Game::getInstance()->getMusic()->openFromFile("../../resources/audio/battle1.ogg") )
     Game::getInstance()->getMusic()->play();
-  c1->gainStamina(600);
-  c2->gainStamina(600);
+  c1->reset();
+  c2->reset();
+  Game::getInstance()->getMatch()->newRound();
+  //Game::getInstance()->getMatch()->getPlayer1()->resetPoints();
+  //Game::getInstance()->getMatch()->getPlayer2()->resetPoints();
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
@@ -259,8 +263,62 @@ bool MatchState::enter(){
 
 bool MatchState::exit(){
   Game::getInstance()->getClock()->restart();
-  while(Game::getInstance()->getTime()< 2.);
-  deleteAll();
+  while(Game::getInstance()->getTime()< 1.);
+  // blacking screen
+  sf::Sprite s;
+  sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
+  s.setTexture(*t);
+  s.setTextureRect(sf::IntRect(0, 0, 80, 200) );
+  m_render->draw(s);
+  m_window->draw();
+  int dec = 0;
+  Game::getInstance()->getClock()->restart();
+  while(dec <= 800){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue;
+    s.setPosition(dec, 0);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec += 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  dec = 800;
+  while(dec >= 0){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue;
+    s.setPosition(dec, 200);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec -= 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  dec = 0;
+  while(dec <= 800){
+    if(Game::getInstance()->getMsTime() < 1 )
+      continue;
+    s.setPosition(dec, 400);
+    m_render->draw(s);
+    m_window->draw();
+    Game::getInstance()->display();
+    dec += 80;
+    Game::getInstance()->getClock()->restart();
+  }
+  // end displaying
+  Match * m = Game::getInstance()->getMatch();
+  if(m->getType() == MatchType::ROUND){
+    if(m->getCharacter1()->getKOs() >= m->getCharacter2()->getKOs() )
+      m->getPlayer2()->addPoints(1);
+    if(m->getCharacter2()->getKOs() >= m->getCharacter1()->getKOs() )
+      m->getPlayer1()->addPoints(1);
+  }
+  if(Game::getInstance()->getMatch()->isFinished() ) {
+    if(Game::getInstance()->getMatch()->getPlayer1()->getPoints() > Game::getInstance()->getMatch()->getPlayer2()->getPoints() )
+      Game::getInstance()->getMatch()->getPlayer1()->addVictory();
+    else if(Game::getInstance()->getMatch()->getPlayer2()->getPoints() > Game::getInstance()->getMatch()->getPlayer1()->getPoints() )
+      Game::getInstance()->getMatch()->getPlayer2()->addVictory();
+  }
   return true;
 }
 

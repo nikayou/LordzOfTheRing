@@ -208,3 +208,21 @@ void CharacterPlayed::actionEnd(){
   setAction(Action::NONE);
 }
 
+unsigned int CharacterPlayed::getDamages(){
+  int accu = 1;
+  int res = 0;
+  for(int j = 0; j < m_kos; j++){
+    res += accu*(m_health-m_currentHealth);
+    accu -= 0.2;
+  }
+  return res;
+}
+
+void CharacterPlayed::reset(){
+  m_currentHealth = m_health;
+  m_currentStamina = m_stamina;
+  m_action = Action::NONE;
+  m_state = Action::NORMAL;
+  m_receivedHits = 0;
+  m_kos = 0;
+};

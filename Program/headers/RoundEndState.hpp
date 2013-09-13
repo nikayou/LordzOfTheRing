@@ -6,6 +6,7 @@
 #include "../headers/GUI_Window.hpp"
 
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include <string>
 
@@ -24,7 +25,7 @@ private:
   sf::RenderTexture * m_render;
   GUIWindow * m_window;
   Container * m_container;
-  float m_scale;
+  void displayScore(sf::Sprite * s);
 };
 
 #endif

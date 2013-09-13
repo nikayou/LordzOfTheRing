@@ -36,10 +36,7 @@ public:
   void init();
   void loop();
   void splash();
-  void displayGauges();
-  void displayClock();
-  void displayCharacters();
-  void displayMatch();
+  void display();
   void pause(const sf::Int64&);
   void close();
   //getters

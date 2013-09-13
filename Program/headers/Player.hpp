@@ -6,6 +6,7 @@
 
 #include "../headers/CharacterPlayed.hpp"
 
+#include <iostream> //delete
 #include <string>
 
 class Player{
@@ -59,7 +60,8 @@ public:
     m_points = 0;
   };
   void addPoints(const unsigned short& value){
-    m_points = ( (m_points+value) <= -1) ? m_points+value : -1;
+    std::cout << "adding "<<value<<" points"<<std::endl;
+    m_points += value;
   };
   void addVictory(){
     m_victories = (m_victories == -1) ? -1 : m_victories+1;

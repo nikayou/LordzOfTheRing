@@ -28,9 +28,10 @@ void Match::manage(){
 
 void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
-    unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE:BASE_STRIKE;
+    unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE+BASE_STRIKE:BASE_STRIKE;
     hit += getCharacter(a)->getAttack();
     getCharacter(b)->takeHit(hit);
+    getCharacter(a)->zeroHits();
     if(m_type == MatchType::DAMAGE)
       m_players[a]->addPoints(hit);
     if( checkKO(b) ){
@@ -81,3 +82,6 @@ bool Match::checkKO(const unsigned short& p){
     
 }
 
+bool Match::isFinished(){
+  return ( m_currentRound >= m_roundsNumber);
+}

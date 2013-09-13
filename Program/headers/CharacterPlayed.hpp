@@ -81,6 +81,8 @@ public:
   unsigned short gainStamina(const unsigned short&);
   void manage();
   void zeroHits(){ m_receivedHits = 0; };
+  unsigned int getDamages();
+  void reset();
 
 };
 

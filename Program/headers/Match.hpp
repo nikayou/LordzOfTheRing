@@ -10,7 +10,7 @@
 #include <string>
 
 #define BASE_STRIKE 3
-#define NICE_STRIKE 6
+#define NICE_STRIKE 9
 
 typedef enum{
   KO, //each KO counts as 1 point 
@@ -63,6 +63,9 @@ const unsigned short& = 3
   CharacterPlayed * getCharacter(const unsigned short& v) const{
     return m_players[v]->getCharacter();
   };
+  MatchType getType() const{
+    return m_type;
+  };
   //setters
   void setTimePerRound(const unsigned short& value){
     m_timePerRound = value;
@@ -83,9 +86,6 @@ const unsigned short& = 3
     m_type = t;
   };
   //others
-  bool isFinished(){
-    return m_currentRound >= m_roundsNumber;
-  };
   void newRound(){
     setCurrentRound( m_currentRound +1 );
   }
@@ -93,8 +93,9 @@ const unsigned short& = 3
   void subCheckHits(const unsigned short&, const unsigned short&);
   void checkHits();
   void KO(const unsigned short&);
-   bool checkHit(const unsigned short&, const unsigned short&);
+  bool checkHit(const unsigned short&, const unsigned short&);
   bool checkKO(const unsigned short&);
+  bool isFinished();
 };
 
 #endif
