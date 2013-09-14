@@ -18,14 +18,21 @@ typedef enum{
   DAMAGE //damages count as score
 } MatchType;
 
+typedef struct{
+  MatchType mo_type;
+  unsigned short mo_roundsNumber;
+  unsigned short mo_strengthModifier;
+  unsigned short mo_fatigueModifier;
+  unsigned short mo_timePerRound;
+  bool mo_TKO; // when 5 KOs in 1 round, the match ends
+} MatchOptions;
+
 class Match{
 
 private:
   Player * m_players[2];
-  unsigned short m_timePerRound; //time (in seconds). 0 = infinity
-  unsigned short m_roundsNumber; //number of rounds to play
+  MatchOptions m_options;
   unsigned short m_currentRound; 
-  MatchType m_type; //type of scoring
   bool m_loaded;
 
 public:
@@ -37,10 +44,10 @@ public:
   ~Match();
   //getters
   unsigned short getTimePerRound() const{
-    return m_timePerRound;
+    return m_options.mo_timePerRound;
   };
   unsigned short getRoundsNumber() const{
-    return m_roundsNumber;
+    return m_options.mo_roundsNumber;
   };
   unsigned short getCurrentRound() const{
     return m_currentRound;
@@ -64,17 +71,29 @@ public:
     return m_players[v]->getCharacter();
   };
   MatchType getType() const{
-    return m_type;
+    return m_options.mo_type;
+  };
+  bool getTKO() const{
+    return m_options.mo_TKO;
+  };
+  unsigned short getStrenghtModifier() const{
+    return m_options.mo_strengthModifier;
+  };
+  unsigned short getFatigueModifier() const{
+    return m_options.mo_fatigueModifier;
+  };
+  MatchOptions getOptions() const{
+    return m_options;
   };
   //setters
   void setTimePerRound(const unsigned short& value){
-    m_timePerRound = value;
+    m_options.mo_timePerRound = value;
   };
   void setRoundsNumber(const unsigned short& value){
-    m_roundsNumber = value;
+    m_options.mo_roundsNumber = value;
   };
   void setCurrentRound(const unsigned short& value){
-    m_currentRound = (value >= m_roundsNumber)?m_roundsNumber:value;
+    m_currentRound = (value >= m_options.mo_roundsNumber)?m_options.mo_roundsNumber:value;
   };
   void setPlayer1(Player * value){
     m_players[0] = value;
@@ -83,10 +102,19 @@ public:
     m_players[1] = value;
   };
   void setType(const MatchType& t){
-    m_type = t;
+    m_options.mo_type = t;
   };
   void setLoaded(const bool& b){
     m_loaded = b;
+  };
+  void setStrengthModifier(const unsigned short& value){
+    m_options.mo_strengthModifier = value;
+  };
+  void setFatigueModifier(const unsigned short& value){
+    m_options.mo_fatigueModifier = value;
+  };
+  void setTKO(const bool& value){
+    m_options.mo_TKO = value;
   };
   //others
   void newRound(){

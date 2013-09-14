@@ -26,8 +26,7 @@ void StateHandler::change(GameState * s){
   m_states.push_back(s);
   m_states.back()->enter();
   if(g != NULL){
-     g->deleteAll();
-    std::cout << "delete all "<<g->getID()<<std::endl;
+    g->deleteAll(); // useless ?
     if( ! g->getID().compare("MAIN_MENU") ){
       delete (MainMenuState *)g;
       return;

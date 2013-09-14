@@ -181,9 +181,9 @@ void CharacterPlayed::takeHit(const unsigned short& dmg){
 }
 
 bool CharacterPlayed::doHit(){
-  if(m_currentStamina < FRAMERATE) 
+  if(m_currentStamina < FRAMERATE*( (0.0+Game::getInstance()->getMatch()->getFatigueModifier() )/100.0) ) 
     return false;
-  loseStamina(2*FRAMERATE);
+  loseStamina(2*FRAMERATE*( (0.0+Game::getInstance()->getMatch()->getFatigueModifier() )/100.0) );
   return true;
 }
 
@@ -213,8 +213,8 @@ unsigned int CharacterPlayed::getDamages(){
   int res = 0;
   for(int j = 0; j < m_kos; j++){
     res += accu*(m_health-m_currentHealth);
-    accu -= 0.2;
-  }
+  accu -= 0.2;
+}
   return res;
 }
 

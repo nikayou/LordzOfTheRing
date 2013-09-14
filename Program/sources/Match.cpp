@@ -12,8 +12,12 @@ Match::Match(Player * p1, Player * p2,
 	     const unsigned short& r){
   m_players[0] = p1;
   m_players[1] = p2;
-  m_timePerRound = t;
-  m_roundsNumber = r;
+  m_options.mo_type = MatchType::KO;
+  m_options.mo_roundsNumber = r;
+  m_options.mo_strengthModifier = 100;
+  m_options.mo_fatigueModifier = 100;
+  m_options.mo_timePerRound = t;
+  m_options.mo_TKO = true;
   m_currentRound = 0;
   m_loaded = false;
 }
@@ -31,9 +35,9 @@ void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE+BASE_STRIKE:BASE_STRIKE;
     hit += getCharacter(a)->getAttack();
-    getCharacter(b)->takeHit(hit);
+    getCharacter(b)->takeHit(hit*((0.0+getStrenghtModifier() )/100) );
     getCharacter(a)->zeroHits();
-    if(m_type == MatchType::DAMAGE)
+    if(m_options.mo_type == MatchType::DAMAGE)
       m_players[a]->addPoints(hit);
     if( checkKO(b) ){
       getCharacter(b)->setAction(Action::KO);
@@ -52,7 +56,7 @@ void Match::checkHits(){
 }
 
 void Match::KO(const unsigned short& p){
-  if(m_type == MatchType::KO)
+  if(m_options.mo_type == MatchType::KO)
     m_players[1^p]->addPoints(1);
 }
 
@@ -84,5 +88,8 @@ bool Match::checkKO(const unsigned short& p){
 }
 
 bool Match::isFinished(){
-  return ( m_currentRound >= m_roundsNumber);
+  return ( 
+	  ( m_currentRound >= m_options.mo_roundsNumber)
+	  || (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() )
+	   );
 }
