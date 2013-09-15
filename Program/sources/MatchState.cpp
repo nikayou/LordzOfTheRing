@@ -21,11 +21,12 @@
 const std::string MatchState::m_matchID = "MATCH";
 
 void MatchState::update(){
+  Match * m = Game::getInstance()->getMatch();
   if(Game::getInstance()->getClock()->getElapsedTime().asSeconds() >= 1){
     Game::getInstance()->addTime(sf::seconds(1) );
     Game::getInstance()->getClock()->restart();
   }
-  if(Game::getInstance()->getMatch()->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) < 0){
+  if(m->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) < 0){
     //time's up
     Game::getInstance()->getStateHandler()->change(new RoundEndState() );
   }
@@ -42,25 +43,27 @@ void MatchState::update(){
 	break;
       }
       
-      if(Game::getInstance()->getMatch()->getCharacter(Action::getDoer(a) )->getAction() == Action::NONE ){
+      if(m->getCharacter(Action::getDoer(a) )->getAction() == Action::NONE ){
+	// if attack is not forbidden
 	if(
 	   !( ( (Action::getType(a) == Action::ATTACK_LEFT)
 		||(Action::getType(a) == Action::ATTACK_MIDDLE)
 		||(Action::getType(a) == Action::ATTACK_RIGHT) )
-	      && !Game::getInstance()->getMatch()->getCharacter(Action::getDoer(a) )->doHit() )
+	      && m->getCharacter(Action::getDoer(a)^1)->getState() != Action::CRYING 
+	      && !m->getCharacter(Action::getDoer(a) )->doHit() )
 	   )
-	  Game::getInstance()->getMatch()->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
+	  m->getCharacter(Action::getDoer(a) )->setAction( Action::getType(a) );
       }else{
 	//player is already performing an action
       }
     }
 
   }
-  Game::getInstance()->getMatch()->manage();
+  m->manage();
   
   if( 
-     (Game::getInstance()->getMatch()->getCharacter(0)->getKOs() >= 5) ||
-     (Game::getInstance()->getMatch()->getCharacter(1)->getKOs() >= 5)
+     (m->getCharacter(0)->getKOs() >= 5) ||
+     (m->getCharacter(1)->getKOs() >= 5)
       )
     Game::getInstance()->getStateHandler()->change(new RoundEndState() );
 }
