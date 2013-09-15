@@ -1,10 +1,10 @@
 #Nicolas CAILLOUX (Lasconik)
-PROGRAM=MyBadPunchOut
+PROGRAM=LordzOfTheRing
 SRCDIR=sources
 
-all: MyBadPunchOut
+all: $(PROGRAM)
 
-MyBadPunchOut:
+$(PROGRAM):
 	cd $(SRCDIR); make
 	cd ../
 	mv ./$(SRCDIR)/$(PROGRAM) $(PROGRAM)

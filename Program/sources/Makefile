@@ -1,5 +1,5 @@
 #Nicolas CAILLOUX (Lasconik)
-PROGRAM=MyBadPunchOut
+PROGRAM=LordzOfTheRing
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
 LIBREP=$(HOME)/.SFML2
