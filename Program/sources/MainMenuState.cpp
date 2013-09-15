@@ -8,6 +8,7 @@
 #include "../headers/GUI_Container.hpp"
 #include "../headers/GUI_Window.hpp"
 #include "../headers/MatchState.hpp"
+#include "../headers/OptionState.hpp"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
@@ -29,7 +30,7 @@ bool MainMenuState::enter(){
   b_play->setTextToCenter();
   b_play->setAction( [ this]() -> void{
       m_window->setContentPane(NULL);
-      Game::getInstance()->getStateHandler()->change( new CharacterState() ) ;
+      Game::getInstance()->getStateHandler()->change( new OptionState() ) ;
     } );
   Button * b_net = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), sf::Color(60, 60, 60) );
   b_net->setBorderThickness(1);
