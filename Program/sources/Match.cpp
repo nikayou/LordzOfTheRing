@@ -35,7 +35,7 @@ void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
   if( checkHit(a,b) ){
     unsigned short hit = (getCharacter(a)->getAction() == Action::ATTACK_MIDDLE) ? NICE_STRIKE+BASE_STRIKE:BASE_STRIKE;
     hit += getCharacter(a)->getAttack();
-    getCharacter(b)->takeHit(hit*((0.0+getStrenghtModifier() )/100) );
+    getCharacter(b)->takeHit(hit*((0.0+getStrengthModifier() )/100) );
     getCharacter(a)->zeroHits();
     if(m_options.mo_type == MatchType::DAMAGE)
       m_players[a]->addPoints(hit);
@@ -90,6 +90,6 @@ bool Match::checkKO(const unsigned short& p){
 bool Match::isFinished(){
   return ( 
 	  ( m_currentRound >= m_options.mo_roundsNumber)
-	  || (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() )
+	  || (m_options.mo_TKO && (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() >= 5 ) )
 	   );
 }

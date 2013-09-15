@@ -6,6 +6,8 @@
 
 #include "../headers/GUI_Container.hpp"
 
+#include <iostream> //delete
+
 class Container;
 ////////////////////
 /// GUIWindow
@@ -33,7 +35,9 @@ public:
   // misc
   /* opens the window and gives it forced focus (or not) */
   void open(const bool&);
-  sf::Vector2i getMouse() const { return sf::Mouse::getPosition(*mWindow); }; 
+  sf::Vector2i getMouse() const { 
+      return sf::Mouse::getPosition(*mWindow); 
+  }; 
   void update();
   /* running drawings and displaying */
   void draw();

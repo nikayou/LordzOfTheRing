@@ -29,6 +29,7 @@ private:
   Container * m_container;
   GUIWindow * m_window;
   std::vector<Button *> m_buttons;
+  Checkbox * m_tko;
   std::vector<sf::Text *> m_texts;
   std::string typeToString(const MatchType&);
 

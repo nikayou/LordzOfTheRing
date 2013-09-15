@@ -76,7 +76,7 @@ public:
   bool getTKO() const{
     return m_options.mo_TKO;
   };
-  unsigned short getStrenghtModifier() const{
+  unsigned short getStrengthModifier() const{
     return m_options.mo_strengthModifier;
   };
   unsigned short getFatigueModifier() const{
