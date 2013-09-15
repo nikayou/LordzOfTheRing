@@ -55,7 +55,7 @@
 **/
 void Game::init(){
  
-  m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "MyBadPunchOut"); 
+  m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring"); 
   m_window->setFramerateLimit( (float) FRAMERATE);
   m_window->setPosition(sf::Vector2i(10, 10) ); //adjust
   m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
@@ -101,7 +101,7 @@ void Game::display(){
 }
 
 void Game::splash(){
-  sf::RenderWindow rw(sf::VideoMode(600, 400), "splashscreen", sf::Style::None );
+  sf::RenderWindow rw(sf::VideoMode(600, 400), "LOTR", sf::Style::None );
   rw.setPosition(sf::Vector2i(0,0) ); //adjust
   sf::Texture * t;
   t = TextureManager::getInstance()->get("splashscreens/sfml.splash")->getTexture();

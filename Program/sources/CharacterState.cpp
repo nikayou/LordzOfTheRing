@@ -15,6 +15,7 @@
 #include "../headers/GUI_Window.hpp"
 #include "../headers/Match.hpp"
 #include "../headers/MatchState.hpp"
+#include "../headers/OptionState.hpp"
 #include "../headers/Texture.hpp"
 #include "../headers/TextureManager.hpp"
 
@@ -214,7 +215,7 @@ bool CharacterState::enter(){
   b_back->setText(sf::Text("<-", *font, 16) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()-> void{
-      //Game::getInstance()->setState(GameState::MAIN_MENU);
+      Game::getInstance()->getStateHandler()->change(new OptionState() );
     } );
   Button * b_play = new Button(sf::Vector2u(25, 25), sf::Vector2f(430, 550), sf::Color(50,50, 100) );
   b_play->setBorderThickness(1);

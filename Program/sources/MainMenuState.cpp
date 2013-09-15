@@ -29,7 +29,6 @@ bool MainMenuState::enter(){
   b_play->setText(sf::Text("Play", *font, 32 ) );
   b_play->setTextToCenter();
   b_play->setAction( [ this]() -> void{
-      m_window->setContentPane(NULL);
       Game::getInstance()->getStateHandler()->change( new OptionState() ) ;
     } );
   Button * b_net = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), sf::Color(60, 60, 60) );
