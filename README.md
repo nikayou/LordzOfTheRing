@@ -47,30 +47,30 @@ When you take several hits without attacking or dodging, you're character has a 
 
 There are 4 ways to win a match : by KO number, by rounds, by damages, or by TKO.
 
-#### KO number
+##### KO number
 After the number of rounds defined in the settings, we are counting each KO on both side : the player who performed the most wins the match.  
 
-#### Rounds
+##### Rounds
 After each round, we count the number of KOs of each side. The player who performed the most wins a points. After all rounds, the player who earned the most points wins the match. Note that between rounds, characters recover all their health.
 
-#### Damages
+##### Damages
 Here, only inflected damages count, for all the rounds.
 
-#### TKO
+##### TKO
 For every other win type, you can choose to set TKO victory : when one performs 5 KOs in 1 round, this is a TKO.  Note that after each KO you recover a part of health (decreasing with number of KOs). 
 
 ### Stats
 
 Stats set are what differences two characters. 
 
-#### Health
+##### Health
 Increase the total amount of health of the character. The more health you have, the more attacks you can bear.
 
-#### Stamina
+##### Stamina
 A high stamina allows to performs more attacks before being tired.
 
-#### Strength
+##### Strength
 A strong character will do more damages during attacks.
 
-#### Resistance
+##### Resistance
 The chances of being stun while being comboed are reduced with a high resistance.
