@@ -7,8 +7,7 @@
 #include "../headers/GUI_Button.hpp"
 #include "../headers/GUI_Container.hpp"
 #include "../headers/GUI_Window.hpp"
-#include "../headers/MatchState.hpp"
-#include "../headers/OptionState.hpp"
+#include "../headers/ProfileState.hpp"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
@@ -31,7 +30,7 @@ bool MainMenuState::enter(){
   b_play->setText(sf::Text("Play", *font, 32 ) );
   b_play->setTextToCenter();
   b_play->setAction( [ this]() -> void{
-      Game::getInstance()->getStateHandler()->change( new OptionState() ) ;
+      Game::getInstance()->getStateHandler()->change( new ProfileState() ) ;
     } );
   Button * b_net = new Button(sf::Vector2u(200, 70) , sf::Vector2f(300, 300), c );
   b_net->setBorderThickness(1);

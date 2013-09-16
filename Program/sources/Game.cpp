@@ -77,7 +77,7 @@ void Game::start(){
   m_music = new sf::Music();
   Player p1("Player1");
   Player p2("Player2");
-  m_match = new Match(&p1, &p2, 90, 3);
+  m_match = new Match(&p1, &p2, 30, 3);
   m_match->setType(MatchType::KO);
   splash();
 }
