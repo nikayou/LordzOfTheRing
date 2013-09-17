@@ -1,11 +1,13 @@
 #include "../headers/Match.hpp"
 #include "../headers/Game.hpp"
 
+#include <iostream> //delete
 #include <sstream>
+#include <string>
+
 /**
    Here we define a match : two players and gaming options 
  */
-#include <string>
 
 Match::Match(Player * p1, Player * p2, 
 	     const unsigned short& t,
@@ -65,7 +67,7 @@ bool Match::checkHit(const unsigned short& a, const unsigned short& b){
   if (
       ( ( p1->getAction() == Action::ATTACK_LEFT ) && (p2->getAction() != Action::DODGE_LEFT) )
       ||
-      ( ( p1->getAction() == Action::ATTACK_MIDDLE ) && (p2->getAction() != Action::DODGE_MIDDLE) )
+      ( ( p1->getAction() == Action::ATTACK_MIDDLE ) && (p2->getAction() != Action::DODGE_RIGHT) && (p2->getAction() != Action::DODGE_LEFT)&& (p2->getAction() != Action::DODGE_MIDDLE) )
       || 
       ( ( p1->getAction() == Action::ATTACK_RIGHT ) && (p2->getAction() != Action::DODGE_RIGHT) )
       ){
@@ -74,6 +76,8 @@ bool Match::checkHit(const unsigned short& a, const unsigned short& b){
 	return true;
       }
       else{
+	// dodge
+	std::cout<<"nice dodge ! "<<std::endl;
 	p2->zeroHits();
 	return false;
       }
