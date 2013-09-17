@@ -158,54 +158,68 @@ void RoundEndState::deleteAll(){
 
 void RoundEndState::displayScore(sf::Sprite * s){
   m_render->clear(sf::Color(120, 120, 120) );
+  std::ostringstream oss;
+  Match * m = Game::getInstance()->getMatch();
   //frame
   sf::RectangleShape r(sf::Vector2f(640, 480) );
-  r.setPosition(80, 60);
+  r.setPosition(80, 100);
   r.setFillColor(sf::Color(110, 110, 110) );
   r.setOutlineThickness(4);
   r.setOutlineColor(sf::Color::Black );
   m_render->draw(r);
   r.setSize(sf::Vector2f(0, 480) );
-  r.setPosition(400, 60);
+  r.setPosition(400, 100);
   m_render->draw(r);
   r.setSize(sf::Vector2f(640, 0) );
-  r.setPosition(80, 180);
+  r.setPosition(80, 400);
   m_render->draw(r);
-  //names
+  r.setSize(sf::Vector2f(640, 0) );
+  r.setPosition(80, 220);
+  m_render->draw(r);
+  //Round count
   sf::Text t;
   t.setFont(*FontManager::getInstance()->get(DEFAULT_FONT) );
   t.setColor(sf::Color::Black);
   t.setCharacterSize(50);
-  t.setString(Game::getInstance()->getMatch()->getPlayer1()->getName() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
-  t.setPosition(240, 120);
-  m_render->draw(t);
-  t.setPosition(800-240, 120);
-  t.setString(Game::getInstance()->getMatch()->getPlayer2()->getName());
-  m_render->draw(t);
-  //global score
-  std::ostringstream oss;
-  oss << Game::getInstance()->getMatch()->getPlayer1()->getVictories();
-  t.setPosition(240, 220);
-  t.setString( oss.str() );
-  m_render->draw(t);
-  t.setPosition(800-240, 220); 
   oss.str("");
   oss.clear();
-  oss << Game::getInstance()->getMatch()->getPlayer2()->getVictories();
+  oss << "Round " << m->getCurrentRound() << "/" << m->getRoundsNumber();
+  t.setString(oss.str() );
+  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  t.setPosition(400, 45);
+  m_render->draw(t);
+  //players's names
+  t.setString(m->getPlayer1()->getName() );
+  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  t.setPosition(240, 160);
+  m_render->draw(t);
+  t.setPosition(800-240, 160);
+  t.setString(m->getPlayer2()->getName());
+  m_render->draw(t);
+  //global score
+  oss.str("");
+  oss.clear();
+  oss << m->getPlayer1()->getVictories();
+  t.setPosition(240, 260);
+  t.setString( oss.str() );
+  m_render->draw(t);
+  t.setPosition(800-240, 260); 
+  oss.str("");
+  oss.clear();
+  oss << m->getPlayer2()->getVictories();
   t.setString(oss.str() );
   m_render->draw(t);
   //local score
-  t.setPosition(240, 330); 
+  t.setPosition(240, 370); 
   oss.str("");
   oss.clear();
-  oss << Game::getInstance()->getMatch()->getPlayer1()->getPoints();
+  oss << m->getPlayer1()->getPoints();
   t.setString( oss.str() );
   m_render->draw(t);
-  t.setPosition(800-240, 330);
+  t.setPosition(800-240, 370);
   oss.str("");
   oss.clear();
-  oss << Game::getInstance()->getMatch()->getPlayer2()->getPoints();
+  oss << m->getPlayer2()->getPoints();
   t.setString(oss.str() );
   m_render->draw(t);
   

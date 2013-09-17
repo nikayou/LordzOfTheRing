@@ -1,13 +1,13 @@
 #include "../headers/Match.hpp"
 #include "../headers/Game.hpp"
 
-#include <iostream> //delete
+
 #include <sstream>
 #include <string>
 
 /**
    Here we define a match : two players and gaming options 
- */
+*/
 
 Match::Match(Player * p1, Player * p2, 
 	     const unsigned short& t,
@@ -22,15 +22,18 @@ Match::Match(Player * p1, Player * p2,
   m_options.mo_TKO = true;
   m_currentRound = 0;
   m_loaded = false;
+
 }
 
 Match::~Match(){
+
 }
 
 void Match::manage(){
   m_players[0]->manage();
   m_players[1]->manage();
   checkHits();
+
 }
 
 void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
@@ -49,18 +52,21 @@ void Match::subCheckHits(const unsigned short& a, const unsigned short& b){
       getCharacter(b)->setAction(Action::STROKE);
     }
   }
+
 }
 
 void Match::checkHits(){
   //check if someone hits, loses health and is KO
   subCheckHits(0, 1);
   subCheckHits(1, 0);
+
 }
 
 void Match::KO(const unsigned short& p){
   if(m_options.mo_type == MatchType::KO)
     m_players[1^p]->addPoints(1);
 }
+
 
 bool Match::checkHit(const unsigned short& a, const unsigned short& b){
   CharacterPlayed * p1 = getCharacter(a), * p2 = getCharacter(b);
@@ -77,7 +83,6 @@ bool Match::checkHit(const unsigned short& a, const unsigned short& b){
       }
       else{
 	// dodge
-	std::cout<<"nice dodge ! "<<std::endl;
 	p2->zeroHits();
 	return false;
       }
@@ -94,6 +99,8 @@ bool Match::checkKO(const unsigned short& p){
 bool Match::isFinished(){
   return ( 
 	  ( m_currentRound >= m_options.mo_roundsNumber)
-	  || (m_options.mo_TKO && (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() >= 5 ) )
+	  || (m_options.mo_TKO 
+	      && (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() >= 5 ) )
 	   );
+
 }

@@ -39,8 +39,6 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 
-
-#include <cstdlib>
 #include <map>
 #include <sstream>
 #include <vector>
@@ -55,9 +53,10 @@
 **/
 void Game::init(){
  
-  m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring"); 
+  m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Titlebar|sf::Style::Close); 
   m_window->setFramerateLimit( (float) FRAMERATE);
   m_window->setPosition(sf::Vector2i(10, 10) ); //adjust
+  m_window->setKeyRepeatEnabled(false);
   m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
   //starting loop
   m_stateHandler->change(new MainMenuState() );
@@ -69,7 +68,6 @@ void Game::init(){
 }
 
 void Game::start(){
-  //setState(GameState::SPLASH);
   m_render = new sf::RenderTexture();
   m_stateHandler = new StateHandler();
   m_clock = new sf::Clock();
@@ -150,7 +148,7 @@ void Game::pause(const sf::Int64& t0){
   }
 }
 
-/** Closes the game
+/** Closes the game instance, trying to free memory
  **/
 void Game::close(){
   TextureManager::getInstance()->remove("background.png");
@@ -159,8 +157,8 @@ void Game::close(){
   delete( m_music);
   delete( m_timer);
   delete( m_clock);
-  delete(m_match);
-  delete(m_stateHandler);
+  delete( m_match);
+  delete( m_stateHandler);
   delete( m_render);
   delete( m_window);
 }
