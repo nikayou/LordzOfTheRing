@@ -387,10 +387,14 @@ bool MatchState::exit(){
       m->getPlayer1()->addPoints(1);
   }
   if(Game::getInstance()->getMatch()->isFinished() ) {
-    if(Game::getInstance()->getMatch()->getPlayer1()->getPoints() > Game::getInstance()->getMatch()->getPlayer2()->getPoints() )
+    if(Game::getInstance()->getMatch()->getPlayer1()->getPoints() > Game::getInstance()->getMatch()->getPlayer2()->getPoints() ){
       Game::getInstance()->getMatch()->getPlayer1()->addVictory();
-    else if(Game::getInstance()->getMatch()->getPlayer2()->getPoints() > Game::getInstance()->getMatch()->getPlayer1()->getPoints() )
+      std::cout<<"Player1 wins"<<std::endl;
+    }
+    else if(Game::getInstance()->getMatch()->getPlayer2()->getPoints() > Game::getInstance()->getMatch()->getPlayer1()->getPoints() ){
       Game::getInstance()->getMatch()->getPlayer2()->addVictory();
+      std::cout<<"Player 2 wins"<<std::endl;
+    }
   }
   return true;
 }
