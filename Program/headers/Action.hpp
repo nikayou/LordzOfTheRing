@@ -15,7 +15,6 @@ The framing tells how many times does the "phase" of the action lasts
 #include "../headers/Misc.hpp"
 
 #include <string>
-#include <vector>
 
 typedef byte action;
 /** An action can be described in one byte:
@@ -84,7 +83,6 @@ namespace Action{
   typedef enum{
     NORMAL = 0,
     ATTACKING,
-    
     DODGING,
     CRYING
   } State; //effective action (ex : the hit is not given when we press the key)

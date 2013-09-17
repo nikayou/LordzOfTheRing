@@ -16,8 +16,6 @@ stamina=medium
 
 #include <cstring>
 #include <fstream>
-//#include <iostream> //delete or replace by error handling
-#include <sstream>
 #include <string>
 
 

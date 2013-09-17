@@ -7,9 +7,6 @@
 #include "../headers/ResourceManager.hpp"
 #include "../headers/Singleton.hpp"
 
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
 #include <string>
 #include <vector>
 

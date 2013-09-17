@@ -39,10 +39,6 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 
-#include <map>
-#include <sstream>
-#include <vector>
-
 
 /** init all required the game : 
     -loads configuration

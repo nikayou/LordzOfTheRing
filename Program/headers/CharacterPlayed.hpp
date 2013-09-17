@@ -9,7 +9,6 @@
 #include "../headers/Action.hpp"
 
 #include <string>
-#include <vector>
 
 class CharacterPlayed : public Character{
 
