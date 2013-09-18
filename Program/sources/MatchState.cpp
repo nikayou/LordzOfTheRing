@@ -225,7 +225,6 @@ bool MatchState::enter(){
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
-  Game::getInstance()->getMusic()->stop();
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
   CharacterPlayed * c1 = Game::getInstance()->getMatch()->getCharacter1();
@@ -265,7 +264,7 @@ bool MatchState::enter(){
   // music launching
   *Game::getInstance()->getTimer() = sf::microseconds(0);
   Game::getInstance()->getClock()->restart();
-  if(Game::getInstance()->getMusic()->openFromFile("../../resources/audio/Guile's theme.ogg") )
+  if(Game::getInstance()->getMusic()->getStatus() == sf::Music::Status::Stopped && Game::getInstance()->getMusic()->openFromFile("../../resources/audio/Guile's theme.ogg") )
     Game::getInstance()->getMusic()->play();
   //ended loading, collasping screen
   *Game::getInstance()->getTimer() = sf::microseconds(0);

@@ -34,6 +34,7 @@ void CharacterState::confirmCharacters(){
   Game::getInstance()->getMatch()->getPlayer1()->setCharacter(c1);
   Game::getInstance()->getMatch()->getPlayer2()->setCharacter(c2);
   Game::getInstance()->getMatch()->setLoaded(false);
+  Game::getInstance()->getMatch()->setCurrentRound(0);
   Game::getInstance()->getStateHandler()->change(new MatchState() );
 }
 
@@ -222,8 +223,8 @@ bool CharacterState::enter(){
   b_play->setText(sf::Text("->", *font, 16) );
   b_play->setTextToCenter();
   b_play->setAction( [this]()-> void{
+      Game::getInstance()->getMusic()->stop();
       confirmCharacters();
-      Game::getInstance()->getStateHandler()->change(new MatchState() );
       return;
     } );
   //m_render = new sf::RenderTexture();
