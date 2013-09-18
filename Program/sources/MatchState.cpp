@@ -222,7 +222,6 @@ void MatchState::displayCharacters(const unsigned short& p_front, const unsigned
 
 
 bool MatchState::enter(){
-
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
@@ -262,8 +261,12 @@ bool MatchState::enter(){
   while( Game::getInstance()->getWindow()->pollEvent(event) ){
     if(event.type == sf::Event::Closed)
       Game::getInstance()->close();
-   
   }
+  // music launching
+  *Game::getInstance()->getTimer() = sf::microseconds(0);
+  Game::getInstance()->getClock()->restart();
+  if(Game::getInstance()->getMusic()->openFromFile("../../resources/audio/Guile's theme.ogg") )
+    Game::getInstance()->getMusic()->play();
   //ended loading, collasping screen
   *Game::getInstance()->getTimer() = sf::microseconds(0);
   Game::getInstance()->getClock()->restart();
@@ -325,11 +328,6 @@ bool MatchState::enter(){
     dec += 80;
     Game::getInstance()->getClock()->restart();
   }
-  // quick settings
-  *Game::getInstance()->getTimer() = sf::microseconds(0);
-  Game::getInstance()->getClock()->restart();
-  if(Game::getInstance()->getMusic()->openFromFile("../../resources/audio/battle1.ogg") )
-    Game::getInstance()->getMusic()->play();
   return true;
 }
 
