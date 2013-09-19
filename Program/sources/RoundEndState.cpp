@@ -161,13 +161,14 @@ void RoundEndState::displayScore(sf::Sprite * s){
   std::ostringstream oss;
   Match * m = Game::getInstance()->getMatch();
   //frame
+  static unsigned int fontsize = 80;
   static unsigned int left_border = 180, right_border = 780, up_border = 100, down_border = 580;
   static unsigned int y1 = up_border+120, y2 = y1+(down_border-y1)/2;
   static unsigned int x2 = left_border+(right_border-left_border)/2, x1 = left_border + (x2-left_border)/2, x3 = x2+(right_border-x2)/2;
   static unsigned int width = right_border-left_border, height = down_border-up_border;
   sf::RectangleShape r(sf::Vector2f(width, height) );
   r.setPosition(left_border, 100);
-  r.setFillColor(sf::Color(110, 110, 110) );
+  r.setFillColor(sf::Color(40, 40, 40) );
   r.setOutlineThickness(4);
   r.setOutlineColor(sf::Color::Black );
   m_render->draw(r);
@@ -185,33 +186,40 @@ void RoundEndState::displayScore(sf::Sprite * s){
   m_render->draw(r);
   //Round count, and socre description
   sf::Text t;
-  t.setFont(*FontManager::getInstance()->get(DEFAULT_FONT) );
+  t.setFont(*FontManager::getInstance()->get("../../resources/chubby_cheeks.ttf") );
   t.setColor(sf::Color::Black);
-  t.setCharacterSize(40);
+  t.setCharacterSize(60);
   t.setString("Wins" );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  sf::FloatRect box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   t.setPosition(left_border/2, y1+(y2-y1)/2);
   m_render->draw(t);
   t.setString("Score" );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   t.setPosition(left_border/2, y2+(down_border-y2)/2);
   m_render->draw(t);
-  t.setCharacterSize(50);
+  t.setCharacterSize(fontsize);
   oss.str("");
   oss.clear();
   oss << "Round " << m->getCurrentRound() << "/" << m->getRoundsNumber();
   t.setString(oss.str() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   t.setPosition(400, up_border/2);
   m_render->draw(t);
   //players's names
+  t.setFont(*FontManager::getInstance()->get("../../resources/charlie_dotted.ttf") );
+  t.setColor(sf::Color::Yellow);
   t.setString(m->getPlayer1()->getName() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   t.setPosition(x1, up_border+(y1-up_border)/2 );
   m_render->draw(t);
-  t.setPosition(x3, up_border+(y1-up_border)/2);
   t.setString(m->getPlayer2()->getName());
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
+  t.setPosition(x3, up_border+(y1-up_border)/2);
   m_render->draw(t);
   //global score
   oss.str("");
@@ -219,14 +227,16 @@ void RoundEndState::displayScore(sf::Sprite * s){
   oss << m->getPlayer1()->getVictories();
   t.setPosition(x1, y1+(y2-y1)/2);
   t.setString( oss.str() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   m_render->draw(t);
-  t.setPosition(x3, y1+(y2-y1)/2); 
   oss.str("");
   oss.clear();
   oss << m->getPlayer2()->getVictories();
   t.setString(oss.str() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
+  t.setPosition(x3, y1+(y2-y1)/2); 
   m_render->draw(t);
   //local score
   t.setPosition(x1, y2+(down_border-y2)/2); 
@@ -234,14 +244,16 @@ void RoundEndState::displayScore(sf::Sprite * s){
   oss.clear();
   oss << m->getPlayer1()->getPoints();
   t.setString( oss.str() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
   m_render->draw(t);
-  t.setPosition(x3, y2+(down_border-y2)/2);
   oss.str("");
   oss.clear();
   oss << m->getPlayer2()->getPoints();
   t.setString(oss.str() );
-  t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
+  box = t.getLocalBounds();
+  t.setOrigin(box.left + box.width/2.0f, box.top + box.height/2.0f);
+  t.setPosition(x3, y2+(down_border-y2)/2);
   m_render->draw(t);
   
 }

@@ -77,10 +77,11 @@ void Checkbox::setPosition(const sf::Vector2f& v){
 void Checkbox::setTextToCenter(){
   sf::Text t = getText();
   unsigned int w, h;
-  w = CHECKBOX_WIDTH + (t.getGlobalBounds().width);
-  h = t.getGlobalBounds().height;
-  mText.setOrigin( (w-CHECKBOX_WIDTH) /2, h/2);
-  mText.setPosition( getX()+CHECKBOX_WIDTH+w/2, getY()+h/2+PADDING_BOX );
+  sf::FloatRect fr = t.getLocalBounds();
+  w = CHECKBOX_WIDTH + (fr.left+fr.width/2);
+  h = fr.height/2-fr.top;
+  mText.setOrigin( (w-CHECKBOX_WIDTH) /2, h);
+  mText.setPosition( getX()+w, getY()+h);
 }
 
 /* checks if the point is in the checkbox */

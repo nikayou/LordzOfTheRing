@@ -9,8 +9,8 @@
 void TextComponent::setTextToCenter(){
   if(mText.getOrigin().x == 0 && mText.getOrigin().y == 0){
     sf::FloatRect fr = mText.getLocalBounds();
-    float x = mText.getOrigin().x + fr.width/2;
-    float y = mText.getOrigin().y + fr.height/2;
+    float x = mText.getOrigin().x + fr.left + fr.width/2.0f;
+    float y = mText.getOrigin().y + fr.top + fr.height/2.0f;
     mText.setOrigin(x, y);
     x = getX()+(getWidth()/2);
     y = getY()+(getHeight()/2);

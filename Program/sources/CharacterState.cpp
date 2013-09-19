@@ -19,6 +19,7 @@
 #include "../headers/Texture.hpp"
 #include "../headers/TextureManager.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
@@ -95,6 +96,9 @@ void CharacterState::render(){
   m_render->clear(sf::Color(120, 120, 120) );
   sf::Sprite s;
   sf::Texture * t;
+sf::RectangleShape r(sf::Vector2f(0, 600) );
+  r.setPosition(400, 0);
+  m_render->draw(r);
   //displaying characters labels
   float scale = 2.0;
   s.scale(scale, scale);
@@ -210,17 +214,17 @@ bool CharacterState::enter(){
   m_index1 = 0;
   m_index2 = 1;
 
-  sf::Font * font = FontManager::getInstance()->get("../../resources/ArialPixel.ttf");
+  sf::Font * font = FontManager::getInstance()->get(DEFAULT_FONT);
   Button * b_back = new Button(sf::Vector2u(25, 25), sf::Vector2f(370, 550), sf::Color(200, 100, 100) );
   b_back->setBorderThickness(1);
-  b_back->setText(sf::Text("<-", *font, 16) );
+  b_back->setText(sf::Text("<-", *font, 40) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()-> void{
       Game::getInstance()->getStateHandler()->change(new OptionState() );
     } );
   Button * b_play = new Button(sf::Vector2u(25, 25), sf::Vector2f(430, 550), sf::Color(100, 200, 100) );
   b_play->setBorderThickness(1);
-  b_play->setText(sf::Text("->", *font, 16) );
+  b_play->setText(sf::Text("->", *font, 40) );
   b_play->setTextToCenter();
   b_play->setAction( [this]()-> void{
       Game::getInstance()->getMusic()->stop();
