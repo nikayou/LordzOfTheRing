@@ -217,14 +217,14 @@ bool CharacterState::enter(){
   m_index2 = 1;
 
   sf::Font * font = FontManager::getInstance()->get(DEFAULT_FONT);
-  Button * b_back = new Button(sf::Vector2u(25, 25), sf::Vector2f(370, 550), sf::Color(200, 100, 100) );
+  Button * b_back = new Button(sf::Vector2u(25, 25), sf::Vector2f(390-25, 550), sf::Color(200, 100, 100) );
   b_back->setBorderThickness(1);
   b_back->setText(sf::Text("<-", *font, 40) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()-> void{
       Game::getInstance()->getStateHandler()->change(new OptionState() );
     } );
-  Button * b_play = new Button(sf::Vector2u(25, 25), sf::Vector2f(430, 550), sf::Color(100, 200, 100) );
+  Button * b_play = new Button(sf::Vector2u(25, 25), sf::Vector2f(410, 550), sf::Color(100, 200, 100) );
   b_play->setBorderThickness(1);
   b_play->setText(sf::Text("->", *font, 40) );
   b_play->setTextToCenter();
