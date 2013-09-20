@@ -26,8 +26,11 @@ void MatchState::update(){
     Game::getInstance()->addTime(sf::seconds(1) );
     Game::getInstance()->getClock()->restart();
   }
-  if(m->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) < 0){
-    //time's up
+  if(
+     (m->getTimePerRound()-(Game::getInstance()->getTimer()->asSeconds() ) < 0)
+     || (m->getTKO() && (m->getCharacter1()->getKOs() >= 5 || m->getCharacter2()->getKOs() >= 5 ) )
+     ) {
+    //time's up or tko and 5 kos
     Game::getInstance()->getStateHandler()->change(new RoundEndState() );
   }
   sf::Event event;
@@ -60,12 +63,6 @@ void MatchState::update(){
 
   }
   m->manage();
-  
-  if( 
-     (m->getCharacter(0)->getKOs() >= 5) ||
-     (m->getCharacter(1)->getKOs() >= 5)
-      )
-    Game::getInstance()->getStateHandler()->change(new RoundEndState() );
 }
 
 

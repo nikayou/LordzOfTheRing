@@ -97,10 +97,6 @@ bool Match::checkKO(const unsigned short& p){
 }
 
 bool Match::isFinished(){
-  return ( 
-	  ( m_currentRound >= m_options.mo_roundsNumber)
-	  || (m_options.mo_TKO 
-	      && (getCharacter1()->getKOs() >= 5 || getCharacter2()->getKOs() >= 5 ) )
-	   );
+  return ( m_currentRound >= m_options.mo_roundsNumber);
 
 }
