@@ -172,6 +172,7 @@ void RoundEndState::displayScore(sf::Sprite * s){
   r.setOutlineThickness(4);
   r.setOutlineColor(sf::Color::Black );
   m_render->draw(r);
+  r.setOutlineThickness(2);
   //vertical separator
   r.setSize(sf::Vector2f(0, height) );
   r.setPosition(x2 , up_border);

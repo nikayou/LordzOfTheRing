@@ -98,6 +98,8 @@ void CharacterState::render(){
   sf::Texture * t;
 sf::RectangleShape r(sf::Vector2f(0, 600) );
   r.setPosition(400, 0);
+  r.setOutlineThickness(2);
+  r.setOutlineColor(sf::Color::Black);
   m_render->draw(r);
   //displaying characters labels
   float scale = 2.0;
