@@ -10,6 +10,7 @@
 #include "../headers/StateHandler.hpp"
 #include "../headers/TextureManager.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Time.hpp>
@@ -75,6 +76,11 @@ void MatchState::render(){
   //displayCharacters(1, 0, -(Config::getInstance()->getWindowWidth()/4), 0 );
   displayCharacters(0, 1, -200, 0);
   displayCharacters(1, 0, 200, 0 );
+  sf::RectangleShape r(sf::Vector2f(0, 600) );
+  r.setPosition(400, 0);
+  r.setOutlineThickness(3);
+  r.setOutlineColor(sf::Color::Black);
+  m_render->draw(r);
   displayGauges();
   displayClock();
   m_window->draw();
@@ -279,6 +285,11 @@ bool MatchState::enter(){
       continue; 
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
+    sf::RectangleShape r(sf::Vector2f(0, 600) );
+    r.setPosition(400, 0);
+    r.setOutlineThickness(3);
+    r.setOutlineColor(sf::Color::Black);
+    m_render->draw(r);
     displayGauges();
     displayClock();
     s.setPosition(dec, 0);
@@ -298,6 +309,11 @@ bool MatchState::enter(){
       continue;
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
+    sf::RectangleShape r(sf::Vector2f(0, 600) );
+    r.setPosition(400, 0);
+    r.setOutlineThickness(3);
+    r.setOutlineColor(sf::Color::Black);
+    m_render->draw(r);
     displayGauges();
     displayClock();
     s.setPosition(-dec, 200);
@@ -315,6 +331,11 @@ bool MatchState::enter(){
       continue;
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
+    sf::RectangleShape r(sf::Vector2f(0, 600) );
+    r.setPosition(400, 0);
+    r.setOutlineThickness(3);
+    r.setOutlineColor(sf::Color::Black);
+    m_render->draw(r);
     displayGauges();
     displayClock();
     s.setPosition(dec, 400);

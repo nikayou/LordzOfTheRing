@@ -130,6 +130,10 @@ Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) );
   return true;
 }
 
+void Config::saveFile(const std::string& f){
+
+}
+
 action Config::getAction(const Key& k){
   if( m_mapping.find(k) == m_mapping.end() )
     return (action)0;

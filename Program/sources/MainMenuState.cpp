@@ -7,7 +7,7 @@
 #include "../headers/GUI_Button.hpp"
 #include "../headers/GUI_Container.hpp"
 #include "../headers/GUI_Window.hpp"
-#include "../headers/OptionState.hpp"
+#include "../headers/SettingsState.hpp"
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
@@ -54,7 +54,7 @@ bool MainMenuState::enter(){
   b_options->setText(sf::Text("Options", *font, fontsize ) );
   b_options->setTextToCenter();
   b_options->setAction( [this]()->void{
-      //Game::getInstance()->getStateHandler()->change(new OptionMenu() );
+      Game::getInstance()->getStateHandler()->change(new SettingsState() );
     } );
   Button * b_quit = new Button(sf::Vector2u(button_w, button_h) , sf::Vector2f(x, y+(button_h+space)*3), c );
   b_quit->setBorderThickness(1);

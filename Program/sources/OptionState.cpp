@@ -94,7 +94,7 @@ bool OptionState::enter(){
   unsigned int fontsize = 56;
   sf::FloatRect fr;
   sf::Color c(110, 110, 110);
-  //title
+  // title
   sf::Text * l_title = new sf::Text("Match options", *f, fontsize);
   fr = l_title->getLocalBounds();
   l_title->setPosition(400-fr.width/2, 10);
@@ -288,6 +288,6 @@ std::string OptionState::typeToString(const MatchType& m){
   if(m == MatchType::ROUND)
     return "Rounds";
   if(m == MatchType::DAMAGE)
-    return "Damage";
+    return "Damages";
   return "???";
 }

@@ -25,7 +25,6 @@ private:
     loadFromFile(CONFIG_FILE); 
   };
   ~Config(){ };
-  bool loadFromFile(const std::string&);
   std::map< Key, action > m_mapping; // no double in both sides 
   byte m_musicVolume;
   byte m_soundVolume;
@@ -64,6 +63,8 @@ public:
     m_windowHeight = h;
   };
   //others
+  bool loadFromFile(const std::string&);
+  void saveFile(const std::string&);
   void init();
 };
 
