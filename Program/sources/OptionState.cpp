@@ -279,7 +279,23 @@ bool OptionState::exit(){
 }
 
 void OptionState::deleteAll(){
-
+  unsigned int s = m_buttons.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_buttons[i];
+    m_buttons[i] = NULL;
+  }
+  delete m_tko;
+  m_tko = NULL;
+  s = m_texts.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_buttons[i];
+    m_buttons[i] = NULL;
+  }
+  delete m_container;
+  m_container = NULL;
+  delete m_window;
+  m_window = NULL;
+ 
 }
 
 std::string OptionState::typeToString(const MatchType& m){

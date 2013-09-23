@@ -147,8 +147,10 @@ void Game::pause(const sf::Int64& t0){
 /** Closes the game instance, trying to free memory
  **/
 void Game::close(){
-  TextureManager::getInstance()->remove("background.png");
-  TextureManager::getInstance()->remove("sprites.png");
+  CharacterManager::getInstance()->clear();
+  SpritesheetManager::getInstance()->clear();
+  FontManager::getInstance()->clear();
+  TextureManager::getInstance()->clear();
   m_window->close();
   delete( m_music);
   delete( m_timer);

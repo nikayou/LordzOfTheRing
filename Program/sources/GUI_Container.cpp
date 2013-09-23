@@ -33,6 +33,8 @@ bool Container::add(Component * c){
 }
 
 void Container::updateFocus(){
+  if(mContainer == NULL)
+    return;
   sf::Vector2i pos = getLocalMouse();
   unsigned int s = mComponents.size();
   for(unsigned int i = 0; i < s; i++){
@@ -76,7 +78,13 @@ void Container::click(){
 }
 
 sf::Vector2i Container::getLocalMouse(){
-  sf::Vector2i mouse = mContainer->getMouse();
+  sf::Vector2i mouse;
+  if(mContainer == NULL){
+    mouse.x = -1;
+    mouse.y = -1;
+    return mouse;
+  }
+  mouse = mContainer->getMouse();
   mouse.x -= getX();
   mouse.y -= getY();
   return mouse;

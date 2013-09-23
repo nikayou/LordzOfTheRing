@@ -96,7 +96,7 @@ void CharacterState::render(){
   m_render->clear(sf::Color(120, 120, 120) );
   sf::Sprite s;
   sf::Texture * t;
-sf::RectangleShape r(sf::Vector2f(0, 600) );
+  sf::RectangleShape r(sf::Vector2f(0, 600) );
   r.setPosition(400, 0);
   r.setOutlineThickness(2);
   r.setOutlineColor(sf::Color::Black);

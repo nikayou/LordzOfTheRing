@@ -12,13 +12,14 @@
 #include <string>
 #include <vector>
 
-const std::string SettingsState::m_settingsID;
+const std::string SettingsState::m_settingsID = "SETTINGS";
 
 void SettingsState::update(){
   m_window->update();
 }
 
 void SettingsState::render(){
+  m_render->clear(sf::Color(120, 120, 120) );
   m_window->draw();
 }
 
@@ -56,5 +57,20 @@ bool SettingsState::exit(){
 }
 
 void SettingsState::deleteAll(){
-
+  delete m_fullscreen;
+  m_fullscreen = NULL;
+  unsigned int s = m_buttons.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_buttons[i];
+    m_buttons[i] = NULL;
+  }
+  s = m_texts.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_texts[i];
+    m_texts[i] = NULL;
+  }
+  delete m_container;
+  m_container = NULL;
+  delete m_window;
+  m_window = NULL;
 }

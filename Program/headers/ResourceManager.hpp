@@ -60,6 +60,13 @@ public:
     //std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
     mData.erase(n);
   }
+
+  /**
+     Remove all elements
+   */
+  virtual void clear(){
+    mData.clear();
+  }
 };
 
 #endif

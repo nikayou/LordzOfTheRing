@@ -3,6 +3,9 @@
 #include "../headers/CharacterState.hpp"
 #include "../headers/MainMenuState.hpp"
 #include "../headers/MatchState.hpp"
+#include "../headers/OptionState.hpp"
+#include "../headers/SettingsState.hpp"
+#include "../headers/RoundEndState.hpp"
 
 #include <iostream> //delete
 #include <vector>
@@ -37,6 +40,18 @@ void StateHandler::change(GameState * s){
     }
     if( ! g->getID().compare("MATCH") ){
       delete (MatchState *)g;
+      return;
+    }
+    if( ! g->getID().compare("ROUND") ){
+      delete (RoundEndState *)g;
+      return;
+    }
+    if( ! g->getID().compare("SETTINGS") ){
+      delete (SettingsState *)g;
+      return;
+    }
+    if( ! g->getID().compare("OPTION_MENU") ){
+      delete (OptionState *)g;
       return;
     }
   }

@@ -55,7 +55,8 @@ void GUIWindow::update(){
 	continue;
       }
       if (event.type == sf::Event::MouseMoved){
-	mContentPane->updateFocus();
+	if(this && mContentPane)
+	  mContentPane->updateFocus();
       }
       if (event.type == sf::Event::MouseButtonPressed){
 	if(event.mouseButton.button == sf::Mouse::Left){
