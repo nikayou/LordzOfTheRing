@@ -30,7 +30,8 @@ GUIWindow::GUIWindow(sf::RenderWindow * w){
 GUIWindow::GUIWindow(sf::RenderWindow * w, Container * c){
   mWindow = w;
   mContentPane = c;
-  mContentPane->setContainer(this);
+  if(mContentPane != NULL)
+    mContentPane->setContainer(this);
 }
 
 GUIWindow::~GUIWindow(){

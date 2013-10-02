@@ -21,7 +21,7 @@ const std::string OptionState::m_optionID = "OPTION_MENU";
 
 void OptionState::update(){
   m_window->update();
-  Game::getInstance()->getMatch()->setTKO(m_tko->isChecked() );
+  //Game::getInstance()->getMatch()->setTKO(m_tko->isChecked() );
 }
 
 void OptionState::render(){
@@ -89,7 +89,8 @@ void OptionState::render(){
 bool OptionState::enter(){
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
-  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
+  m_window = Game::getInstance()->getGUI();
+  m_window->setContentPane(m_container);
   sf::Font * f = FontManager::getInstance()->get(DEFAULT_FONT);
   unsigned int fontsize = 56;
   sf::FloatRect fr;
@@ -134,7 +135,7 @@ bool OptionState::enter(){
   m_tko->setPosition(sf::Vector2f(660, 120) );
   m_tko->setTextToCenter();
   m_tko->setChecked(Game::getInstance()->getMatch()->getTKO() );
-  m_container->add(m_tko);
+  //m_container->add(m_tko);
   // rounds
   sf::Text * l_rounds = new sf::Text("Rounds", *f, fontsize);
   fr = l_rounds->getLocalBounds();
@@ -263,7 +264,7 @@ bool OptionState::enter(){
   m_container->add(b_back);
   m_buttons.push_back(b_back);
   Button * b_ok = new Button(sf::Vector2u(60, 40), sf::Vector2f(530, 540), sf::Color(100,200,100) );
-  b_ok->setText(sf::Text("->", *f, fontsize) );
+  b_ok->setText(sf::Text("- >", *f, fontsize) );
   b_ok->setTextToCenter();
   b_ok->setAction( [this]()->void{
       Game::getInstance()->getStateHandler()->change(new CharacterState() );
@@ -293,8 +294,6 @@ void OptionState::deleteAll(){
   }
   delete m_container;
   m_container = NULL;
-  delete m_window;
-  m_window = NULL;
  
 }
 

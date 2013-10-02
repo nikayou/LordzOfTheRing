@@ -2,6 +2,8 @@
    Here is the game singleton : in which state we are, how many times since launching, the window...
  */
 #include "../headers/Singleton.hpp"
+#include "../headers/GUI_Container.hpp"
+#include "../headers/GUI_Window.hpp"
 #include "../headers/Match.hpp"
 #include "../headers/StateHandler.hpp"
 
@@ -24,7 +26,8 @@ private:
   ~Game(){ };
   sf::RenderWindow * m_window;
   sf::RenderTexture * m_render;
-  //GameState::state m_state;
+  GUIWindow * m_gui;
+  Container * m_container;
   StateHandler * m_stateHandler;
   Match * m_match;
   sf::Clock * m_clock;
@@ -67,6 +70,9 @@ public:
   sf::Music * getMusic() const{
       return m_music;
     };
+  GUIWindow * getGUI() const{
+    return m_gui;
+  };
   //setters
   void setMatch(Match * m){
     m_match = m;

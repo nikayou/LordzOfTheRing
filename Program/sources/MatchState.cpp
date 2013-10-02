@@ -227,7 +227,8 @@ void MatchState::displayCharacters(const unsigned short& p_front, const unsigned
 bool MatchState::enter(){
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
-  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
+  m_window = Game::getInstance()->getGUI();
+  m_window->setContentPane(m_container);
   sf::Texture * t = TextureManager::getInstance()->get("loading")->getTexture();
   sf::Sprite s;
   CharacterPlayed * c1 = Game::getInstance()->getMatch()->getCharacter1();
@@ -417,7 +418,4 @@ bool MatchState::exit(){
 void MatchState::deleteAll(){
   delete m_container;
   m_container = NULL;
-  delete m_window;
-  m_window = NULL;
-
 }

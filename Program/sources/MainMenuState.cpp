@@ -74,7 +74,8 @@ bool MainMenuState::enter(){
   m_buttons.push_back(b_net);
   m_buttons.push_back(b_options);
   m_buttons.push_back(b_quit);
-  m_window = new GUIWindow(Game::getInstance()->getWindow(), m_container);
+  m_window = Game::getInstance()->getGUI();
+  m_window->setContentPane(m_container);
   return true;
 }
 
@@ -94,6 +95,4 @@ void MainMenuState::deleteAll(){
   m_buttons.clear();
   delete m_container;
   m_container = NULL;
-  delete m_window;
-  m_window = NULL;
 }

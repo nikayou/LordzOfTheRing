@@ -44,7 +44,8 @@ void RoundEndState::render(){
 bool RoundEndState::enter(){
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
-  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
+  m_window = Game::getInstance()->getGUI();
+  m_window->setContentPane(m_container);
   sf::Sprite s, s2;
   sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   //score displaying
@@ -152,8 +153,6 @@ bool RoundEndState::exit(){
 void RoundEndState::deleteAll(){
   delete m_container;
   m_container = NULL;
-  delete m_window;
-  m_window = NULL;
 }
 
 void RoundEndState::displayScore(sf::Sprite * s){

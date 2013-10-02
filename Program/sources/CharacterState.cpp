@@ -241,7 +241,8 @@ bool CharacterState::enter(){
   m_container->add(b_play);
   m_buttons.push_back(b_back);
   m_buttons.push_back(b_play);
-  m_window = new GUIWindow (Game::getInstance()->getWindow(), m_container);
+  m_window = Game::getInstance()->getGUI();
+  m_window->setContentPane(m_container);
   return true;
 }
 
@@ -256,6 +257,4 @@ void CharacterState::deleteAll(){
   m_buttons[0] = NULL;
   delete m_container;
   m_container = NULL;
-  delete m_window;
-  m_window = NULL;
 }

@@ -23,6 +23,7 @@
 #include "../headers/GUI_Bordered.hpp"
 #include "../headers/GUI_Button.hpp"
 #include "../headers/GUI_Container.hpp"
+#include "../headers/GUI_Window.hpp"
 #include "../headers/FontManager.hpp"
 
 #include <SFML/Audio/Music.hpp>
@@ -55,11 +56,12 @@ void Game::init(){
   m_window->setKeyRepeatEnabled(false);
   m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
   //starting loop
-  m_stateHandler->change(new MainMenuState() );
   m_music->setVolume(Config::getInstance()->getMusicVolume() );
   m_music->openFromFile("../../resources/audio/menu1.ogg");
   m_music->setVolume(Config::getInstance()->getMusicVolume() );
   m_music->play();
+  m_gui = new GUIWindow (m_window, new Container(m_render) );
+  m_stateHandler->change(new MainMenuState() );
   loop();
 }
 
