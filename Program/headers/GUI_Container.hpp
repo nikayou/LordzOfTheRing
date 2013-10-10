@@ -35,10 +35,10 @@ public:
   void updateFocus();
   void focusUp();
   void focusDown();
-  /* Clicks on the given position */
-  void click(const sf::Vector2i&);
+  /* Clicks on the given position, return value tells if we are closing the window (false) */
+  bool click(const sf::Vector2i&);
   /* Clicks on the mouse position (relative) */
-  void click();
+  bool click();
   /* returns relative position of mouse */
   sf::Vector2i getLocalMouse();
   /* displays all components' texts */

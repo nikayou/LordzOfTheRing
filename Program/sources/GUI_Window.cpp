@@ -8,7 +8,7 @@
 
 #include "../headers/GUI_Container.hpp"
 #include "../headers/GUI_Window.hpp"
-
+#include "../headers/Game.hpp"
 
 //////////////////////////////
 /// INTERFACE
@@ -52,8 +52,8 @@ void GUIWindow::update(){
     //controls
     while(mWindow && mWindow->pollEvent(event) ){
       if (event.type == sf::Event::Closed){
-	mWindow->close();
-	continue;
+	Game::getInstance()->close();
+	break;
       }
       if (event.type == sf::Event::MouseMoved){
 	if(this && mContentPane)
@@ -61,8 +61,10 @@ void GUIWindow::update(){
       }
       if (event.type == sf::Event::MouseButtonPressed){
 	if(event.mouseButton.button == sf::Mouse::Left){
-	  mContentPane->click( );
-	  continue;
+	  if(mContentPane->click( ) )
+	    continue;
+	  else
+	    break;
 	}
       }
       if (event.type == sf::Event::KeyPressed){

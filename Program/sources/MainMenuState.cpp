@@ -60,6 +60,7 @@ bool MainMenuState::enter(){
   b_quit->setBorderThickness(1);
   b_quit->setText(sf::Text("Quit", *font, fontsize ) );
   b_quit->setTextToCenter();
+  b_quit->setCloser(true);
   b_quit->setAction( [this]()->void{
       Game::getInstance()->close();
     }

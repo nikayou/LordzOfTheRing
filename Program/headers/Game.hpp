@@ -33,6 +33,7 @@ private:
   sf::Clock * m_clock;
   sf::Time * m_timer;
   sf::Music * m_music;
+  bool m_updating;
 
 public:
   void start();
@@ -81,5 +82,11 @@ public:
   void addTime(const sf::Time &s){
     *m_timer += s;
   };
+  bool updating() const{
+    return m_updating;
+  }
+  void setUpdateing(const bool& b){
+    m_updating = b;
+  }
 
 };

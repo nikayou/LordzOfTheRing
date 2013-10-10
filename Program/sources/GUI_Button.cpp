@@ -30,6 +30,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p){
   setForeground(sf::Color::Black);
   setBorderThickness(1);
   setAction( [this]()->void{} );
+  m_closing = false;
 }
 
 Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Color& c){
@@ -45,6 +46,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Color& c)
   setForeground(sf::Color::Black);
   setBorderThickness(1);
   setAction( [this]()->void{} );
+  m_closing = false;
 }
 
 Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t){
@@ -58,6 +60,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t){
   setForeground(sf::Color::Black);
   setBorderThickness(1);
   setAction( [this]()->void{} );
+  m_closing = false;
 }
 
 Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t, const sf::Color& c){
@@ -74,6 +77,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t, 
   setForeground(sf::Color::Black);
   setBorderThickness(1);
   setAction( [this]()->void{} );
+  m_closing = false;
 }
 
 

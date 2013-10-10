@@ -56,25 +56,27 @@ void Container::focusDown(){
   mFocused = (mFocused == (unsigned int)mComponents.size() )?0:mFocused+1;
 }
 
-void Container::click(const sf::Vector2i& pos){
+/** the return value indicate if we close the window(false) or not (true)*/
+bool Container::click(const sf::Vector2i& pos){
   unsigned int nb = mComponents.size();
   for(unsigned int i = 0; i < nb; i++){
     if(i >= mComponents.size() || mComponents[i] == NULL)
-      return;
+      return true;
     if(mComponents[i]->getClass().compare("Button") == 0){
       Button * b = (Button *) mComponents[i];
       if( (mFocused != 0 && mComponents[mFocused-1] == b ) || b->contains(pos) )
-	b->action();
+	return(b->action() );
     }else if(mComponents[i]->getClass().compare("Checkbox") == 0){
       Checkbox * c = (Checkbox *) mComponents[i];
       if(c->contains(pos) )
-	c->changeState();
+	return(c->changeState() );
     }
   }
+  return true;
 }
 
-void Container::click(){
-  click(getLocalMouse() );
+bool Container::click(){
+  return click(getLocalMouse() );
 }
 
 sf::Vector2i Container::getLocalMouse(){

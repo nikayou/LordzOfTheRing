@@ -46,7 +46,7 @@ void CharacterState::update(){
   while( m_window && m_window->getWindow() && m_window->getWindow()->pollEvent(event) ){
 
     if (event.type == sf::Event::Closed){
-      m_window->getWindow()->close();
+      Game::getInstance()->close();
       continue;
     }
     if (event.type == sf::Event::MouseMoved){
@@ -196,6 +196,10 @@ void CharacterState::render(){
   value *= 15*scale;
   s.move(value, 0);
   m_render->draw(s);
+  //texts for stats
+  for(unsigned int i = 0; i < m_texts.size(); i++){
+    m_render->draw(*m_texts[i] );
+  }
   m_window->draw();
  
 }
@@ -217,24 +221,75 @@ bool CharacterState::enter(){
   m_index2 = 1;
 
   sf::Font * font = FontManager::getInstance()->get(DEFAULT_FONT);
+  unsigned int fontsize = 40;
   Button * b_back = new Button(sf::Vector2u(25, 25), sf::Vector2f(390-25, 550), sf::Color(200, 100, 100) );
   b_back->setBorderThickness(1);
-  b_back->setText(sf::Text("<-", *font, 40) );
+  b_back->setText(sf::Text("<-", *font, fontsize) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()-> void{
       Game::getInstance()->getStateHandler()->change(new OptionState() );
     } );
   Button * b_play = new Button(sf::Vector2u(25, 25), sf::Vector2f(410, 550), sf::Color(100, 200, 100) );
   b_play->setBorderThickness(1);
-  b_play->setText(sf::Text("->", *font, 40) );
+  b_play->setText(sf::Text("->", *font, fontsize) );
   b_play->setTextToCenter();
   b_play->setAction( [this]()-> void{
       Game::getInstance()->getMusic()->stop();
       confirmCharacters();
       return;
     } );
-  //m_render = new sf::RenderTexture();
-  //m_render->create(800, 600);
+
+  sf::FloatRect fr;
+  sf::Text * l_health = new sf::Text("Health", *font, fontsize*2/3);
+  fr = l_health->getLocalBounds();
+  l_health->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  l_health->setPosition(230-100-fr.width/2, 480);
+  l_health->setColor(sf::Color::Black);
+  m_texts.push_back(l_health);
+  sf::Text * l_stam = new sf::Text("Stamina", *font, fontsize*2/3);
+  fr = l_stam->getLocalBounds();
+  l_stam->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  l_stam->setPosition(230-100-fr.width/2, 480+32);
+  l_stam->setColor(sf::Color::Black);
+  m_texts.push_back(l_stam);
+  sf::Text * l_atk = new sf::Text("Strength", *font, fontsize*2/3);
+  fr = l_atk->getLocalBounds();
+  l_atk->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  l_atk->setPosition(230-100-fr.width/2, 480+64);
+  l_atk->setColor(sf::Color::Black);
+  m_texts.push_back(l_atk);
+  sf::Text * l_def = new sf::Text("Resistance", *font, fontsize*2/3);
+  fr = l_def->getLocalBounds();
+  l_def->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  l_def->setPosition(230-100-fr.width/2, 480+96);
+  l_def->setColor(sf::Color::Black);
+  m_texts.push_back(l_def);
+  
+
+  sf::Text * r_health = new sf::Text("Health", *font, fontsize*2/3);
+  fr = r_health->getLocalBounds();
+  r_health->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  r_health->setPosition(570+125+fr.width/2, 480);
+  r_health->setColor(sf::Color::Black);
+  m_texts.push_back(r_health);
+  sf::Text * r_stam = new sf::Text("Stamina", *font, fontsize*2/3);
+  fr = r_stam->getLocalBounds();
+  r_stam->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  r_stam->setPosition(570+125+fr.width/2, 480+32);
+  r_stam->setColor(sf::Color::Black);
+  m_texts.push_back(r_stam);
+  sf::Text * r_atk = new sf::Text("Strength", *font, fontsize*2/3);
+  fr = r_atk->getLocalBounds();
+  r_atk->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  r_atk->setPosition(570+125+fr.width/2, 480+64);
+  r_atk->setColor(sf::Color::Black);
+  m_texts.push_back(r_atk);
+  sf::Text * r_def = new sf::Text("Resistance", *font, fontsize*2/3);
+  fr = r_def->getLocalBounds();
+  r_def->setOrigin(fr.left+fr.width/2, fr.top+fr.height/2);
+  r_def->setPosition(570+125+fr.width/2, 480+96);
+  r_def->setColor(sf::Color::Black);
+  m_texts.push_back(r_def);
   m_render = Game::getInstance()->getRender();
   m_container = new Container(m_render );
   m_container->add(b_back);
@@ -251,6 +306,10 @@ bool CharacterState::exit(){
 }
 
 void CharacterState::deleteAll(){
+  for(unsigned int i = 0; i < m_texts.size(); i++){
+    delete m_texts[i];
+  }
+  m_texts.clear();
   delete m_buttons[1];
   m_buttons[1] = NULL;
   delete m_buttons[0];

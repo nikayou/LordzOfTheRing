@@ -1,4 +1,5 @@
 #include "../headers/StateHandler.hpp"
+#include "../headers/Game.hpp"
 #include "../headers/GameState.hpp"
 #include "../headers/CharacterState.hpp"
 #include "../headers/MainMenuState.hpp"
@@ -7,8 +8,10 @@
 #include "../headers/SettingsState.hpp"
 #include "../headers/RoundEndState.hpp"
 
-#include <iostream> //delete
+
+//#include <iostream> //delete
 #include <vector>
+
 
 void StateHandler::push(GameState * s){
   m_states.push_back(s);
@@ -67,11 +70,13 @@ void StateHandler::pop(){
 }
 
 void StateHandler::update(){
-  if(!m_states.empty() )
+  std::cout<<"update ? "<<Game::getInstance()->updating()<<std::endl;
+  if(Game::getInstance()->updating() && !m_states.empty() )
     m_states.back()->update();
 }
 
 void StateHandler::render(){
-  if(!m_states.empty() )
+  std::cout<<"render ? "<<Game::getInstance()->updating()<<std::endl;
+  if(Game::getInstance()->updating() && !m_states.empty() )
     m_states.back()->render();
 }

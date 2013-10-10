@@ -66,6 +66,7 @@ void Game::init(){
 }
 
 void Game::start(){
+  m_updating = true;
   m_render = new sf::RenderTexture();
   m_stateHandler = new StateHandler();
   m_clock = new sf::Clock();
@@ -84,7 +85,7 @@ void Game::start(){
     -print situation
 **/
 void Game::loop(){
-  while(m_window->isOpen() ){
+  while(m_updating && m_window->isOpen() ){
     //m_window->clear(sf::Color::Black);
     m_stateHandler->update();
     m_stateHandler->render();
@@ -149,11 +150,14 @@ void Game::pause(const sf::Int64& t0){
 /** Closes the game instance, trying to free memory
  **/
 void Game::close(){
+  m_updating = false;
+  std::cout<<"closing"<<std::endl;
   CharacterManager::getInstance()->clear();
   SpritesheetManager::getInstance()->clear();
   FontManager::getInstance()->clear();
   TextureManager::getInstance()->clear();
   m_window->close();
+  std::cout<<"deleting"<<std::endl;
   delete( m_music);
   delete( m_timer);
   delete( m_clock);
@@ -161,6 +165,7 @@ void Game::close(){
   delete( m_stateHandler);
   delete( m_render);
   delete( m_window);
+  std::cout<<"closed"<<std::endl;
 }
 
 

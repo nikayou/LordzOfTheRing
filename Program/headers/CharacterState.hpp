@@ -7,6 +7,8 @@
 #include "../headers/GUI_Window.hpp"
 #include "../headers/GUI_Container.hpp"
 
+#include <SFML/Graphics/Text.hpp>
+
 #include <string>
 #include <vector>
 
@@ -27,6 +29,7 @@ private:
   unsigned int m_index1;
   unsigned int m_index2;
   static std::vector<Character *> m_chars;
+  std::vector<sf::Text *> m_texts;
   std::vector<Button *> m_buttons;
   void confirmCharacters();
 
