@@ -30,6 +30,7 @@ void MainMenuState::render(){
 }
 
 bool MainMenuState::enter(){
+  Game::getInstance()->setUpdating(true);
   sf::Font * font = FontManager::getInstance()->get("../../resources/laff_riot.ttf");
   sf::Color c(100, 100, 100);
   unsigned int fontsize = 40;
@@ -81,6 +82,8 @@ bool MainMenuState::enter(){
 }
 
 bool MainMenuState::exit(){
+
+  Game::getInstance()->setUpdating(false);
   return true;
 }
 

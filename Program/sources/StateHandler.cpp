@@ -8,8 +8,6 @@
 #include "../headers/SettingsState.hpp"
 #include "../headers/RoundEndState.hpp"
 
-
-//#include <iostream> //delete
 #include <vector>
 
 
@@ -25,6 +23,7 @@ void StateHandler::change(GameState * s){
       return;
     }
     if(m_states.back()->exit() ){
+      Game::getInstance()->setUpdating(false);
       g = m_states.back();
       m_states.pop_back();
     }
@@ -70,13 +69,11 @@ void StateHandler::pop(){
 }
 
 void StateHandler::update(){
-  std::cout<<"update ? "<<Game::getInstance()->updating()<<std::endl;
   if(Game::getInstance()->updating() && !m_states.empty() )
     m_states.back()->update();
 }
 
 void StateHandler::render(){
-  std::cout<<"render ? "<<Game::getInstance()->updating()<<std::endl;
   if(Game::getInstance()->updating() && !m_states.empty() )
     m_states.back()->render();
 }

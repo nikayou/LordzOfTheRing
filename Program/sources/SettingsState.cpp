@@ -25,6 +25,7 @@ void SettingsState::render(){
 
 bool SettingsState::enter(){
   m_render = Game::getInstance()->getRender();
+  Game::getInstance()->setUpdating(true);
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
@@ -54,6 +55,8 @@ bool SettingsState::enter(){
 }
 
 bool SettingsState::exit(){
+
+  Game::getInstance()->setUpdating(false);
   return true;
 }
 

@@ -48,7 +48,7 @@ void GUIWindow::update(){
   //if(sf::Mouse::isButtonPressed(sf::Mouse::Left) )
   //  mContentPane->click( );
   sf::Event event;
-  if(mWindow->isOpen() ){
+  if(Game::getInstance()->updating() && mWindow->isOpen() ){
     //controls
     while(mWindow && mWindow->pollEvent(event) ){
       if (event.type == sf::Event::Closed){

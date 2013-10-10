@@ -45,6 +45,7 @@ void RoundEndState::render(){
 
 bool RoundEndState::enter(){
   m_render = Game::getInstance()->getRender();
+  Game::getInstance()->setUpdating(true);
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
@@ -148,6 +149,8 @@ bool RoundEndState::exit(){
     dec += 80;
     Game::getInstance()->getClock()->restart();
   }
+  
+  Game::getInstance()->setUpdating(false);
   // end displaying
   return true;
 }

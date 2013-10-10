@@ -9,6 +9,7 @@
 #include "../headers/GUI_Button.hpp"
 #include "../headers/GUI_Checkbox.hpp"
 #include "../headers/GUI_Container.hpp"
+#include "../headers/Game.hpp"
 
 Container::Container(){
   mContent->create(1, 1);
@@ -33,7 +34,7 @@ bool Container::add(Component * c){
 }
 
 void Container::updateFocus(){
-  if(mContainer == NULL)
+  if(Game::getInstance()->updating() && mContainer == NULL)
     return;
   sf::Vector2i pos = getLocalMouse();
   unsigned int s = mComponents.size();

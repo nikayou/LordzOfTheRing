@@ -85,7 +85,7 @@ public:
   bool updating() const{
     return m_updating;
   }
-  void setUpdateing(const bool& b){
+  void setUpdating(const bool& b){
     m_updating = b;
   }
 

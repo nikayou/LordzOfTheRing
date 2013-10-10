@@ -43,19 +43,21 @@ void CharacterState::update(){
   std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
   unsigned int size = chars.size();
   sf::Event event;
-  while( m_window && m_window->getWindow() && m_window->getWindow()->pollEvent(event) ){
+  while( Game::getInstance()->updating() && m_window && m_window->getWindow() && m_window->getWindow()->pollEvent(event) ){
 
     if (event.type == sf::Event::Closed){
       Game::getInstance()->close();
-      continue;
+      break;
     }
     if (event.type == sf::Event::MouseMoved){
       m_container->updateFocus();
     }
     if (event.type == sf::Event::MouseButtonPressed){
       if(event.mouseButton.button == sf::Mouse::Left){
-	m_container->click( );
-	continue;
+	if(m_container->click( ) )
+	  continue;
+	else
+	  break;
       }
     }
     if (event.type == sf::Event::KeyPressed){
@@ -68,8 +70,10 @@ void CharacterState::update(){
 	continue;
       }
       if(event.key.code == sf::Keyboard::Space){
-	m_container->click();
-	continue;
+	if(m_container->click())
+	  continue;
+	else
+	  break;
       }
 
       action a = Config::getInstance()->getAction( (Key)event.key.code);
@@ -205,6 +209,7 @@ void CharacterState::render(){
 }
 
 bool CharacterState::enter(){
+  Game::getInstance()->setUpdating(true);
   CharacterPlayed c1(* (CharacterManager::getInstance()->get("avrage.chara") )  );
   CharacterPlayed c2(* (CharacterManager::getInstance()->get("sdard.chara") )  );
   std::map<std::string, Character > chars = CharacterManager::getInstance()->getData();
@@ -302,6 +307,7 @@ bool CharacterState::enter(){
 }
 
 bool CharacterState::exit(){
+  Game::getInstance()->setUpdating(false);
   return true;
 }
 
