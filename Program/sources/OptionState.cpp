@@ -51,11 +51,12 @@ void OptionState::render(){
   t.setOrigin(box.width/2.0f+box.left, box.top/2);
   t.setPosition(x_arg, 120);
   m_render->draw(t);
+  //  m_render->draw(m_tko);
   oss.str("");
   oss.clear();
   oss << opt.mo_roundsNumber;
   t.setString( oss.str() );
-   box = t.getLocalBounds();
+  box = t.getLocalBounds();
   t.setOrigin(box.width/2.0f+box.left, box.top/2);
   t.setPosition(x_arg, 220);
   m_render->draw(t);
@@ -136,7 +137,7 @@ bool OptionState::enter(){
   m_tko->setPosition(sf::Vector2f(660, 120) );
   m_tko->setTextToCenter();
   m_tko->setChecked(Game::getInstance()->getMatch()->getTKO() );
-  //m_container->add(m_tko);
+  m_container->add(m_tko);
   // rounds
   sf::Text * l_rounds = new sf::Text("Rounds", *f, fontsize);
   fr = l_rounds->getLocalBounds();
