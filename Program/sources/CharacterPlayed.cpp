@@ -12,7 +12,6 @@ CharacterPlayed are Characters with additionnal attributes necessary for match.
 #include "../headers/Game.hpp"
 #include "../headers/Random.hpp"
 
-#include <iostream> //delete
 #include <sstream>
 #include <string>
 #include <vector>

@@ -16,7 +16,6 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include <iostream>
 #include <string>
 
 const std::string MatchState::m_matchID = "MATCH";
@@ -415,12 +414,10 @@ bool MatchState::exit(){
   if(Game::getInstance()->getMatch()->isFinished() ) {
     if(Game::getInstance()->getMatch()->getPlayer1()->getPoints() > Game::getInstance()->getMatch()->getPlayer2()->getPoints() ){
       Game::getInstance()->getMatch()->getPlayer1()->addVictory();
-      std::cout<<"Player1 wins"<<std::endl;
     }
     else if(Game::getInstance()->getMatch()->getPlayer2()->getPoints() > Game::getInstance()->getMatch()->getPlayer1()->getPoints() ){
       Game::getInstance()->getMatch()->getPlayer2()->addVictory();
-      std::cout<<"Player 2 wins"<<std::endl;
-    }
+        }
   }
   Game::getInstance()->setUpdating(false);
   return true;

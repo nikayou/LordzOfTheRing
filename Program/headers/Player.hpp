@@ -6,7 +6,6 @@
 
 #include "../headers/CharacterPlayed.hpp"
 
-#include <iostream> //delete
 #include <string>
 
 class Player{
@@ -60,7 +59,6 @@ public:
     m_points = 0;
   };
   void addPoints(const unsigned short& value){
-    std::cout << "adding "<<value<<" points"<<std::endl;
     m_points += value;
   };
   void addVictory(){

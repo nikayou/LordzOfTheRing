@@ -1,7 +1,6 @@
 #ifndef RESOURCEMANAGER_HPP
 #define RESOURCEMANAGER_HPP
 
-#include <iostream>
 #include <map>
 #include <string>
 

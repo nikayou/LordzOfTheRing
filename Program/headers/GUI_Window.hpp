@@ -6,7 +6,6 @@
 
 #include "../headers/GUI_Container.hpp"
 
-#include <iostream> //delete
 
 class Container;
 ////////////////////

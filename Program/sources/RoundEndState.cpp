@@ -23,7 +23,6 @@
 const std::string RoundEndState::m_roundID = "ROUND";
 
 void RoundEndState::update(){
-  std::cout<< "score : "<<Game::getInstance()->getMatch()->getPlayer1()->getPoints() << "/" <<Game::getInstance()->getMatch()->getPlayer2()->getPoints() << std::endl;
   while(Game::getInstance()->getTime() < 5.){
     m_window->update();
   }

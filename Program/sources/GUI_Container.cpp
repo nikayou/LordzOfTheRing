@@ -1,4 +1,3 @@
-#include <cstdio> //delete
 #include <vector>
 
 #include <SFML/Graphics/Color.hpp>
@@ -167,7 +166,7 @@ sf::VertexArray Container::draw(){
       }
     }
   }
-  //printf("Finished drawing in texture : %d vertices in quads\n", quads.getVertexCount() );
+ 
   mContent->draw(quads);
   mContent->draw(lines);
   drawTexts();

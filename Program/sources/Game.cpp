@@ -151,8 +151,7 @@ void Game::pause(const sf::Int64& t0){
  **/
 void Game::close(){
   m_updating = false;
-  std::cout<<"closing"<<std::endl;
-  CharacterManager::getInstance()->clear();
+   CharacterManager::getInstance()->clear();
   SpritesheetManager::getInstance()->clear();
   FontManager::getInstance()->clear();
   TextureManager::getInstance()->clear();
@@ -160,7 +159,6 @@ void Game::close(){
   while(!getStateHandler()->empty() ){
     getStateHandler()->pop();
   }
-  std::cout<<"deleting"<<std::endl;
   delete( m_music);
   delete( m_timer);
   delete( m_clock);
@@ -169,7 +167,6 @@ void Game::close(){
   delete( m_render);
   delete( m_window);
   delete( m_gui);
-  std::cout<<"closed"<<std::endl;
 }
 
 
