@@ -21,7 +21,6 @@ const std::string OptionState::m_optionID = "OPTION_MENU";
 
 void OptionState::update(){
   m_window->update();
-  //Game::getInstance()->getMatch()->setTKO(m_tko->isChecked() );
 }
 
 void OptionState::render(){
@@ -51,7 +50,6 @@ void OptionState::render(){
   t.setOrigin(box.width/2.0f+box.left, box.top/2);
   t.setPosition(x_arg, 120);
   m_render->draw(t);
-  //  m_render->draw(m_tko);
   oss.str("");
   oss.clear();
   oss << opt.mo_roundsNumber;
@@ -277,6 +275,7 @@ bool OptionState::enter(){
 }
 
 bool OptionState::exit(){
+  Game::getInstance()->getMatch()->setTKO(m_tko->isChecked() );
   Game::getInstance()->setUpdating(false);
   return true;
 }
