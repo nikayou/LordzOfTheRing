@@ -10,6 +10,9 @@
 
 #include <vector>
 
+bool StateHandler::empty(){
+  return m_states.empty();
+}
 
 void StateHandler::push(GameState * s){
   m_states.push_back(s);
@@ -30,6 +33,27 @@ void StateHandler::change(GameState * s){
   }
   m_states.push_back(s);
   m_states.back()->enter();
+  deleteState(g);
+}
+
+
+void StateHandler::pop(){
+  if(!m_states.empty() ){
+    GameState * g = m_states.back();
+    Game::getInstance()->setUpdating(false);
+    if(g ->exit() ){
+      m_states.pop_back();
+      deleteState(g);
+    }
+  }
+}
+
+void StateHandler::update(){
+  if(Game::getInstance()->updating() && !m_states.empty() )
+    m_states.back()->update();
+}
+
+void StateHandler::deleteState( GameState * g){
   if(g != NULL){
     g->deleteAll(); // useless ?
     if( ! g->getID().compare("MAIN_MENU") ){
@@ -57,20 +81,6 @@ void StateHandler::change(GameState * s){
       return;
     }
   }
-}
-
-void StateHandler::pop(){
-  if(!m_states.empty() ){
-    if(m_states.back() ->exit() ){
-      delete m_states.back();
-      m_states.pop_back();
-    }
-  }
-}
-
-void StateHandler::update(){
-  if(Game::getInstance()->updating() && !m_states.empty() )
-    m_states.back()->update();
 }
 
 void StateHandler::render(){

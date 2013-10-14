@@ -49,9 +49,10 @@ void CharacterState::update(){
       Game::getInstance()->close();
       break;
     }
+    /*
     if (event.type == sf::Event::MouseMoved){
       m_container->updateFocus();
-    }
+      }*/
     if (event.type == sf::Event::MouseButtonPressed){
       if(event.mouseButton.button == sf::Mouse::Left){
 	if(m_container->click( ) )

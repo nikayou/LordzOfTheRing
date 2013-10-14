@@ -290,8 +290,8 @@ void OptionState::deleteAll(){
   m_tko = NULL;
   s = m_texts.size();
   for(unsigned int i = 0; i < s; i++){
-    delete m_buttons[i];
-    m_buttons[i] = NULL;
+    delete m_texts[i];
+    m_texts[i] = NULL;
   }
   delete m_container;
   m_container = NULL;

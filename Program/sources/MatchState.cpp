@@ -37,7 +37,9 @@ void MatchState::update(){
   sf::Event event;
   while( Game::getInstance()->getWindow()->pollEvent(event) ){
     if(event.type == sf::Event::Closed){
+      Game::getInstance()->setUpdating(false);
       Game::getInstance()->close();
+      break;
     }else if(event.type ==sf::Event::KeyPressed ){
       action a = Config::getInstance()->getAction( (Key)event.key.code);
       if(a == (action)0 )
@@ -262,11 +264,7 @@ bool MatchState::enter(){
     Game::getInstance()->getMatch()->setLoaded(true);
   }
   Game::getInstance()->getMatch()->newRound();
-  sf::Event event;
-  while( Game::getInstance()->getWindow()->pollEvent(event) ){
-    if(event.type == sf::Event::Closed)
-      Game::getInstance()->close();
-  }
+  checkClose();
   // music launching
   *Game::getInstance()->getTimer() = sf::microseconds(0);
   Game::getInstance()->getClock()->restart();
@@ -284,8 +282,10 @@ bool MatchState::enter(){
   int dec = 0;
   Game::getInstance()->getClock()->restart();
   while(dec <= 800){
-    if(Game::getInstance()->getMsTime() < 1 )
+    if(Game::getInstance()->getMsTime() < 1 ){
+      checkClose();
       continue; 
+    }
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
     sf::RectangleShape r(sf::Vector2f(0, 600) );
@@ -308,8 +308,10 @@ bool MatchState::enter(){
   }
   dec = 0;
   while(dec <= 800){
-    if(Game::getInstance()->getMsTime() < 1 )
+    if(Game::getInstance()->getMsTime() < 1 ){
+      checkClose();
       continue;
+    }
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
     sf::RectangleShape r(sf::Vector2f(0, 600) );
@@ -330,8 +332,10 @@ bool MatchState::enter(){
   }
   dec = 0;
   while(dec <= 800){
-    if(Game::getInstance()->getMsTime() < 1 )
+    if(Game::getInstance()->getMsTime() < 1 ){
+      checkClose();
       continue;
+    }
     displayCharacters(0, 1, -200, 0);
     displayCharacters(1, 0, 200, 0 );
     sf::RectangleShape r(sf::Vector2f(0, 600) );
@@ -376,8 +380,10 @@ bool MatchState::exit(){
   }
   dec = 800;
   while(dec >= 0){
-    if(Game::getInstance()->getMsTime() < 1 )
+    if(Game::getInstance()->getMsTime() < 1 ){
+      checkClose();
       continue;
+    }
     s.setPosition(dec, 200);
     m_render->draw(s);
     m_window->draw();
@@ -387,8 +393,10 @@ bool MatchState::exit(){
   }
   dec = 0;
   while(dec <= 800){
-    if(Game::getInstance()->getMsTime() < 1 )
+    if(Game::getInstance()->getMsTime() < 1 ){
+      checkClose();
       continue;
+    }
     s.setPosition(dec, 400);
     m_render->draw(s);
     m_window->draw();
@@ -421,4 +429,15 @@ bool MatchState::exit(){
 void MatchState::deleteAll(){
   delete m_container;
   m_container = NULL;
+}
+
+void MatchState::checkClose(){
+  sf::Event event;
+  while( Game::getInstance()->getWindow()->pollEvent(event) ){
+    if(event.type == sf::Event::Closed){
+      Game::getInstance()->setUpdating(false);
+      Game::getInstance()->close();
+      break;
+    }
+  }
 }

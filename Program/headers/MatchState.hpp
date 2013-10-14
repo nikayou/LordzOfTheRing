@@ -14,6 +14,7 @@ public:
   virtual bool enter();
   virtual bool exit();
   virtual void deleteAll();
+  virtual void checkClose();
   virtual std::string getID() const { return m_matchID; }
 
 private:

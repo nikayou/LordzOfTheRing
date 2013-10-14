@@ -157,6 +157,9 @@ void Game::close(){
   FontManager::getInstance()->clear();
   TextureManager::getInstance()->clear();
   m_window->close();
+  while(!getStateHandler()->empty() ){
+    getStateHandler()->pop();
+  }
   std::cout<<"deleting"<<std::endl;
   delete( m_music);
   delete( m_timer);
@@ -165,6 +168,7 @@ void Game::close(){
   delete( m_stateHandler);
   delete( m_render);
   delete( m_window);
+  delete( m_gui);
   std::cout<<"closed"<<std::endl;
 }
 
