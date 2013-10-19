@@ -6,7 +6,7 @@ CXX=g++
 CXXFLAGS := -std=c++0x -Wall
 LDFLAGS= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
-all: show $(PROGRAM)
+all: $(PROGRAM)
 
 show:
 	@echo "ld : "$(LDFLAGS);
