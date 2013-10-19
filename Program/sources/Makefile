@@ -2,12 +2,10 @@
 PROGRAM=LordzOfTheRing
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
-LIBREP=$(HOME)/.SFML2
-CC=g++ -std=c++0x
+CC=g++ -std=c++11
 CPPFLAGS=
 CFLAGS=-Wall -g
-IFLAGS= -I$(LIBREP)/include
-LDFLAGS=-L$(LIBREP)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 all: clean show $(PROGRAM)
 
@@ -23,7 +21,7 @@ $(PROGRAM):$(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 	cp $(PROGRAM) ../$(PROGRAM)
 
-%.o:%.cpp
+%.o:%.d
 	@echo "building "$@;
 	$(CC) $(CFLAGS) -c $< $(IFLAGS)
 
