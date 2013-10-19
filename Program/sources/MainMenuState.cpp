@@ -11,6 +11,8 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
+#include <functional>
+
 
 const std::string MainMenuState::m_mainMenuID = "MAIN_MENU";
 

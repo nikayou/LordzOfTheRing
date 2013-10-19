@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include <string>
+#include <functional>
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>

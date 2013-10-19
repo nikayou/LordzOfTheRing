@@ -17,6 +17,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include <string>
+#include <functional>
 
 const std::string MatchState::m_matchID = "MATCH";
 

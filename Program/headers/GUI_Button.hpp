@@ -2,6 +2,7 @@
 #define BUTTON_HPP
 
 #include <string>
+#include <functional>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>

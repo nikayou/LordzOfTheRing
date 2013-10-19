@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 
 const std::string SettingsState::m_settingsID = "SETTINGS";
 

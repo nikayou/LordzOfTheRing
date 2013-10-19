@@ -1,6 +1,5 @@
-#include <cstdio> //delete
-
 #include <string>
+#include <functional>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>

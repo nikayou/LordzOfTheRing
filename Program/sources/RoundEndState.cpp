@@ -19,6 +19,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <sstream>
+#include <functional>
 
 const std::string RoundEndState::m_roundID = "ROUND";
 

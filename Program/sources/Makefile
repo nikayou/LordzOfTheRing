@@ -2,34 +2,29 @@
 PROGRAM=LordzOfTheRing
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
-CC=g++ -std=c++11
-CPPFLAGS=
-CFLAGS=-Wall -g
+CXX=g++
+CXXFLAGS := -std=c++0x -Wall
 LDFLAGS= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
-all: clean show $(PROGRAM)
+all: show $(PROGRAM)
 
 show:
-	@echo "librep : "$(LIBREP);
-	@echo "include : "$(IFLAGS);
 	@echo "ld : "$(LDFLAGS);
 	@echo "sources : "$(SOURCES);
 	@echo "objects : "$(OBJECTS);
+	@echo "command : "$(CXX) $(CXXFLAGS);
 
 $(PROGRAM):$(OBJECTS)
 	@echo "building "$@;
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 	cp $(PROGRAM) ../$(PROGRAM)
 
 %.o:%.d
-	@echo "building "$@;
-	$(CC) $(CFLAGS) -c $< $(IFLAGS)
+	$(CXX) -c $(CXXFLAGS) $<
 
 %.d:%.cpp
-	@echo "building "$@;
-	$(CC) $(CFLAGS) -MM $< $(IFLAGS)
+	$(CXX) -M $(CXXFLAGS) $<
 
 clean:
-	@echo "building "$@;
 	rm -f $(PROGRAM) $(OBJECTS) *.d *~
 

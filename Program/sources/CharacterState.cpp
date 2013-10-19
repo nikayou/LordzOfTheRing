@@ -24,6 +24,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <functional>
 #include <vector>
 
 const std::string CharacterState::m_charMenuID = "CHAR_MENU";
