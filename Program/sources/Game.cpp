@@ -94,7 +94,8 @@ void Game::loop(){
 }
 
 void Game::display(){
-  m_window->display();
+  if(m_updating)
+    m_window->display();
 }
 
 void Game::splash(){

@@ -84,7 +84,6 @@ bool MainMenuState::enter(){
 }
 
 bool MainMenuState::exit(){
-
   Game::getInstance()->setUpdating(false);
   return true;
 }

@@ -1,7 +1,5 @@
 #include "../headers/ResourcesDirectories.hpp"
 
-
-
 std::string ResDir::m_resDir = "";
 std::string ResDir::m_imgDir = "";
 std::string ResDir::m_charDir = "";
