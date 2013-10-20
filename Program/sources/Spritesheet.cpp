@@ -31,7 +31,7 @@ Sprite::Sprite(const unsigned short& x,
 
 bool Spritesheet::loadFromFile(const std::string& f){
   std::ifstream ifs;
-  std::string file = ResDir::getInstance()->getSpritesheetDir() + f;
+  std::string file = ResDir::getSpritesheetDir() + f;
   ifs.open(file.c_str() );
   if( !ifs.good() ){
     return false;

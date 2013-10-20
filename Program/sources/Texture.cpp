@@ -11,7 +11,7 @@ Texture::Texture(const std::string& f){
 }
 
 bool Texture::loadFromFile(const std::string& f){
-  std::string file = ResDir::getInstance()->getImgDir()+f;
+  std::string file = ResDir::getImgDir()+f;
   if(!m_texture.loadFromFile(file))
     return false;
   m_texture.setSmooth(false);

@@ -1,45 +1,18 @@
-
 #include "../headers/ResourcesDirectories.hpp"
-#include "../headers/FontManager.hpp"
 
 
-#include <string>
+
+std::string ResDir::m_resDir = "";
+std::string ResDir::m_imgDir = "";
+std::string ResDir::m_charDir = "";
+std::string ResDir::m_spritesheetDir = "";
+std::string ResDir::m_fontDir = "";  
 
 ResDir::~ResDir(){
-  m_resDir.clear();
-  m_imgDir.clear();
-  m_charDir.clear();
-  m_spritesheetDir.clear();
+  ResDir::m_resDir.clear();
+  ResDir::m_imgDir.clear();
+  ResDir::m_charDir.clear();
+  ResDir::m_fontDir.clear();
+  ResDir::m_spritesheetDir.clear();
 }
 
-void ResDir::recompute_resdir(const std::string n){
-  m_resDir = n;
-  m_imgDir = n;
-  m_imgDir.append("images/");
-  m_charDir = n;
-  m_charDir.append("characters/");
-  m_spritesheetDir = n;
-  m_spritesheetDir.append("spritesheets/");
-  m_fontDir = n;
-  m_fontDir.append("fonts/");
-}
-
-std::string ResDir::getResDir() const{
-  return m_resDir;
-}
-
-std::string ResDir::getImgDir() const{
-  return m_imgDir;
-}
-
-std::string ResDir::getCharDir() const{
-  return m_charDir;
-}
-
-std::string ResDir::getSpritesheetDir() const{
-  return m_spritesheetDir;
-}
-
-std::string ResDir::getFontDir() const{
-  return m_fontDir;
-}

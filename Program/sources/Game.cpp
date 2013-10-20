@@ -176,10 +176,10 @@ void Game::close(){
 int main(int argc, char *argv[]){
    if(argc <= 1){
      std::string p("../../resources/");
-    ResDir::getInstance()->recompute_resdir(p);
+     ResDir::recompute_resdir(p);
     p.clear();
   }else{
-    ResDir::getInstance()->recompute_resdir(argv[1]);
+     ResDir::recompute_resdir(argv[1]);
   }
   Game::getInstance()->start();
   return 0;

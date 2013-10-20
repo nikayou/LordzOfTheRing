@@ -104,7 +104,7 @@ Character::~Character(){}
 
 bool Character::loadFromFile(const std::string& f){
   std::ifstream ifs;
-  std::string file = ResDir::getInstance()->getCharDir()+f;
+  std::string file = ResDir::getCharDir()+f;
   ifs.open(file.c_str() );
   if( !ifs.good() ){
     return false;

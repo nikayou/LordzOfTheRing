@@ -11,5 +11,5 @@ sf::Font * Font::getFont(){
 
 
 bool Font::loadFromFile(const std::string& n){
-    return m_font.loadFromFile(ResDir::getInstance()->getFontDir()+n );
+    return m_font.loadFromFile(ResDir::getFontDir()+n );
 }

@@ -3,28 +3,48 @@
 
 #include <string>
 
-#include "../headers/Singleton.hpp"
-
 /* repertories all the resources directories */
 
-class ResDir: public Singleton<ResDir>{
+class ResDir{
 
 private:
-  std::string m_resDir;
-  std::string m_imgDir;
-  std::string m_charDir;
-  std::string m_spritesheetDir;
-  std::string m_fontDir;
+  ResDir();
+  ~ResDir();
 
 public:
-  ~ResDir();
-  void recompute_resdir(const std::string);
-  std::string getResDir() const;
-  std::string getImgDir() const;
-  std::string getCharDir() const;
-  std::string getSpritesheetDir() const;
-  std::string getFontDir() const;
-  
+  static std::string m_resDir;
+  static std::string m_imgDir;
+  static std::string m_charDir;
+  static std::string m_spritesheetDir;
+  static std::string m_fontDir;
+  static void recompute_resdir(const std::string n){
+    ResDir::m_resDir = n;
+    ResDir::m_imgDir = n;
+    ResDir::m_imgDir.append("images/");
+    ResDir::m_charDir = n;
+    ResDir::m_charDir.append("characters/");
+    ResDir::m_spritesheetDir = n;
+    ResDir::m_spritesheetDir.append("spritesheets/");
+    ResDir::m_fontDir = n;
+    ResDir::m_fontDir.append("fonts/");
+  };
+  static std::string getResDir(){
+    return ResDir::m_resDir;
+  };
+  static std::string getImgDir(){
+    return ResDir::m_imgDir;
+  };
+  static std::string getCharDir(){
+    return ResDir::m_charDir;
+  };
+  static std::string getSpritesheetDir(){
+    return ResDir::m_spritesheetDir;
+  };
+  static std::string getFontDir(){
+    return ResDir::m_fontDir;
+  };
+
 };
+
 
 #endif
