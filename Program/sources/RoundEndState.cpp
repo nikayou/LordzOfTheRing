@@ -187,7 +187,7 @@ void RoundEndState::displayScore(){
   m_render->draw(r);
   //Round count, and socre description
   sf::Text t;
-  t.setFont(*FontManager::getInstance()->get("../../resources/chubby_cheeks.ttf") );
+  t.setFont(*FontManager::getInstance()->get("chubby_cheeks.ttf")->getFont() );
   t.setColor(sf::Color::Black);
   t.setCharacterSize(60);
   t.setString("Wins" );
@@ -210,7 +210,7 @@ void RoundEndState::displayScore(){
   t.setPosition(400, up_border/2);
   m_render->draw(t);
   //players's names
-  t.setFont(*FontManager::getInstance()->get("../../resources/charlie_dotted.ttf") );
+  t.setFont(*FontManager::getInstance()->get("charlie_dotted.ttf")->getFont() );
   t.setColor(sf::Color::Yellow);
   t.setString(m->getPlayer1()->getName() );
   box = t.getLocalBounds();

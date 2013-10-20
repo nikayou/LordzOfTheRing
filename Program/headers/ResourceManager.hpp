@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 
+#include <iostream>
+
 template <class T>
 class ResourceManager
 {
@@ -20,8 +22,8 @@ protected:
      Add an element to data
    */
   virtual void add(const std::string& s, const T& t){
-    std::string n = s;
-    mData.insert( std::pair<std::string, T>(n, t) );
+    std::cout<<"adding resource \""<<s<<"\""<<std::endl;
+    mData.insert( std::pair<std::string, T>(s, t) );
   }
 
 
@@ -34,12 +36,13 @@ public:
    */
   virtual T * get(const std::string& n){
     T t;
-    //std::cout<< "trying to get resource "<<n<<"("<<t.getClass()<<")"<<std::endl;
+    std::cout<< "trying to get resource "<<n<<std::endl;
     if(mData.find(n) == mData.end() ){
-      //std::cout<< "not present"<<std::endl;
+      std::cout<< "not present"<<std::endl;
       if( t.loadFromFile(n) ){
-	//	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
+	std::cout<<"Loaded resource \""<<n<<"\""<<std::endl;
 	add(n, t);
+	std::cout<<"added \""<<n<<"\" at "<<&mData[n]<<std::endl;
 	return &mData[n];
       }else{
 	//std::cout<<"Couldn't load resource \""<<n<<"\""<<std::endl;
@@ -58,8 +61,9 @@ public:
      Remove an element from data, given its name (key)
    */
   virtual void remove(const std::string& n){
-    //std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
-    mData.erase(n);
+    std::cout<<"Removing resource \""<<n<<"\""<<std::endl;
+    if( mData.find(n) == mData.end() )
+      mData.erase(n);
   }
 
   /**

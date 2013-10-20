@@ -49,7 +49,7 @@ Checkbox::Checkbox(const sf::Text& t){
 
 Checkbox::Checkbox(const std::string& s){
   setChecked(false);
-  sf::Text t(s, *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) ) );
+  sf::Text t(s, *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) )->getFont() );
   setText( t );
   unsigned int w, h;  
   if(!s.compare("") ){

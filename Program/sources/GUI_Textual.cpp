@@ -13,6 +13,6 @@ void Textual::setText(const sf::Text& t){
 }
 
 void Textual::setFont(const std::string& s){ 
-  mText.setFont(*FontManager::getInstance()->get(s) ); 
+  mText.setFont(*FontManager::getInstance()->get(s)->getFont() ); 
   //setTextToCenter();
 }

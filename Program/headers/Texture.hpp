@@ -19,6 +19,7 @@ public:
   bool loadFromFile(const std::string&);
   void setTexture(const sf::Texture& t){ m_texture = t; };
   sf::Texture * getTexture() { return &(m_texture); };
+  static std::string getClass() { return "Texture"; };
 };
 
 

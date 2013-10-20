@@ -30,12 +30,12 @@ bool SettingsState::enter(){
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
-  sf::Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
+  Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 56;
  // state buttons
   fontsize = 56;
   Button * b_back = new Button(sf::Vector2u(60, 40), sf::Vector2f(270, 540), sf::Color(200, 100, 100) );
-  b_back->setText(sf::Text("<-", *f, fontsize) );
+  b_back->setText(sf::Text("<-", *(f->getFont() ), fontsize) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()->void{
       Config::getInstance()->loadFromFile(CONFIG_FILE);
@@ -44,7 +44,7 @@ bool SettingsState::enter(){
   m_container->add(b_back);
   m_buttons.push_back(b_back);
   Button * b_ok = new Button(sf::Vector2u(60, 40), sf::Vector2f(530, 540), sf::Color(100,200,100) );
-  b_ok->setText(sf::Text("OK", *f, fontsize) );
+  b_ok->setText(sf::Text("OK", *(f->getFont() ), fontsize) );
   b_ok->setTextToCenter();
   b_ok->setAction( [this]()->void{
       Config::getInstance()->saveFile(CONFIG_FILE);

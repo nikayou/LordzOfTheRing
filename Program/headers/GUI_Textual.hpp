@@ -8,6 +8,8 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "../headers/Font.hpp"
+
 ////////////////////
 /// Textual interface
 ////////////////////
@@ -26,7 +28,7 @@ public:
   void setText(const sf::Text& t);
   void setText(const std::string& s){ setString(s); };
   void setForeground(const sf::Color& c){ mText.setColor(c); };
-  void setFont(const sf::Font& f){ mText.setFont(f); //setTextToCenter(); 
+  void setFont(Font * f){ (mText.setFont(*f->getFont() ) ); //setTextToCenter(); 
   };
   void setFont(const std::string& s);
   void setString(const sf::String& s){ mText.setString(s); //setTextToCenter(); 

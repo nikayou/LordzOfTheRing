@@ -40,7 +40,6 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 
-#include <iostream> //delete
 
 /** init all required the game : 
     -loads configuration
@@ -128,6 +127,7 @@ void Game::splash(){
   rw.close();
   TextureManager::getInstance()->remove("splashscreens/sfml.splash");
   TextureManager::getInstance()->remove("splashscreens/auth.splash");
+  TextureManager::getInstance()->remove("splashscreens/pixotters.splash");
   init();
 }  
 
@@ -173,13 +173,11 @@ void Game::close(){
 
 
 int main(int argc, char *argv[]){
-  std::cout<<"computing directories"<<std::endl;
-  if(argc <= 1){
+   if(argc <= 1){
     ResDir::getInstance()->recompute_resdir("../../resources/");
   }else{
     ResDir::getInstance()->recompute_resdir(argv[1]);
   }
-  std::cout<<"ok"<<std::endl;
   Game::getInstance()->start();
   return 0;
 }

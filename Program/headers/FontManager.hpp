@@ -3,32 +3,30 @@
 
 #include <string>
 
-#include <SFML/Graphics/Font.hpp>
 
 #include "../headers/ResourcesDirectories.hpp"
 #include "../headers/ResourceManager.hpp"
 #include "../headers/Singleton.hpp"
+#include "../headers/Font.hpp"
 
 
-const std::string DEF_FONT = "chubby_cheeks.ttf";
+const std::string DEFAULT_FONT = "chubby_cheeks.ttf";
 
-class FontManager: public ResourceManager<sf::Font>, public Singleton<FontManager>{
+class FontManager: public ResourceManager<Font>, public Singleton<FontManager>{
 
 private:
 std::string m_defaultFont;
 
 
 public :
-FontManager(){ m_defaultFont = ResDir::getInstance()->getFontDir()+DEF_FONT;
+FontManager(){ m_defaultFont = DEFAULT_FONT;
 };
+
 std::string getClass(){ 
 return "FontManager";
 }
 std::string getDefaultFont() const{
 return m_defaultFont;
-}
-void refreshDefaultFont(const std::string& n){
-m_defaultFont = n+DEF_FONT;
 }
 
 };
