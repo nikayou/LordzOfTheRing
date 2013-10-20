@@ -17,7 +17,8 @@ private:
   std::string m_fontDir;
 
 public:
-  void recompute_resdir(const std::string& n);
+  ~ResDir();
+  void recompute_resdir(const std::string);
   std::string getResDir() const;
   std::string getImgDir() const;
   std::string getCharDir() const;

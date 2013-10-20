@@ -14,10 +14,6 @@
 #include <functional>
 
 
-//delete
-#include "../headers/Spritesheet.hpp"
-#include "../headers/SpritesheetManager.hpp"
-
 const std::string MainMenuState::m_mainMenuID = "MAIN_MENU";
 
 void MainMenuState::update(){

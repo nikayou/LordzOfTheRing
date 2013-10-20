@@ -56,7 +56,6 @@ bool SettingsState::enter(){
 }
 
 bool SettingsState::exit(){
-
   Game::getInstance()->setUpdating(false);
   return true;
 }
@@ -69,11 +68,13 @@ void SettingsState::deleteAll(){
     delete m_buttons[i];
     m_buttons[i] = NULL;
   }
+  m_buttons.clear();
   s = m_texts.size();
   for(unsigned int i = 0; i < s; i++){
     delete m_texts[i];
     m_texts[i] = NULL;
   }
+  m_texts.clear();
   delete m_container;
   m_container = NULL;
 

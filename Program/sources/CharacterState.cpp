@@ -219,8 +219,9 @@ bool CharacterState::enter(){
     {
       std::string file = "characters/"+it->second.getBasename();
       file += "_menu.png";
-      if(TextureManager::getInstance()->get(file) != NULL){
-	TextureManager::getInstance()->remove(it->first);
+      if(TextureManager::getInstance()->get(file) == NULL){
+	TextureManager::getInstance()->remove(file);
+	CharacterManager::getInstance()->remove(it->first);
       }
     }
   CharacterManager::getInstance()->computeArray();
@@ -316,7 +317,7 @@ bool CharacterState::exit(){
 void CharacterState::deleteAll(){
   for(unsigned int i = 0; i < m_texts.size(); i++){
     delete m_texts[i];
-  }
+    }
   m_texts.clear();
   delete m_buttons[1];
   m_buttons[1] = NULL;

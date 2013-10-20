@@ -15,6 +15,7 @@
 //#include "../headers/MusicManager.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/ResourceManager.hpp"
+#include "../headers/ResourcesDirectories.hpp"
 #include "../headers/RoundEndState.hpp"
 #include "../headers/SpritesheetManager.hpp"
 #include "../headers/StateHandler.hpp"
@@ -49,7 +50,6 @@
     -begins the loop
 **/
 void Game::init(){
- 
   m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Titlebar|sf::Style::Close); 
   m_window->setFramerateLimit( (float) FRAMERATE);
   m_window->setPosition(sf::Vector2i(10, 10) ); //adjust
@@ -60,7 +60,8 @@ void Game::init(){
   m_music->openFromFile("../../resources/audio/menu1.ogg");
   m_music->setVolume(Config::getInstance()->getMusicVolume() );
   m_music->play();
-  m_gui = new GUIWindow (m_window, new Container(m_render) );
+  m_container = new Container(m_render);
+  m_gui = new GUIWindow (m_window, m_container );
   m_stateHandler->change(new MainMenuState() );
   loop();
 }
@@ -86,7 +87,6 @@ void Game::start(){
 **/
 void Game::loop(){
   while(m_updating && m_window->isOpen() ){
-    //m_window->clear(sf::Color::Black);
     m_stateHandler->update();
     m_stateHandler->render();
     display();
@@ -160,6 +160,7 @@ void Game::close(){
   while(!getStateHandler()->empty() ){
     getStateHandler()->pop();
   }
+  delete( m_container );
   delete( m_music);
   delete( m_timer);
   delete( m_clock);
@@ -174,7 +175,9 @@ void Game::close(){
 
 int main(int argc, char *argv[]){
    if(argc <= 1){
-    ResDir::getInstance()->recompute_resdir("../../resources/");
+     std::string p("../../resources/");
+    ResDir::getInstance()->recompute_resdir(p);
+    p.clear();
   }else{
     ResDir::getInstance()->recompute_resdir(argv[1]);
   }

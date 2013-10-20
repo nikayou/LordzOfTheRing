@@ -5,14 +5,24 @@
 
 #include <string>
 
-void ResDir::recompute_resdir(const std::string& n){
-  m_resDir = n;
-  m_imgDir = m_resDir+"images/";
-  m_charDir = m_resDir+"characters/";
-  m_spritesheetDir = m_resDir+"spritesheets/";
-  m_fontDir = m_resDir+"fonts/";
+ResDir::~ResDir(){
+  m_resDir.clear();
+  m_imgDir.clear();
+  m_charDir.clear();
+  m_spritesheetDir.clear();
 }
 
+void ResDir::recompute_resdir(const std::string n){
+  m_resDir = n;
+  m_imgDir = n;
+  m_imgDir.append("images/");
+  m_charDir = n;
+  m_charDir.append("characters/");
+  m_spritesheetDir = n;
+  m_spritesheetDir.append("spritesheets/");
+  m_fontDir = n;
+  m_fontDir.append("fonts/");
+}
 
 std::string ResDir::getResDir() const{
   return m_resDir;

@@ -18,6 +18,7 @@ namespace StateID{
 class GameState{
 
 public:
+  virtual ~GameState(){};
   virtual void update() = 0;
   virtual void render() = 0;
   virtual bool enter() = 0;

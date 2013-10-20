@@ -87,6 +87,10 @@ public:
   Spritesheet(const std::string& n){
     loadFromFile(n);
   };
+  ~Spritesheet(){
+    m_sprites.clear();
+    m_animations.clear();
+  }
   bool loadFromFile(const std::string& n);
   std::vector<Sprite> getSprites(){
     return m_sprites;

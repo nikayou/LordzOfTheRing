@@ -15,6 +15,7 @@ class Component: public Bordered, public Colorful, public Positionable, public R
 
 public :
   Component();
+  virtual ~Component(){};
   // getters
   virtual inline std::string getClass(){ return "Component"; };
   // setters
