@@ -3,10 +3,9 @@
 
 
 #include <SFML/Graphics/Texture.hpp>
+#include "../headers/ResourceManager.hpp"
 
 #include <string>
-
-#define IMG_DIR "../../resources/images/"
 
 class Texture{
 

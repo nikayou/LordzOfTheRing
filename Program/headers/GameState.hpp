@@ -13,7 +13,7 @@ namespace StateID{
     MATCH,
     PAUSE
   } ID;
-};
+}
 
 class GameState{
 

@@ -7,10 +7,12 @@
 template <class T>
 class ResourceManager
 {
+
+
 protected:
   std::map<std::string, T > mData;
   ResourceManager () { 
-}
+   }
   ~ResourceManager () { 
     mData.clear();
   }
@@ -66,6 +68,7 @@ public:
   virtual void clear(){
     mData.clear();
   }
+  
 };
 
 #endif

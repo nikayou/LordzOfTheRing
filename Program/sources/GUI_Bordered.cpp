@@ -1,7 +1,6 @@
 #include <SFML/Graphics/Color.hpp>
 
 #include "../headers/GUI_Bordered.hpp"
-#include "../headers/Misc.hpp"
 
 ////////////////////
 /// Border interface
@@ -13,19 +12,19 @@
 // getters
 sf::Color Bordered::getBorder() const{ 
   return mBorder; 
-};
+}
 
 unsigned short Bordered::getBorderThickness() const{ 
-  return MAX(0, mBorderThickness); 
-};
+  return mBorderThickness; 
+}
 
 // setters
 
 void Bordered::setBorder(const sf::Color& c){ 
   mBorder = c; 
-};
+}
 
 void Bordered::setBorderThickness(const unsigned short& v){
-  mBorderThickness = MAX(0, v); 
-};  
+  mBorderThickness = v; 
+}
 

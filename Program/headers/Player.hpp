@@ -62,7 +62,7 @@ public:
     m_points += value;
   };
   void addVictory(){
-    m_victories = (m_victories == -1) ? -1 : m_victories+1;
+    m_victories = (m_victories == 99) ? 0: m_victories+1;
   }
   void manage();
 };

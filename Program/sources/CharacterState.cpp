@@ -227,7 +227,7 @@ bool CharacterState::enter(){
   m_index1 = 0;
   m_index2 = 1;
 
-  sf::Font * font = FontManager::getInstance()->get(DEFAULT_FONT);
+  sf::Font * font = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 40;
   Button * b_back = new Button(sf::Vector2u(25, 25), sf::Vector2f(390-25, 550), sf::Color(200, 100, 100) );
   b_back->setBorderThickness(1);

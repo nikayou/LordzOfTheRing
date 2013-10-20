@@ -1,7 +1,7 @@
 #ifndef CHARACTERMANAGER_HPP
 #define CHARACTERMANAGER_HPP
 
-#include "../headers/CharacterManager.hpp"
+
 #include "../headers/Character.hpp"
 #include "../headers/Misc.hpp"
 #include "../headers/ResourceManager.hpp"

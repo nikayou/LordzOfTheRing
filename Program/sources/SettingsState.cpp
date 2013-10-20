@@ -30,7 +30,7 @@ bool SettingsState::enter(){
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
-  sf::Font * f = FontManager::getInstance()->get(DEFAULT_FONT);
+  sf::Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 56;
  // state buttons
   fontsize = 56;

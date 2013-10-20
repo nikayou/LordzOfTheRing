@@ -40,6 +40,7 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/Window.hpp>
 
+#include <iostream> //delete
 
 /** init all required the game : 
     -loads configuration
@@ -151,7 +152,7 @@ void Game::pause(const sf::Int64& t0){
  **/
 void Game::close(){
   m_updating = false;
-   CharacterManager::getInstance()->clear();
+  CharacterManager::getInstance()->clear();
   SpritesheetManager::getInstance()->clear();
   FontManager::getInstance()->clear();
   TextureManager::getInstance()->clear();
@@ -171,7 +172,14 @@ void Game::close(){
 
 
 
-int main(){
+int main(int argc, char *argv[]){
+  std::cout<<"computing directories"<<std::endl;
+  if(argc <= 1){
+    ResDir::getInstance()->recompute_resdir("../../resources/");
+  }else{
+    ResDir::getInstance()->recompute_resdir(argv[1]);
+  }
+  std::cout<<"ok"<<std::endl;
   Game::getInstance()->start();
   return 0;
 }

@@ -8,6 +8,7 @@
 #include "../headers/Spritesheet.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Misc.hpp"
+#include "../headers/ResourcesDirectories.hpp"
 
 #include <fstream>
 #include <map>
@@ -30,7 +31,7 @@ Sprite::Sprite(const unsigned short& x,
 
 bool Spritesheet::loadFromFile(const std::string& f){
   std::ifstream ifs;
-  std::string file = SPRITESHEET_DIR + f;
+  std::string file = ResDir::getInstance()->getSpritesheetDir() + f;
   ifs.open(file.c_str() );
   if( !ifs.good() ){
     return false;

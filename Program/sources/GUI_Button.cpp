@@ -22,7 +22,7 @@
 Button::Button(const sf::Vector2u& d, const sf::Vector2f& p){
   resize(d);
   setPosition(p);
-  setFont( *FontManager::getInstance()->get(DEFAULT_FONT) );
+  setFont( *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) ) );
   setBackground(sf::Color(185, 185, 185) );
   setFocus( Color::brighter(getBackground() ) );
   setBorder(sf::Color(0,0,0,255) );
@@ -35,7 +35,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p){
 Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Color& c){
   resize(d);
   setPosition(p);
-  setFont( *FontManager::getInstance()->get(DEFAULT_FONT) );
+  setFont( *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) ) );
   setBackground(c);
   if( (c.r + c.g + c.b) < LUMINESCENCE )
     setFocus( Color::brighter(getBackground() ) );
@@ -52,7 +52,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t){
   resize(d);
   setPosition(p);
   setText(t);
-  setFont( *FontManager::getInstance()->get(DEFAULT_FONT) );
+  setFont( *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) ) );
   setBackground(sf::Color(185, 185, 185) );
   setFocus( Color::brighter(getBackground() ) );
   setBorder(sf::Color(0,0,0,255) );
@@ -66,7 +66,7 @@ Button::Button(const sf::Vector2u& d, const sf::Vector2f& p, const sf::Text& t, 
   resize(d);
   setPosition(p);
   setText(t);
-  setFont( *FontManager::getInstance()->get(DEFAULT_FONT) );
+  setFont( *(FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() ) ) );
   setBackground(c);
   if( (c.r + c.g + c.b) < LUMINESCENCE )
     setFocus( Color::brighter(getBackground() ) );

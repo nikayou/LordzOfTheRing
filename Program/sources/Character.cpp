@@ -13,11 +13,11 @@ stamina=medium
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Game.hpp"
 #include "../headers/Misc.hpp"
+#include "../headers/ResourcesDirectories.hpp"
 
 #include <cstring>
 #include <fstream>
 #include <string>
-
 
 namespace Stats{
 
@@ -104,7 +104,7 @@ Character::~Character(){}
 
 bool Character::loadFromFile(const std::string& f){
   std::ifstream ifs;
-  std::string file = CHAR_DIR + f;
+  std::string file = ResDir::getInstance()->getCharDir()+f;
   ifs.open(file.c_str() );
   if( !ifs.good() ){
     return false;

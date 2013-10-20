@@ -19,7 +19,7 @@ public:
   void setAction( std::function<void ()> f ){ 
     mAction = f; };
   /* performs the action */
-  virtual bool action(){ mAction (); return !m_closing; };
+  bool action(){ mAction (); return !m_closing; };
   /* change the value telling if we close the window with the action or not*/
   void setCloser(const bool& v){
     m_closing = v;

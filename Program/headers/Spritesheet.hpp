@@ -9,6 +9,7 @@
 #define SPRITESHEET_HPP
 
 #include "../headers/Action.hpp"
+#include "../headers/ResourceManager.hpp"
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -75,7 +76,6 @@ public:
 
 };
 
-#define SPRITESHEET_DIR "../../resources/spritesheets/"
 
 class Spritesheet{
 private:

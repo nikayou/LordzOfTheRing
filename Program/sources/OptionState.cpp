@@ -40,7 +40,7 @@ void OptionState::render(){
   m_render->draw(r);
   for(unsigned int i = 0; i < m_texts.size(); i++)
     m_render->draw(*m_texts[i]);
-  sf::Font * f = FontManager::getInstance()->get(DEFAULT_FONT);
+  sf::Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   MatchOptions opt = Game::getInstance()->getMatch()->getOptions();
   std::string s = typeToString(opt.mo_type);
   std::ostringstream oss;
@@ -92,7 +92,7 @@ bool OptionState::enter(){
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
-  sf::Font * f = FontManager::getInstance()->get(DEFAULT_FONT);
+  sf::Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 56;
   sf::FloatRect fr;
   sf::Color c(110, 110, 110);

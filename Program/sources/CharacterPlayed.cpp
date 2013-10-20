@@ -3,9 +3,9 @@
 */
 
 /*
-CharacterPlayed are Characters with additionnal attributes necessary for match.
+  CharacterPlayed are Characters with additionnal attributes necessary for match.
 
- */
+*/
 #include "../headers/CharacterPlayed.hpp"
 #include "../headers/Action.hpp"
 #include "../headers/Character.hpp"
@@ -23,11 +23,6 @@ CharacterPlayed::CharacterPlayed(
 				 const unsigned short& r, 
 				 const unsigned short& a, 
 				 const unsigned short& sta): Character(n, h, r, a, sta){
-  m_name = n;
-  m_health = h;
-  m_resistance = r;
-  m_attack = a;
-  m_stamina = sta;
   m_currentStamina = sta;
   m_currentHealth = h;
   m_action = Action::NONE;
@@ -37,13 +32,14 @@ CharacterPlayed::CharacterPlayed(
   m_kos = 0;
 }
 
-CharacterPlayed::CharacterPlayed(const CharacterPlayed& c){
-  m_name = c.getName();
+CharacterPlayed::CharacterPlayed(const CharacterPlayed& c): 
+  Character(c.getName(),
+	    c.getHealth(),
+	    c.getResistance(),
+	    c.getAttack(),
+	    c.getStamina() )
+{
   m_basename = c.getBasename();
-  m_health = c.getHealth();
-  m_resistance = c.getResistance();
-  m_attack = c.getAttack();
-  m_stamina = c.getStamina();
   m_currentStamina = m_stamina;
   m_currentHealth = c.getCurrentHealth();
   m_action = c.getAction();
@@ -212,8 +208,8 @@ unsigned int CharacterPlayed::getDamages(){
   int res = 0;
   for(int j = 0; j < m_kos; j++){
     res += accu*(m_health-m_currentHealth);
-  accu -= 0.2;
-}
+    accu -= 0.2;
+  }
   return res;
 }
 
@@ -225,4 +221,4 @@ void CharacterPlayed::reset(){
   m_frame = 0;
   m_receivedHits = 0;
   m_kos = 0;
-};
+}

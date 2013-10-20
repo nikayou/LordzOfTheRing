@@ -35,11 +35,8 @@ void RoundEndState::update(){
 }
 
 void RoundEndState::render(){
-  sf::Sprite s;
-  sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   //score displaying
-  s.setTexture(*t);
-  displayScore(&s);
+  displayScore();
   m_window->draw();
 }
 
@@ -49,11 +46,10 @@ bool RoundEndState::enter(){
   m_container = new Container(m_render );
   m_window = Game::getInstance()->getGUI();
   m_window->setContentPane(m_container);
-  sf::Sprite s, s2;
+  sf::Sprite s;
   sf::Texture * t = TextureManager::getInstance()->get("sprites.png")->getTexture();
   //score displaying
-  s2.setTexture(*t);
-  displayScore(&s2);
+  displayScore();
   //collapse screen
   t = TextureManager::getInstance()->get("loading")->getTexture();
   s.setTexture(*t);
@@ -66,7 +62,7 @@ bool RoundEndState::enter(){
   while(dec <= 800){
     if(Game::getInstance()->getMsTime() < 1 )
       continue;
-    displayScore(&s2);
+    displayScore();
     s.setPosition(dec, 0);
     m_render->draw(s);
     s.setPosition(0, 200);
@@ -82,7 +78,7 @@ bool RoundEndState::enter(){
   while(dec <= 800){
     if(Game::getInstance()->getMsTime() < 1 )
       continue;
-    displayScore(&s2);
+    displayScore();
     s.setPosition(-dec, 200);
     m_render->draw(s);
     s.setPosition(0, 400);
@@ -96,7 +92,7 @@ bool RoundEndState::enter(){
   while(dec <= 800){
     if(Game::getInstance()->getMsTime() < 1 )
       continue;
-    displayScore(&s2);
+    displayScore();
     s.setPosition(dec, 400);
     m_render->draw(s);
     m_window->draw();
@@ -160,7 +156,7 @@ void RoundEndState::deleteAll(){
   m_container = NULL;
 }
 
-void RoundEndState::displayScore(sf::Sprite * s){
+void RoundEndState::displayScore(){
   m_render->clear(sf::Color(120, 120, 120) );
   std::ostringstream oss;
   Match * m = Game::getInstance()->getMatch();

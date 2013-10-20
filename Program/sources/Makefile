@@ -3,7 +3,7 @@ PROGRAM=LordzOfTheRing
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
 CXX=g++
-CXXFLAGS := -std=c++0x -Wall
+CXXFLAGS := -std=c++0x -Wall -Wextra -pedantic-errors
 LDFLAGS= -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 all: $(PROGRAM)

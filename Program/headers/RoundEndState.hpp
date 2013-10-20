@@ -25,7 +25,7 @@ private:
   sf::RenderTexture * m_render;
   GUIWindow * m_window;
   Container * m_container;
-  void displayScore(sf::Sprite * s);
+  void displayScore();
 };
 
 #endif
