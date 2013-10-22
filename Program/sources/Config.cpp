@@ -145,12 +145,9 @@ Key Config::getKey(const action& a) const{
   //std::map<Key,action>::iterator it;
   // show content:
   for (auto it=m_mapping.begin(); it!=m_mapping.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
-  /*
-  for(std::map<Key, action>::iterator it = m_mapping.begin(); it != m_mapping.end(); ++it){
     if(it->second == a)
       return it->first;
-      }*/
+      
   return (Key)-1;
 }
 
