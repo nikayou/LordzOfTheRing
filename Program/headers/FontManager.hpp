@@ -9,25 +9,34 @@
 #include "../headers/Singleton.hpp"
 #include "../headers/Font.hpp"
 
-
-const std::string DEFAULT_FONT = "chubby_cheeks.ttf";
-
 class FontManager: public ResourceManager<Font>, public Singleton<FontManager>{
 
 private:
-std::string m_defaultFont;
+  std::string m_defaultFont;
 
 
 public :
-FontManager(){ m_defaultFont = DEFAULT_FONT;
-};
+  FontManager(){ m_defaultFont = "chubby_cheeks.ttf";
+  };
 
-std::string getClass(){ 
-return "FontManager";
-}
-std::string getDefaultFont() const{
-return m_defaultFont;
-}
+  ~FontManager(){
+    m_defaultFont.clear();
+  };
+
+  std::string getClass(){ 
+    return "FontManager";
+  }
+  std::string getDefaultFont() const{
+    return m_defaultFont;
+  }
+  /**
+     Remove all elements and clears the default font
+  */
+  virtual void clear(){
+    std::cout<<"clearing "<<getClass()<<" at "<<this<<std::endl;
+    mData.clear();
+    m_defaultFont.clear();
+  }
 
 };
 
