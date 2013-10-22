@@ -10,6 +10,8 @@ namespace StateID{
     OPTIONS_MENU,
     PROFILE_MENU,
     CHARACTER_MENU,
+    SETTINGS_MENU,
+    ROUND,
     MATCH,
     PAUSE
   } ID;
@@ -23,7 +25,7 @@ public:
   virtual void render() = 0;
   virtual bool enter() = 0;
   virtual bool exit() = 0;
-  virtual std::string getID() const = 0;
+  virtual StateID::ID getID() const = 0;
   virtual void deleteAll() = 0; // may be useless : do a "delete" delete also the members ?
 
 

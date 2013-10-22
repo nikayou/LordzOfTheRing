@@ -27,8 +27,6 @@
 #include <functional>
 #include <vector>
 
-const std::string CharacterState::m_charMenuID = "CHAR_MENU";
-
 void CharacterState::confirmCharacters(){
   std::vector< Character * > chars = CharacterManager::getInstance()->getArray();
   Character c1 = *chars[m_index1];
@@ -317,12 +315,12 @@ bool CharacterState::exit(){
 void CharacterState::deleteAll(){
   for(unsigned int i = 0; i < m_texts.size(); i++){
     delete m_texts[i];
-    }
+  }
   m_texts.clear();
-  delete m_buttons[1];
-  m_buttons[1] = NULL;
-  delete m_buttons[0];
-  m_buttons[0] = NULL;
-  delete m_container;
-  m_container = NULL;
+  unsigned int s = m_buttons.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_buttons[i];
+    m_buttons[i] = NULL;
+  }
+  m_buttons.clear();
 }

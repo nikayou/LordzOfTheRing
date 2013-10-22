@@ -20,11 +20,11 @@ public :
   virtual void render();
   virtual bool enter();
   virtual bool exit();
-  virtual std::string getID() const{ return m_optionID; };
+  virtual StateID::ID  getID() const{ return m_optionID; };
   virtual void deleteAll();
 
 private:
-  static const std::string m_optionID;
+  static const StateID::ID m_optionID = StateID::OPTIONS_MENU;
   sf::RenderTexture * m_render;
   Container * m_container;
   GUIWindow * m_window;

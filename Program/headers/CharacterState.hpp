@@ -19,10 +19,10 @@ public:
   virtual bool enter();
   virtual bool exit();
   virtual void deleteAll();
-  virtual std::string getID() const { return m_charMenuID; }
+  virtual StateID::ID getID() const { return m_charMenuID; }
 
 private:
-  static const std::string m_charMenuID;
+  static const StateID::ID m_charMenuID = StateID::CHARACTER_MENU;
   sf::RenderTexture * m_render;
   GUIWindow * m_window;
   Container * m_container;

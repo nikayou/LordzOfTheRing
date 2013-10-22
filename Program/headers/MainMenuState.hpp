@@ -18,11 +18,11 @@ public:
   virtual bool enter();
   virtual bool exit();
   virtual void deleteAll();
-  virtual std::string getID() const { return m_mainMenuID; }
+  virtual StateID::ID getID() const { return m_mainMenuID; }
 
 private:
   sf::RenderTexture * m_render;
-  static const std::string m_mainMenuID;
+  static const StateID::ID m_mainMenuID = StateID::MAIN_MENU;
   std::vector<Button *> m_buttons;
   Container * m_container;
   GUIWindow * m_window;

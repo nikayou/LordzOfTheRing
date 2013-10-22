@@ -17,11 +17,11 @@ public :
   virtual void render();
   virtual bool enter();
   virtual bool exit();
-  virtual std::string getID() const{ return m_settingsID; };
+  virtual StateID::ID getID() const{ return m_settingsID; };
   virtual void deleteAll();
 
 private:
-  static const std::string m_settingsID;
+  static const StateID::ID m_settingsID = StateID::SETTINGS_MENU;
   sf::RenderTexture * m_render;
   Container * m_container;
   GUIWindow * m_window;

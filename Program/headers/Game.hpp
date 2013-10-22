@@ -1,3 +1,6 @@
+#ifndef GAME_HPP
+#define GAME_HPP
+
 /**
    Here is the game singleton : in which state we are, how many times since launching, the window...
  */
@@ -15,7 +18,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
 
-#define FRAMERATE 10
+const float FRAMERATE = 10;
 
 
 class Game : public Singleton<Game>{
@@ -90,3 +93,5 @@ public:
   }
 
 };
+
+#endif

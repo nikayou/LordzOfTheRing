@@ -18,8 +18,6 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-const std::string OptionState::m_optionID = "OPTION_MENU";
-
 void OptionState::update(){
   m_window->update();
 }

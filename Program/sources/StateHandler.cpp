@@ -14,6 +14,18 @@ bool StateHandler::empty(){
   return m_states.empty();
 }
 
+void StateHandler::clear(){
+  while(!m_states.empty() ){
+    GameState * g = m_states.back();
+    Game::getInstance()->setUpdating(false);
+    if(g->exit() ){
+      m_states.pop_back();
+      deleteState(g);
+    }
+  }
+  m_states.clear();
+}
+
 void StateHandler::push(GameState * s){
   m_states.push_back(s);
   m_states.back()->enter();
@@ -22,7 +34,7 @@ void StateHandler::push(GameState * s){
 void StateHandler::change(GameState * s){
   GameState * g = NULL;
   if(!m_states.empty() ){
-    if(m_states.back()->getID().compare( s->getID() ) == 0){
+    if(m_states.back()->getID() == s->getID() ){
       return;
     }
     if(m_states.back()->exit() ){
@@ -56,27 +68,27 @@ void StateHandler::update(){
 void StateHandler::deleteState( GameState * g){
   if(g != NULL){
     g->deleteAll(); // useless ?
-    if( ! g->getID().compare("MAIN_MENU") ){
+    if( ! g->getID() == StateID::MAIN_MENU ){
       delete (MainMenuState *)g;
       return;
     }
-    if( ! g->getID().compare("CHAR_MENU") ){
+    if( ! g->getID() == StateID::CHARACTER_MENU ){
       delete (CharacterState *)g;
       return;
     }
-    if( ! g->getID().compare("MATCH") ){
+    if( ! g->getID() == StateID::MATCH ){
       delete (MatchState *)g;
       return;
     }
-    if( ! g->getID().compare("ROUND") ){
+    if( ! g->getID() == StateID::ROUND ){
       delete (RoundEndState *)g;
       return;
     }
-    if( ! g->getID().compare("SETTINGS") ){
+    if( ! g->getID() == StateID::SETTINGS_MENU ){
       delete (SettingsState *)g;
       return;
     }
-    if( ! g->getID().compare("OPTION_MENU") ){
+    if( ! g->getID() == StateID::OPTIONS_MENU ){
       delete (OptionState *)g;
       return;
     }

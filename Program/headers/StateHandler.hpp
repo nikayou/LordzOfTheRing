@@ -15,6 +15,7 @@ public:
   void render();
   bool empty();
   void deleteState(GameState *);
+  void clear();
 
 private:
   std::vector <GameState * > m_states;

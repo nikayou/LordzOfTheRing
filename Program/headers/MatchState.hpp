@@ -15,10 +15,10 @@ public:
   virtual bool exit();
   virtual void deleteAll();
   virtual void checkClose();
-  virtual std::string getID() const { return m_matchID; }
+  virtual StateID::ID getID() const { return m_matchID; }
 
 private:
-  static const std::string m_matchID;
+  static const StateID::ID m_matchID = StateID::MATCH;
   sf::RenderTexture * m_render;
   Container * m_container;
   GUIWindow * m_window;

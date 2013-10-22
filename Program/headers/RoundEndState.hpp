@@ -18,10 +18,10 @@ public :
   virtual bool enter();
   virtual bool exit();
   virtual void deleteAll();
-  virtual std::string getID() const{ return m_roundID; };
+  virtual StateID::ID getID() const{ return m_roundID; };
 
 private:
-  static const std::string m_roundID;
+  static const StateID::ID m_roundID = StateID::ROUND;
   sf::RenderTexture * m_render;
   GUIWindow * m_window;
   Container * m_container;

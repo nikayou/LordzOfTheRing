@@ -13,9 +13,6 @@
 
 #include <functional>
 
-
-const std::string MainMenuState::m_mainMenuID = "MAIN_MENU";
-
 void MainMenuState::update(){
   m_window->update();
 }
@@ -89,15 +86,12 @@ bool MainMenuState::exit(){
 }
 
 void MainMenuState::deleteAll(){
-  delete m_buttons[3];
-  delete m_buttons[2];
-  delete m_buttons[1];
-  delete m_buttons[0];
-  m_buttons[3] = NULL;
-  m_buttons[2] = NULL;
-  m_buttons[1] = NULL;
-  m_buttons[0] = NULL;
-  m_buttons.clear();
   delete m_container;
   m_container = NULL;
+  unsigned int s = m_buttons.size();
+  for(unsigned int i = 0; i < s; i++){
+    delete m_buttons[i];
+    m_buttons[i] = NULL;
+  }
+  m_buttons.clear();
 }

@@ -158,9 +158,7 @@ void Game::close(){
   FontManager::getInstance()->clear();
   TextureManager::getInstance()->clear();
   m_window->close();
-  while(!getStateHandler()->empty() ){
-    getStateHandler()->pop();
-  }
+  getStateHandler()->clear();
   delete( m_container );
   delete( m_music);
   delete( m_timer);

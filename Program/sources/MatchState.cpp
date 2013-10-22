@@ -19,8 +19,6 @@
 #include <string>
 #include <functional>
 
-const std::string MatchState::m_matchID = "MATCH";
-
 void MatchState::update(){
   Match * m = Game::getInstance()->getMatch();
   if(Game::getInstance()->getClock()->getElapsedTime().asSeconds() >= 1){

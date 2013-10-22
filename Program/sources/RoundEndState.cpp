@@ -21,8 +21,6 @@
 #include <sstream>
 #include <functional>
 
-const std::string RoundEndState::m_roundID = "ROUND";
-
 void RoundEndState::update(){
   while(Game::getInstance()->getTime() < 5.){
     m_window->update();

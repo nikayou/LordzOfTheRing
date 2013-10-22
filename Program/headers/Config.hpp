@@ -2,6 +2,7 @@
 #define CONFIG_HPP
 
 #include "../headers/Action.hpp"
+#include "../headers/Game.hpp"
 #include "../headers/Misc.hpp"
 #include "../headers/Singleton.hpp"
 
@@ -10,7 +11,9 @@
 #include <map>
 #include <string>
 
-#define CONFIG_FILE "../../resources/config.txt"
+#include <iostream> //delete
+
+const std::string CONFIG_FILE = "../../resources/config.txt";
 
 typedef sf::Keyboard::Key Key;
 
@@ -52,9 +55,35 @@ public:
   void setAction(const Key&, const action&);
   void setMusicVolume(const byte& v){
     m_musicVolume = MIN(100, v);
+    Game::getInstance()->getMusic()->pause();
+    Game::getInstance()->getMusic()->setVolume(m_musicVolume);
+    Game::getInstance()->getMusic()->play();
+  };
+  void addMusic(const unsigned int& s){
+    setMusicVolume(m_musicVolume+s);
+  };
+  void lessMusic(const unsigned int& s){
+    std::cout<<"music : ";
+    std::cout<<(unsigned int)m_musicVolume<<std::endl;
+    if( (int)( (int)m_musicVolume - (int)s) < 0)
+      m_musicVolume = 0;
+    else
+      m_musicVolume -= s;
+    Game::getInstance()->getMusic()->pause();
+    Game::getInstance()->getMusic()->setVolume(m_musicVolume);
+    Game::getInstance()->getMusic()->play();
   };
   void setSoundVolume(const byte& v){
     m_soundVolume = MIN(100, v);
+  };
+  void addSound(const unsigned int& s){
+    setSoundVolume(m_soundVolume+s);
+  };
+  void lessSound(const unsigned int& s){
+    if( (int)(m_soundVolume - s) < 0)
+      m_soundVolume = 0;
+    else
+      m_soundVolume -= s;
   };
   void setWindowWidth(const unsigned int& w){
     m_windowWidth = w;

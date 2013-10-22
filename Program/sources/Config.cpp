@@ -66,63 +66,63 @@ bool Config::loadFromFile(const std::string& path){
     //Player 1 controller
     if(contains(line, "1-attackL=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2) );
+		 Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-attackM=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2) );
+		 Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-attackR=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2) );
+		 Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "1-dodgeL=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1) );
+		 Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "1-dodgeM=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1) );
+		 Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "1-dodgeR=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1) );
+		 Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1) );
       continue;
     }
     //player2 controller
-        if(contains(line, "2-attackL=") ){
+    if(contains(line, "2-attackL=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1) );
+		 Action::actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-attackM=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1) );
+		 Action::actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-attackR=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1) );
+		 Action::actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1) );
       continue;
     }
     if(contains(line, "2-dodgeL=") ){
       setAction( (Key) extractInt(line), 
-Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) );
+		 Action::actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "2-dodgeM=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2) );
+		 Action::actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
     if(contains(line, "2-dodgeR=") ){
       setAction( (Key) extractInt(line), 
- Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2) );
+		 Action::actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2) );
       continue;
     }
   }
@@ -142,11 +142,24 @@ action Config::getAction(const Key& k){
 
 //TODO
 Key Config::getKey(const action& a) const{
+  //std::map<Key,action>::iterator it;
+  // show content:
+  for (auto it=m_mapping.begin(); it!=m_mapping.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+  /*
+  for(std::map<Key, action>::iterator it = m_mapping.begin(); it != m_mapping.end(); ++it){
+    if(it->second == a)
+      return it->first;
+      }*/
   return (Key)-1;
 }
 
 //TODO
 Key Config::getKey(const Action::Type& a) const{
+  /* for(auto it = m_mapping.begin(); it != m_mapping.end(); ++it){
+    if(it->second.getType() == a)
+      return it->first;
+      }*/
   return (Key)-1;
 }
 
