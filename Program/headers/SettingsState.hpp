@@ -26,8 +26,13 @@ private:
   Container * m_container;
   GUIWindow * m_window;
   std::vector<Button *> m_buttons;
+  std::vector<Button *> m_inputButtons;
   Checkbox * m_fullscreen;
   std::vector<sf::Text *> m_texts;
+  void panel1();
+  void panel2();
+  void panel3();
+  void updateInputButtons();
 
 };
 

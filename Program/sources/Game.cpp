@@ -73,6 +73,7 @@ void Game::start(){
   m_clock = new sf::Clock();
   m_timer = new sf::Time();
   m_music = new sf::Music();
+  //m_music->initialize();
   Player p1("Player1");
   Player p2("Player2");
   m_match = new Match(&p1, &p2, 90, 3);

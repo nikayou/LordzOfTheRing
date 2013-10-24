@@ -168,3 +168,13 @@ void Config::setAction(const Key& k, const action& a){
 }
 
 
+std::string Config::keyToString(const Key& k) const{
+  std::string res = "";
+  if(k >= 0 && k <= 25){
+     return (res += (char)('A'+k));
+  }
+  if(k >= 26 && k <= 35){
+    return res += "Num"+('0'+(k-26));
+  }
+  return "?";
+}

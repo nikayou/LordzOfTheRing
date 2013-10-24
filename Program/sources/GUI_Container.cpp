@@ -65,12 +65,13 @@ bool Container::click(const sf::Vector2i& pos){
     if(mComponents[i]->getClass().compare("Button") == 0){
       Button * b = (Button *) mComponents[i];
       if( (mFocused != 0 && mComponents[mFocused-1] == b ) 
-	  || b->contains(pos) )
-	if(b == NULL)
+	  || b->contains(pos) ){
+	if(b == NULL){
 	  return true;
-	else
+	}else{
 	  return( b->action() );
-	
+	}
+      }
     }else if(mComponents[i]->getClass().compare("Checkbox") == 0){
       Checkbox * c = (Checkbox *) mComponents[i];
       if(c->contains(pos) )
