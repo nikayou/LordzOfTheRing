@@ -2,6 +2,7 @@
 #define SETTINGSTATE_HPP
 
 #include "../headers/GameState.hpp"
+#include "../headers/Action.hpp"
 #include "../headers/GUI_Button.hpp"
 #include "../headers/GUI_Checkbox.hpp"
 #include "../headers/GUI_Container.hpp"
@@ -33,7 +34,7 @@ private:
   void panel2();
   void panel3();
   void updateInputButtons();
-
+  void promptKey(const action& a);
 };
 
 #endif

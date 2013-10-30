@@ -1,5 +1,6 @@
 #include "../headers/SettingsState.hpp"
 #include "../headers/GameState.hpp"
+#include "../headers/Action.hpp"
 #include "../headers/Config.hpp"
 #include "../headers/FontManager.hpp"
 #include "../headers/Game.hpp"
@@ -83,7 +84,7 @@ void SettingsState::render(){
     m_render->draw(*m_texts[i]);
   Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 40;
-  std::string s = "800x600";
+  std::string s = "??x??";
   static std::ostringstream oss;
   oss.str("");
   oss.clear();
@@ -256,7 +257,7 @@ void SettingsState::panel3(){
   Button * b_1al = new Button(sf::Vector2u(30, 30), sf::Vector2f(60, 388), c);
   b_1al->setText(sf::Text("7", *(f->getFont() ), fontsize) );
   b_1al->setTextToCenter();
-  b_1al->setAction( [this]()->void{ } );
+  b_1al->setAction( [this]()->void{ promptKey(actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2) ); } );
   m_container->add(b_1al);
   m_inputButtons.push_back(b_1al);
   sf::Text * l_1al = new sf::Text("Left Attack", *(f->getFont() ), fontsize);
@@ -267,7 +268,7 @@ void SettingsState::panel3(){
   Button * b_1am = new Button(sf::Vector2u(30, 30), sf::Vector2f(60, 438), c);
   b_1am->setText(sf::Text("8", *(f->getFont() ), fontsize) );
   b_1am->setTextToCenter();
-  b_1am->setAction( [this]()->void{ } );
+  b_1am->setAction( [this]()->void{promptKey(actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2) ); } );
   m_container->add(b_1am);
   m_inputButtons.push_back(b_1am);
   sf::Text * l_1am = new sf::Text("Middle Attack", *(f->getFont() ), fontsize);
@@ -278,7 +279,7 @@ void SettingsState::panel3(){
   Button * b_1ar = new Button(sf::Vector2u(30, 30), sf::Vector2f(60, 488), c);
   b_1ar->setText(sf::Text("9", *(f->getFont() ), fontsize) );
   b_1ar->setTextToCenter();
-  b_1ar->setAction( [this]()->void{ } );
+  b_1ar->setAction( [this]()->void{promptKey(actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2) ); } );
   m_container->add(b_1ar);
   m_inputButtons.push_back(b_1ar);
   sf::Text * l_1ar = new sf::Text("Right Attack", *(f->getFont() ), fontsize);
@@ -289,7 +290,7 @@ void SettingsState::panel3(){
   Button * b_1dl = new Button(sf::Vector2u(30, 30), sf::Vector2f(230, 388), c);
   b_1dl->setText(sf::Text("4", *(f->getFont() ), fontsize) );
   b_1dl->setTextToCenter();
-  b_1dl->setAction( [this]()->void{ } );
+  b_1dl->setAction( [this]()->void{promptKey(actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1) ); } );
   m_container->add(b_1dl);
   m_inputButtons.push_back(b_1dl);
   sf::Text * l_1dl = new sf::Text("Left Dodge", *(f->getFont() ), fontsize);
@@ -300,7 +301,7 @@ void SettingsState::panel3(){
   Button * b_1dm = new Button(sf::Vector2u(30, 30), sf::Vector2f(230, 438), c);
   b_1dm->setText(sf::Text("5", *(f->getFont() ), fontsize) );
   b_1dm->setTextToCenter();
-  b_1dm->setAction( [this]()->void{ } );
+  b_1dm->setAction( [this]()->void{promptKey(actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1) ); } );
   m_container->add(b_1dm);
   m_inputButtons.push_back(b_1dm);
   sf::Text * l_1dm = new sf::Text("Middle Dodge", *(f->getFont() ), fontsize);
@@ -311,7 +312,7 @@ void SettingsState::panel3(){
   Button * b_1dr = new Button(sf::Vector2u(30, 30), sf::Vector2f(230, 488), c);
   b_1dr->setText(sf::Text("6", *(f->getFont() ), fontsize) );
   b_1dr->setTextToCenter();
-  b_1dr->setAction( [this]()->void{ } );
+  b_1dr->setAction( [this]()->void{ promptKey(actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1) ); } );
   m_container->add(b_1dr);
   m_inputButtons.push_back(b_1dr);
   sf::Text * l_1dr = new sf::Text("Right Dodge", *(f->getFont() ), fontsize);
@@ -323,7 +324,7 @@ void SettingsState::panel3(){
   Button * b_2al = new Button(sf::Vector2u(30, 30), sf::Vector2f(400, 388), c);
   b_2al->setText(sf::Text("1", *(f->getFont() ), fontsize) );
   b_2al->setTextToCenter();
-  b_2al->setAction( [this]()->void{ } );
+  b_2al->setAction( [this]()->void{ promptKey(actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1) ); } ); 
   m_container->add(b_2al);
   m_inputButtons.push_back(b_2al);
   sf::Text * l_2al = new sf::Text("Left Attack", *(f->getFont() ), fontsize);
@@ -334,7 +335,7 @@ void SettingsState::panel3(){
   Button * b_2am = new Button(sf::Vector2u(30, 30), sf::Vector2f(400, 438), c);
   b_2am->setText(sf::Text("2", *(f->getFont() ), fontsize) );
   b_2am->setTextToCenter();
-  b_2am->setAction( [this]()->void{ } );
+  b_2am->setAction( [this]()->void{ promptKey(actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1) ); } );
   m_container->add(b_2am);
   m_inputButtons.push_back(b_2am);
   sf::Text * l_2am = new sf::Text("Middle Attack", *(f->getFont() ), fontsize);
@@ -345,7 +346,7 @@ void SettingsState::panel3(){
   Button * b_2ar = new Button(sf::Vector2u(30, 30), sf::Vector2f(400, 488), c);
   b_2ar->setText(sf::Text("3", *(f->getFont() ), fontsize) );
   b_2ar->setTextToCenter();
-  b_2ar->setAction( [this]()->void{ } );
+  b_2ar->setAction( [this]()->void{ promptKey(actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1) );} );
   m_container->add(b_2ar);
   m_inputButtons.push_back(b_2ar);
   sf::Text * l_2ar = new sf::Text("Right Attack", *(f->getFont() ), fontsize);
@@ -356,7 +357,7 @@ void SettingsState::panel3(){
   Button * b_2dl = new Button(sf::Vector2u(30, 30), sf::Vector2f(570, 388), c);
   b_2dl->setText(sf::Text("0", *(f->getFont() ), fontsize) );
   b_2dl->setTextToCenter();
-  b_2dl->setAction( [this]()->void{ } );
+  b_2dl->setAction( [this]()->void{ promptKey(actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2) ); } );
   m_container->add(b_2dl);
   m_inputButtons.push_back(b_2dl);
   sf::Text * l_2dl = new sf::Text("Left Dodge", *(f->getFont() ), fontsize);
@@ -367,7 +368,7 @@ void SettingsState::panel3(){
   Button * b_2dm = new Button(sf::Vector2u(30, 30), sf::Vector2f(570, 438), c);
   b_2dm->setText(sf::Text("w", *(f->getFont() ), fontsize) );
   b_2dm->setTextToCenter();
-  b_2dm->setAction( [this]()->void{ } );
+  b_2dm->setAction( [this]()->void{ promptKey(actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2) ); } );
   m_container->add(b_2dm);
   m_inputButtons.push_back(b_2dm);
   sf::Text * l_2dm = new sf::Text("Middle Dodge", *(f->getFont() ), fontsize);
@@ -378,7 +379,7 @@ void SettingsState::panel3(){
   Button * b_2dr = new Button(sf::Vector2u(30, 30), sf::Vector2f(570, 488), c);
   b_2dr->setText(sf::Text("x", *(f->getFont() ), fontsize) );
   b_2dr->setTextToCenter();
-  b_2dr->setAction( [this]()->void{ } );
+  b_2dr->setAction( [this]()->void{promptKey(actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2) ); } );
   m_container->add(b_2dr);
   m_inputButtons.push_back(b_2dr);
   sf::Text * l_2dr = new sf::Text("Right Dodge", *(f->getFont() ), fontsize);
@@ -386,6 +387,54 @@ void SettingsState::panel3(){
   l_2dr->setPosition(570+35, 488+15-fr.top-fr.height/2.0);
   l_2dr->setColor(sf::Color::Black);
   m_texts.push_back(l_2dr);
+}
+
+void SettingsState::promptKey(const action& a){
+  sf::Color c(30, 30, 30);
+  sf::RectangleShape r(sf::Vector2f(210, 110) );
+  r.setPosition(300, 250);
+  r.setOutlineColor(sf::Color::Black);
+  r.setOutlineThickness(5);
+  r.setFillColor(c);
+  std::string s = "Press a key for :\n" + Action::actionToString(a);
+  Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
+  sf::Text t(s, *(f->getFont() ), 25);
+  t.setColor(sf::Color::Black);
+  t.setPosition(405, 280);
+  sf::FloatRect box = t.getLocalBounds();
+  t.setOrigin(box.width/2.0f+box.left, box.top/2);
+  /*
+    m_window->draw();
+    Game::getInstance()->display();
+    m_render->draw(r);  
+    m_render->draw(t);*/
+  Game::getInstance()->getWindow()->draw(r);
+  Game::getInstance()->getWindow()->draw(t);
+  Game::getInstance()->display();
+  sf::Event event;
+  bool waiting = true;
+  while( (Game::getInstance() -> updating() && m_window && m_window->getWindow() && m_window->getWindow()->pollEvent(event) ) || waiting ){
+    if (event.type == sf::Event::Closed){
+      Game::getInstance()->close();
+      waiting = false;
+      break;
+    }
+    if(event.type == sf::Event::KeyPressed){
+      if(event.key.code == sf::Keyboard::Escape){
+	waiting = false;
+	break;
+      }
+      if(event.key.code >= sf::Keyboard::A && event.key.code <= sf::Keyboard::Num9){
+	//change input
+	Config::getInstance()->dropAction(a);
+	Config::getInstance()->dropKey(event.key.code);
+	Config::getInstance()->setAction(event.key.code, a);
+	updateInputButtons();
+	waiting = false;
+	break;
+      }
+    }
+  }
 }
 
 bool SettingsState::exit(){
@@ -402,7 +451,7 @@ void SettingsState::deleteAll(){
     m_buttons[i] = NULL;
   }
   m_buttons.clear(); 
-s = m_inputButtons.size();
+  s = m_inputButtons.size();
   for(unsigned int i = 0; i < s; i++){
     delete m_inputButtons[i];
     m_inputButtons[i] = NULL;

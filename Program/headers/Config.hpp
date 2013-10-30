@@ -38,7 +38,6 @@ public:
   //getters
   action getAction(const Key& k);
   Key getKey(const action&) const;
-  Key getKey(const Action::Type&) const;
   std::string keyToString(const Key&) const;
   byte getMusicVolume() const{
     return m_musicVolume;
@@ -54,6 +53,8 @@ public:
   };
   //setters
   void setAction(const Key&, const action&);
+  void dropAction(const action&);
+  void dropKey(const Key&);
   void setMusicVolume(const byte& v){
     m_musicVolume = MIN(100, v);
     Game::getInstance()->getMusic()->pause();

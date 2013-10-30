@@ -9,6 +9,8 @@
 #include <sstream>
 #include <string>
 
+#include <iostream> //delete
+
 void Config::init(){
   m_musicVolume = 70;
   m_soundVolume = 100;
@@ -140,7 +142,6 @@ action Config::getAction(const Key& k){
   return m_mapping[k];
 }
 
-//TODO
 Key Config::getKey(const action& a) const{
   //std::map<Key,action>::iterator it;
   // show content:
@@ -151,15 +152,6 @@ Key Config::getKey(const action& a) const{
   return (Key)-1;
 }
 
-//TODO
-Key Config::getKey(const Action::Type& a) const{
-  /* for(auto it = m_mapping.begin(); it != m_mapping.end(); ++it){
-    if(it->second.getType() == a)
-      return it->first;
-      }*/
-  return (Key)-1;
-}
-
 void Config::setAction(const Key& k, const action& a){
   std::map<Key,action>::iterator it = m_mapping.find(k);
   if( it != m_mapping.end() )
@@ -167,6 +159,32 @@ void Config::setAction(const Key& k, const action& a){
   m_mapping.insert( std::pair<Key, action>(k, a) );
 }
 
+
+void Config::dropAction(const action& a){
+  auto it = m_mapping.begin();
+  do{
+    if(it->second == a){
+      m_mapping.erase(it);
+      it = m_mapping.begin();
+    }
+    ++it;
+  }while(it != m_mapping.end() );
+  }
+
+void Config::dropKey(const Key& k){
+  auto it = m_mapping.begin();
+  do{
+    if(it->first == k){
+      m_mapping.erase(it);
+      std::cout<<"dropped key "<<k<<std::endl;
+      it = m_mapping.begin();
+    }
+    ++it;
+  }while(it != m_mapping.end() );
+  for(it = m_mapping.begin(); it != m_mapping.end(); ++it){
+    std::cout<<"key : "<<(char)('A'+it->first)<<" -> "<<(int)it->second<<std::endl;
+  }
+}
 
 std::string Config::keyToString(const Key& k) const{
   std::string res = "";
