@@ -13,8 +13,6 @@
 
 #include <iostream> //delete
 
-const std::string CONFIG_FILE = "../../resources/config.txt";
-
 typedef sf::Keyboard::Key Key;
 
 /** Configuration class (singleton)
@@ -25,7 +23,7 @@ class Config : public Singleton<Config>{
 
 private:
   Config(){ 
-    loadFromFile(CONFIG_FILE); 
+    loadFromFile("config.txt"); 
   };
   ~Config(){ };
   std::map< Key, action > m_mapping; // no double in both sides 
@@ -102,7 +100,7 @@ public:
   };
   //others
   bool loadFromFile(const std::string&);
-  void saveFile(const std::string&);
+  bool saveFile(const std::string&);
   void init();
 };
 

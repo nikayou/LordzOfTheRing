@@ -82,28 +82,18 @@ void SettingsState::render(){
   m_render->draw(r);
   for(unsigned int i = 0; i < m_texts.size(); i++)
     m_render->draw(*m_texts[i]);
-  Font * f = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
+  Font * font = FontManager::getInstance()->get(FontManager::getInstance()->getDefaultFont() );
   unsigned int fontsize = 40;
-  std::string s = "??x??";
-  static std::ostringstream oss;
-  oss.str("");
-  oss.clear();
-  oss << Config::getInstance()->getWindowWidth();
-  oss << "x";
-  oss << Config::getInstance()->getWindowHeight();
-  sf::Text t( oss.str(), *(f->getFont() ), fontsize);
+  sf::Text t("", *(font->getFont() ), fontsize);
   t.setColor(sf::Color::Black);
-  unsigned int x_arg = 390+(610-390)/2;
-  sf::FloatRect box = t.getLocalBounds();
-  t.setOrigin(box.width/2.0f+box.left, box.top/2);
-  t.setPosition(x_arg, 120);
-  m_render->draw(t);
+  std::ostringstream oss;
   oss.str("");
+  unsigned int x_arg = 390+(610-390)/2;
   oss.clear();
   oss << (unsigned int)Config::getInstance()->getMusicVolume();
   oss <<"%";
   t.setString( oss.str() );
-  box = t.getLocalBounds();
+  sf::FloatRect box = t.getLocalBounds();
   t.setOrigin(box.width/2.0f+box.left, box.top/2);
   t.setPosition(x_arg, 220);
   m_render->draw(t);
@@ -146,7 +136,7 @@ bool SettingsState::enter(){
   b_back->setText(sf::Text("<-", *(f->getFont() ), fontsize) );
   b_back->setTextToCenter();
   b_back->setAction( [this]()->void{
-      Config::getInstance()->loadFromFile(CONFIG_FILE);
+      Config::getInstance()->loadFromFile("config.txt");
       Game::getInstance()->getStateHandler()->change(new MainMenuState() );
     } );
   m_container->add(b_back);
@@ -155,7 +145,8 @@ bool SettingsState::enter(){
   b_ok->setText(sf::Text("OK", *(f->getFont() ), fontsize) );
   b_ok->setTextToCenter();
   b_ok->setAction( [this]()->void{
-      Config::getInstance()->saveFile(CONFIG_FILE);
+      Config::getInstance()->setFullscreen(m_fullscreen->isChecked() );
+      Config::getInstance()->saveFile("config.txt");
       Game::getInstance()->getStateHandler()->change(new MainMenuState() );
     } );
   m_container->add(b_ok);
@@ -169,27 +160,15 @@ void SettingsState::panel1(){
   sf::FloatRect fr;
   sf::Color c(110, 110, 110);
   //resolution
-  sf::Text * l_res = new sf::Text("Resolution", *(f->getFont() ), fontsize);
+  sf::Text * l_res = new sf::Text("Display", *(f->getFont() ), fontsize);
   fr = l_res->getLocalBounds();
   l_res->setPosition(70, 140-fr.top-fr.height/2.0);
   l_res->setColor(sf::Color::Black);
   m_texts.push_back(l_res);
-  Button * b_lres = new Button(sf::Vector2u(40, 40), sf::Vector2f(350, 120), c);
-  b_lres->setText(sf::Text("<", *(f->getFont() ), fontsize) );
-  b_lres->setTextToCenter();
-  //b_lres->setAction();
-  m_container->add(b_lres);
-  m_buttons.push_back(b_lres);
-  Button * b_rres = new Button(sf::Vector2u(40, 40), sf::Vector2f(610, 120), c);
-  b_rres->setText(sf::Text(">", *(f->getFont() ), fontsize) );
-  b_rres->setTextToCenter();
-  // b_rres->setAction();
-  m_container->add(b_rres);
-  m_buttons.push_back(b_rres);
-  m_fullscreen = new Checkbox(sf::Text("Fullscreen", *(f->getFont() ), fontsize*1/3) );
-  m_fullscreen->setPosition(sf::Vector2f(660, 125) );
-  m_fullscreen->setTextToCenter();
-  //m_fullscreen->setChecked(Game::getInstance()->getMatch()->getFULLSCREEN() );
+  m_fullscreen = new Checkbox(sf::Text("Fullscreen", *(f->getFont() ), fontsize-10) );
+  m_fullscreen->setPosition(sf::Vector2f(300, 125) );
+  //  m_fullscreen->setTextToCenter();
+  m_fullscreen->setChecked(Config::getInstance()->getFullscreen() );
   m_container->add(m_fullscreen);
 }
 

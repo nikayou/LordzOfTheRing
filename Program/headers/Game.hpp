@@ -15,6 +15,7 @@
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Window.hpp>
 
@@ -37,6 +38,7 @@ private:
   sf::Time * m_timer;
   sf::Music * m_music;
   bool m_updating;
+  sf::View * m_view;
 
 public:
   void start();

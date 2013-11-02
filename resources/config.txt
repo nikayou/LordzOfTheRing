@@ -1,12 +1,8 @@
-#resolution (in pixels)
-width=800
-height=600
+#fullscreen
 fullscreen=0
 #sound (in percents)
-music=60
+music=65
 sound=100
-#global inputs
-pause=36
 #player 1 inputs
 1-attackL=0
 1-attackM=25
@@ -21,4 +17,3 @@ pause=36
 2-dodgeL=10
 2-dodgeM=11
 2-dodgeR=12
-

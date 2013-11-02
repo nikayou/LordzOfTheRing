@@ -1,5 +1,6 @@
 #include "../headers/Config.hpp"
 #include "../headers/Action.hpp"
+#include "../headers/ResourcesDirectories.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -35,21 +36,25 @@ void Config::init(){
 bool Config::loadFromFile(const std::string& path){
   init();
   std::ifstream ifs;
-  ifs.open(path.c_str() );
+  ifs.open(ResDir::getResDir()+path );
   if( !ifs.good() ){
     return false;
   }
   std::string line = "";
+  m_windowWidth = 800;
+  m_windowHeight = 600;
+  setAction( (Key) 36, 
+		 Action::actionToByte(Action::PAUSE) );
   while( !ifs.eof() ){
     getline(ifs, line);
     if(line[0] == '#' )
       continue;
-    if(contains(line, "width") ){
-      m_windowWidth = extractInt(line);
+    if(contains(line, "width=") ){
+      m_windowWidth = 800;
       continue;
     }
     if(contains(line, "height=")  ){
-      m_windowHeight = extractInt(line);
+      m_windowHeight = 600;
       continue;
     }
     if(contains(line, "fullscreen=")  ){
@@ -66,11 +71,6 @@ bool Config::loadFromFile(const std::string& path){
     }
     if(contains(line,"sound=") ){
       setSoundVolume( extractInt(line) );
-      continue;
-    }
-    if(contains(line, "pause=") ){
-      setAction( (Key) extractInt(line), 
-		 Action::actionToByte(Action::PAUSE) );
       continue;
     }
     //Player 1 controller
@@ -139,9 +139,69 @@ bool Config::loadFromFile(const std::string& path){
   return true;
 }
 
-//TODO
-void Config::saveFile(const std::string& f){
 
+bool Config::saveFile(const std::string& f){
+  std::ofstream ofs(ResDir::getResDir()+f);
+  //  ofs.open(f.c_str() );
+  if( !ofs.good() ){
+    return false;
+  }
+  ofs << "#fullscreen"<<std::endl;
+  ofs.flush();
+  ofs << "fullscreen=";
+  if(m_fullscreen)
+    ofs<<"1";
+  else
+    ofs<<"0";
+  ofs<<std::endl;
+  ofs.flush();
+  ofs<<"#sound (in percents)"<<std::endl<<"music="<<(unsigned int)m_musicVolume<<std::endl;
+  ofs.flush();
+  ofs<<"sound="<<(unsigned int)m_soundVolume<<std::endl;
+  ofs.flush();
+  action a;
+  ofs<<"#player 1 inputs"<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::ATTACK_LEFT, Action::PLAYER1, Action::PLAYER2);
+  ofs<<"1-attackL="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER1, Action::PLAYER2);
+  ofs<<"1-attackM="<<(int)(getKey(a) )<<std::endl;
+    ofs.flush();
+a = actionToByte(Action::ATTACK_RIGHT, Action::PLAYER1, Action::PLAYER2);
+  ofs<<"1-attackR="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_LEFT, Action::PLAYER1, Action::PLAYER1);
+  ofs<<"1-dodgeL="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_MIDDLE, Action::PLAYER1, Action::PLAYER1);
+  ofs<<"1-dodgeM="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_RIGHT, Action::PLAYER1, Action::PLAYER1);
+  ofs<<"1-dodgeR="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  ofs<<"#player 2 inputs"<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::ATTACK_LEFT, Action::PLAYER2, Action::PLAYER1);
+  ofs<<"2-attackL="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::ATTACK_MIDDLE, Action::PLAYER2, Action::PLAYER1);
+  ofs<<"2-attackM="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::ATTACK_RIGHT, Action::PLAYER2, Action::PLAYER1);
+  ofs<<"2-attackR="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_LEFT, Action::PLAYER2, Action::PLAYER2);
+  ofs<<"2-dodgeL="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_MIDDLE, Action::PLAYER2, Action::PLAYER2);
+  ofs<<"2-dodgeM="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  a = actionToByte(Action::DODGE_RIGHT, Action::PLAYER2, Action::PLAYER2);
+  ofs<<"2-dodgeR="<<(int)(getKey(a) )<<std::endl;
+  ofs.flush();
+  ofs.close();
+  return true;
 }
 
 action Config::getAction(const Key& k){

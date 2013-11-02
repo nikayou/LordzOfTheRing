@@ -33,6 +33,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -50,146 +51,147 @@
     -begins the loop
 **/
 void Game::init(){
-  if(Config::getInstance()->getFullscreen() )
+  if(Config::getInstance()->getFullscreen() ){
     m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Close|sf::Style::Fullscreen); 
-  else{
+  }else{
     m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Titlebar|sf::Style::Close); 
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     m_window->setPosition(sf::Vector2i( (desktop.width - m_window->getSize().x)/2, (desktop.height - m_window->getSize().y)/2 ) ); 
- 
+    
+    }
+    m_window->setFramerateLimit( (float) FRAMERATE);
+    m_window->setKeyRepeatEnabled(false);
+    m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
+    //starting loop
+    m_music->setVolume(Config::getInstance()->getMusicVolume() );
+    m_music->openFromFile("../../resources/audio/menu1.ogg");
+    m_music->setVolume(Config::getInstance()->getMusicVolume() );
+    m_music->play();
+    m_container = new Container(m_render);
+    m_gui = new GUIWindow (m_window, m_container );
+    m_stateHandler->change(new MainMenuState() );
+    loop();
   }
-  m_window->setFramerateLimit( (float) FRAMERATE);
-  m_window->setKeyRepeatEnabled(false);
-  m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
-  //starting loop
-  m_music->setVolume(Config::getInstance()->getMusicVolume() );
-  m_music->openFromFile("../../resources/audio/menu1.ogg");
-  m_music->setVolume(Config::getInstance()->getMusicVolume() );
-  m_music->play();
-  m_container = new Container(m_render);
-  m_gui = new GUIWindow (m_window, m_container );
-  m_stateHandler->change(new MainMenuState() );
-  loop();
-}
 
-void Game::start(){
-  m_updating = true;
-  m_render = new sf::RenderTexture();
-  m_stateHandler = new StateHandler();
-  m_clock = new sf::Clock();
-  m_timer = new sf::Time();
-  m_music = new sf::Music();
-  //m_music->initialize();
-  Player p1("Player1");
-  Player p2("Player2");
-  m_match = new Match(&p1, &p2, 90, 3);
-  m_match->setType(MatchType::KO);
-  splash();
-}
-
-/** Starts the game loop : 
-    -read input
-    -eval action
-    -print situation
-**/
-void Game::loop(){
-  while(m_updating && m_window->isOpen() ){
-    m_stateHandler->update();
-    m_stateHandler->render();
-    display();
+  void Game::start(){
+    m_updating = true;
+    m_render = new sf::RenderTexture();
+    m_stateHandler = new StateHandler();
+    m_clock = new sf::Clock();
+    m_timer = new sf::Time();
+    m_music = new sf::Music();
+    //m_music->initialize();
+    Player p1("Player1");
+    Player p2("Player2");
+    m_match = new Match(&p1, &p2, 90, 3);
+    m_match->setType(MatchType::KO);
+    splash();
   }
-}
 
-void Game::display(){
-  if(m_updating)
-    m_window->display();
-}
+  /** Starts the game loop : 
+      -read input
+      -eval action
+      -print situation
+  **/
+  void Game::loop(){
+    while(m_updating && m_window->isOpen() ){
+      m_stateHandler->update();
+      m_stateHandler->render();
+      display();
+    }
+  }
 
-void Game::splash(){
-  sf::RenderWindow rw(sf::VideoMode(600, 400), "LOTR", sf::Style::None );
+  void Game::display(){
+    if(m_updating)
+      m_window->display();
+  }
+
+  void Game::splash(){
+    sf::RenderWindow rw(sf::VideoMode(600, 400), "LOTR", sf::Style::None );
 
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     rw.setPosition(sf::Vector2i(desktop.width/2 - 300, desktop.height/2 - 200 ) );   
-  sf::Texture * t;
-  t = TextureManager::getInstance()->get("splashscreens/sfml.splash")->getTexture();
-  sf::Sprite s;
-  s.setTexture(*t);
-  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
-  s.setPosition(sf::Vector2f(300, 200) );
-  rw.clear(sf::Color::White);
-  rw.draw(s);
-  rw.display();
-  while(getTime() < 2.);
-  t = TextureManager::getInstance()->get("splashscreens/auth.splash")->getTexture();
-  s.setTexture(*t );
-  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
-  rw.clear(sf::Color::White);
-  rw.draw(s);
-  rw.display();
-  while(getTime() < 4.);
-  t = TextureManager::getInstance()->get("splashscreens/pixotters.splash")->getTexture();
-  s.setTexture(*t );
-  s.setOrigin(t->getSize().x/2, t->getSize().y/2);
-  rw.clear(sf::Color::White);
-  rw.draw(s);
-  rw.display();
-  while(getTime() < 6.);
-  rw.close();
-  TextureManager::getInstance()->remove("splashscreens/sfml.splash");
-  TextureManager::getInstance()->remove("splashscreens/auth.splash");
-  TextureManager::getInstance()->remove("splashscreens/pixotters.splash");
-  init();
-}  
+    sf::Texture * t;
+    t = TextureManager::getInstance()->get("splashscreens/sfml.splash")->getTexture();
+    sf::Sprite s;
+    s.setTexture(*t);
+    s.setOrigin(t->getSize().x/2, t->getSize().y/2);
+    s.setPosition(sf::Vector2f(300, 200) );
+    rw.clear(sf::Color::White);
+    rw.draw(s);
+    rw.display();
+    while(getTime() < 2.);
+    t = TextureManager::getInstance()->get("splashscreens/auth.splash")->getTexture();
+    s.setTexture(*t );
+    s.setOrigin(t->getSize().x/2, t->getSize().y/2);
+    rw.clear(sf::Color::White);
+    rw.draw(s);
+    rw.display();
+    while(getTime() < 4.);
+    t = TextureManager::getInstance()->get("splashscreens/pixotters.splash")->getTexture();
+    s.setTexture(*t );
+    s.setOrigin(t->getSize().x/2, t->getSize().y/2);
+    rw.clear(sf::Color::White);
+    rw.draw(s);
+    rw.display();
+    while(getTime() < 6.);
+    rw.close();
+    TextureManager::getInstance()->remove("splashscreens/sfml.splash");
+    TextureManager::getInstance()->remove("splashscreens/auth.splash");
+    TextureManager::getInstance()->remove("splashscreens/pixotters.splash");
+    init();
+  }  
 
 
-void Game::pause(const sf::Int64& t0){
-  sf::Event event;
-  while( m_window->pollEvent(event) ){
-    if(event.type == sf::Event::Closed){
-      close();
-    }else if(event.type ==sf::Event::KeyPressed ){
-      action a = Config::getInstance()->getAction( (Key)event.key.code);
-      if(Action::getType(a) == Action::PAUSE ){
-	Game::getInstance()->getStateHandler()->pop();
-	*m_timer = sf::microseconds(t0);
-	break;
+  void Game::pause(const sf::Int64& t0){
+    sf::Event event;
+    while( m_window->pollEvent(event) ){
+      if(event.type == sf::Event::Closed){
+	close();
+      }else if(event.type ==sf::Event::KeyPressed ){
+	action a = Config::getInstance()->getAction( (Key)event.key.code);
+	if(Action::getType(a) == Action::PAUSE ){
+	  Game::getInstance()->getStateHandler()->pop();
+	  *m_timer = sf::microseconds(t0);
+	  break;
+	}
       }
     }
   }
-}
 
-/** Closes the game instance, trying to free memory
- **/
-void Game::close(){
-  m_updating = false;
-  CharacterManager::getInstance()->clear();
-  SpritesheetManager::getInstance()->clear();
-  FontManager::getInstance()->clear();
-  TextureManager::getInstance()->clear();
-  m_window->close();
-  getStateHandler()->clear();
-  delete( m_container );
-  delete( m_music);
-  delete( m_timer);
-  delete( m_clock);
-  delete( m_match);
-  delete( m_stateHandler);
-  delete( m_render);
-  delete( m_window);
-  delete( m_gui);
-}
-
-
-
-int main(int argc, char *argv[]){
-  if(argc <= 1){
-    std::string p("../../resources/");
-    ResDir::recompute_resdir(p);
-    p.clear();
-  }else{
-    ResDir::recompute_resdir(argv[1]);
+  /** Closes the game instance, trying to free memory
+   **/
+  void Game::close(){
+    m_updating = false;
+    CharacterManager::getInstance()->clear();
+    SpritesheetManager::getInstance()->clear();
+    FontManager::getInstance()->clear();
+    TextureManager::getInstance()->clear();
+    m_window->close();
+    getStateHandler()->clear();
+    delete( m_container );
+    delete( m_music);
+    delete( m_timer);
+    delete( m_clock);
+    delete( m_match);
+    delete( m_stateHandler);
+    delete( m_render);
+    delete( m_window);
+    delete( m_view);
+    delete( m_gui);
   }
-  Game::getInstance()->start();
-  return 0;
-}
+
+
+
+  int main(int argc, char *argv[]){
+    if(argc <= 1){
+      std::string p("../../resources/");
+      ResDir::recompute_resdir(p);
+      p.clear();
+    }else{
+      ResDir::recompute_resdir(argv[1]);
+    }
+    Game::getInstance()->start();
+    return 0;
+  }
 
