@@ -52,6 +52,14 @@ bool Config::loadFromFile(const std::string& path){
       m_windowHeight = extractInt(line);
       continue;
     }
+    if(contains(line, "fullscreen=")  ){
+      int full = extractInt(line);
+      if(full == 0)
+	m_fullscreen = false;
+      else
+	m_fullscreen = true;
+      continue;
+    }
     if(contains(line, "music=") ){
       setMusicVolume( extractInt(line) );
       continue;

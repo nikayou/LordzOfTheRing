@@ -1,6 +1,7 @@
 #resolution (in pixels)
 width=800
 height=600
+fullscreen=0
 #sound (in percents)
 music=60
 sound=100

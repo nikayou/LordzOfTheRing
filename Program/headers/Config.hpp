@@ -33,6 +33,7 @@ private:
   byte m_soundVolume;
   unsigned int m_windowWidth;
   unsigned int m_windowHeight;
+  bool m_fullscreen;
 
 public:
   //getters
@@ -51,7 +52,13 @@ public:
   unsigned int getWindowHeight() const{
     return m_windowHeight;
   };
+  bool getFullscreen() const{
+    return m_fullscreen;
+  };
   //setters
+  void setFullscreen(const bool& b){
+    m_fullscreen = b;
+  };
   void setAction(const Key&, const action&);
   void dropAction(const action&);
   void dropKey(const Key&);

@@ -50,9 +50,15 @@
     -begins the loop
 **/
 void Game::init(){
-  m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Titlebar|sf::Style::Close); 
+  if(Config::getInstance()->getFullscreen() )
+    m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Close|sf::Style::Fullscreen); 
+  else{
+    m_window = new sf::RenderWindow(sf::VideoMode(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() ), "Lordz Of The Ring", sf::Style::Titlebar|sf::Style::Close); 
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    m_window->setPosition(sf::Vector2i( (desktop.width - m_window->getSize().x)/2, (desktop.height - m_window->getSize().y)/2 ) ); 
+ 
+  }
   m_window->setFramerateLimit( (float) FRAMERATE);
-  m_window->setPosition(sf::Vector2i(10, 10) ); //adjust
   m_window->setKeyRepeatEnabled(false);
   m_render->create(Config::getInstance()->getWindowWidth(), Config::getInstance()->getWindowHeight() );
   //starting loop
@@ -101,7 +107,9 @@ void Game::display(){
 
 void Game::splash(){
   sf::RenderWindow rw(sf::VideoMode(600, 400), "LOTR", sf::Style::None );
-  rw.setPosition(sf::Vector2i(0,0) ); //adjust
+
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    rw.setPosition(sf::Vector2i(desktop.width/2 - 300, desktop.height/2 - 200 ) );   
   sf::Texture * t;
   t = TextureManager::getInstance()->get("splashscreens/sfml.splash")->getTexture();
   sf::Sprite s;
@@ -174,12 +182,12 @@ void Game::close(){
 
 
 int main(int argc, char *argv[]){
-   if(argc <= 1){
-     std::string p("../../resources/");
-     ResDir::recompute_resdir(p);
+  if(argc <= 1){
+    std::string p("../../resources/");
+    ResDir::recompute_resdir(p);
     p.clear();
   }else{
-     ResDir::recompute_resdir(argv[1]);
+    ResDir::recompute_resdir(argv[1]);
   }
   Game::getInstance()->start();
   return 0;
